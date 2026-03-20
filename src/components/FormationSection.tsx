@@ -25,8 +25,7 @@ const FormationSection = () => {
   const [loading, setLoading] = useState(false);
 
   const handleClick = () => {
-    setLoading(true);
-    window.location.href = STRIPE_LINK;
+    window.open(STRIPE_LINK, "_blank", "noopener,noreferrer");
   };
 
   return (
