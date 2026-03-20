@@ -33,38 +33,26 @@ const FormationSection = () => {
     <section id="formation" className="py-24 md:py-32 bg-cream">
       <div className="max-w-3xl mx-auto px-6">
         <FadeIn>
-          <p className="font-body text-xs tracking-[0.4em] uppercase text-muted-foreground mb-4">
-            Formation
-          </p>
-          <h2 className="font-display text-3xl md:text-5xl font-light text-foreground mb-2 text-wrap-balance" style={{ lineHeight: 1.1 }}>
-            Écrire un livre de A à Z
-          </h2>
-          <div className="w-12 h-px bg-bordeaux mb-8" />
-        </FadeIn>
+          <div className="p-8 md:p-12 bg-background rounded border border-border text-center">
+            <GraduationCap className="w-6 h-6 text-bordeaux mx-auto mb-4" />
+            <h3 className="font-display text-2xl md:text-3xl font-light text-foreground mb-3">
+              Écrire un livre de A à Z
+            </h3>
+            <p className="font-body text-base text-muted-foreground mb-8 max-w-md mx-auto leading-relaxed">
+              De l'idée initiale au manuscrit prêt à être publié.
+            </p>
 
-        <FadeIn delay={0.1}>
-          <p className="font-body text-base md:text-lg text-muted-foreground leading-relaxed mb-10 max-w-2xl">
-            Une formation complète pour apprendre à écrire, structurer et finaliser votre livre.
-            De l'idée initiale au manuscrit prêt à être publié — 18 modules, plusieurs heures
-            de contenu vidéo, des résumés pratiques et des PDF pour vous guider pas à pas.
-          </p>
-        </FadeIn>
+            {/* Benefits */}
+            <div className="grid sm:grid-cols-2 gap-3 mb-10 text-left max-w-lg mx-auto">
+              {benefits.map((b, i) => (
+                <div key={i} className="flex items-start gap-2.5 p-3">
+                  <b.icon className="w-4 h-4 text-bordeaux mt-0.5 shrink-0" />
+                  <p className="font-body text-sm text-foreground leading-snug">{b.text}</p>
+                </div>
+              ))}
+            </div>
 
-        {/* Benefits */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          {benefits.map((b, i) => (
-            <FadeIn key={i} delay={0.15 + i * 0.08}>
-              <div className="flex items-start gap-3 p-4 bg-background rounded border border-border">
-                <b.icon className="w-5 h-5 text-bordeaux mt-0.5 shrink-0" />
-                <p className="font-body text-sm text-foreground leading-snug">{b.text}</p>
-              </div>
-            </FadeIn>
-          ))}
-        </div>
-
-        {/* Price + CTA */}
-        <FadeIn delay={0.4}>
-          <div className="text-center">
+            {/* Price + CTA */}
             <p className="font-display text-2xl md:text-3xl font-light text-foreground mb-1">
               225&nbsp;€
             </p>
