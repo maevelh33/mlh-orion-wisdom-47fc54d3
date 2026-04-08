@@ -42,6 +42,7 @@ const booksData: Record<string, BookData> = {
       {
         name: "Aline",
         description: "Dix-sept ans, orpheline et survivante. Derrière sa fragilité apparente se cache une détermination farouche. Elle refuse de se laisser briser par un système qui l'a abandonnée.",
+        image: alineBoard,
         playlists: {
           youtube: "",
           spotify: "",
@@ -50,6 +51,7 @@ const booksData: Record<string, BookData> = {
       {
         name: "Sergueï",
         description: "Lié à la Bratva, Sergueï est un homme aux multiples facettes. Protecteur ou manipulateur ? La frontière est mince, et Aline devra apprendre à la discerner.",
+        image: sergueiBoard,
         playlists: {
           youtube: "",
           spotify: "",
@@ -58,6 +60,7 @@ const booksData: Record<string, BookData> = {
       {
         name: "Mehran",
         description: "L'ami le plus proche de Sergueï, et un fantôme du passé d'Aline. Son retour bouleverse l'équilibre fragile qu'elle tentait de construire.",
+        image: mehranBoard,
         playlists: {
           youtube: "",
           spotify: "",
