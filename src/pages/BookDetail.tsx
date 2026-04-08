@@ -2,6 +2,9 @@ import { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, ExternalLink, Music, Youtube } from "lucide-react";
+import alineBoard from "@/assets/aline-board.jpg";
+import sergueiBoard from "@/assets/serguei-board.jpg";
+import mehranBoard from "@/assets/mehran-board.jpg";
 
 const FadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) => (
   <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay, ease: "easeOut" }} className={className}>
@@ -39,6 +42,7 @@ const booksData: Record<string, BookData> = {
       {
         name: "Aline",
         description: "Dix-sept ans, orpheline et survivante. Derrière sa fragilité apparente se cache une détermination farouche. Elle refuse de se laisser briser par un système qui l'a abandonnée.",
+        image: alineBoard,
         playlists: {
           youtube: "",
           spotify: "",
@@ -47,6 +51,7 @@ const booksData: Record<string, BookData> = {
       {
         name: "Sergueï",
         description: "Lié à la Bratva, Sergueï est un homme aux multiples facettes. Protecteur ou manipulateur ? La frontière est mince, et Aline devra apprendre à la discerner.",
+        image: sergueiBoard,
         playlists: {
           youtube: "",
           spotify: "",
@@ -55,6 +60,7 @@ const booksData: Record<string, BookData> = {
       {
         name: "Mehran",
         description: "L'ami le plus proche de Sergueï, et un fantôme du passé d'Aline. Son retour bouleverse l'équilibre fragile qu'elle tentait de construire.",
+        image: mehranBoard,
         playlists: {
           youtube: "",
           spotify: "",
@@ -178,7 +184,7 @@ const BookDetail = () => {
                 >
                   {/* Character image placeholder */}
                   {char.image ? (
-                    <img src={char.image} alt={char.name} className="w-full aspect-[3/4] object-cover rounded mb-4" />
+                    <img src={char.image} alt={char.name} className="w-full rounded mb-4" />
                   ) : (
                     <div className="w-full aspect-[3/4] bg-muted rounded mb-4 flex items-center justify-center">
                       <span className="font-display text-4xl text-muted-foreground/30">{char.name[0]}</span>
