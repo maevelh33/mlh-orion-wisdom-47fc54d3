@@ -193,8 +193,19 @@ const BookDetail = () => {
                   <h3 className="font-display text-xl font-medium text-foreground mb-2">{char.name}</h3>
                   <p className="font-body text-sm leading-relaxed text-muted-foreground mb-4">{char.description}</p>
                   
-                  {/* Playlist links */}
-                  {char.playlists && (char.playlists.youtube || char.playlists.spotify) && (
+                  <p className="font-body text-xs text-muted-foreground/70 italic mb-3">
+                    (Les sons qui incarnent sa vibe, décrivent une part de son caractère en paroles — et ceux écoutés en écrivant.)
+                  </p>
+                  {char.playlists && (char.playlists.spotify) && (
+                    <a
+                      href={char.playlists.spotify}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 font-body text-xs tracking-wider uppercase px-3 py-1.5 border border-border text-muted-foreground hover:text-foreground hover:border-foreground transition-colors rounded"
+                    >
+                      <Music className="w-3.5 h-3.5" /> Accéder à la playlist Spotify
+                    </a>
+                  )}
                     <div className="flex flex-wrap gap-2">
                       {char.playlists.youtube && (
                         <a
