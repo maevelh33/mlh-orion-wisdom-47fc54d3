@@ -193,68 +193,22 @@ const BookDetail = () => {
                   <h3 className="font-display text-xl font-medium text-foreground mb-2">{char.name}</h3>
                   <p className="font-body text-sm leading-relaxed text-muted-foreground mb-4">{char.description}</p>
                   
-                  {/* Playlist links */}
-                  {char.playlists && (char.playlists.youtube || char.playlists.spotify) && (
-                    <div className="flex flex-wrap gap-2">
-                      {char.playlists.youtube && (
-                        <a
-                          href={char.playlists.youtube}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 font-body text-xs tracking-wider uppercase px-3 py-1.5 border border-border text-muted-foreground hover:text-foreground hover:border-foreground transition-colors rounded"
-                        >
-                          <Youtube className="w-3.5 h-3.5" /> Playlist
-                        </a>
-                      )}
-                      {char.playlists.spotify && (
-                        <a
-                          href={char.playlists.spotify}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 font-body text-xs tracking-wider uppercase px-3 py-1.5 border border-border text-muted-foreground hover:text-foreground hover:border-foreground transition-colors rounded"
-                        >
-                          <Music className="w-3.5 h-3.5" /> Spotify
-                        </a>
-                      )}
-                    </div>
+                  <p className="font-body text-xs text-muted-foreground/70 italic mb-3">
+                    (Les sons qui incarnent sa vibe, décrivent une part de son caractère en paroles — et ceux écoutés en écrivant.)
+                  </p>
+                  {char.playlists && (char.playlists.spotify) && (
+                    <a
+                      href={char.playlists.spotify}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 font-body text-xs tracking-wider uppercase px-3 py-1.5 border border-border text-muted-foreground hover:text-foreground hover:border-foreground transition-colors rounded"
+                    >
+                      <Music className="w-3.5 h-3.5" /> Accéder à la playlist Spotify
+                    </a>
                   )}
                 </motion.div>
               ))}
             </div>
-          </section>
-        </FadeIn>
-
-        {/* Aesthetic / Mood Board */}
-        <FadeIn delay={0.25}>
-          <section className="mb-20">
-            <p className="font-body text-xs tracking-[0.4em] uppercase text-muted-foreground mb-4">
-              Univers visuel
-            </p>
-            <h2 className="font-display text-2xl md:text-3xl font-light text-foreground mb-8">
-              Esthétique & Atmosphère
-            </h2>
-            {book.aesthetic.length > 0 ? (
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {book.aesthetic.map((item, i) => (
-                  <div key={i} className="relative group">
-                    {item.image && (
-                      <img src={item.image} alt={item.caption} className="w-full aspect-square object-cover rounded" />
-                    )}
-                    <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/40 transition-colors rounded flex items-end p-3">
-                      <span className="font-body text-xs text-background opacity-0 group-hover:opacity-100 transition-opacity">
-                        {item.caption}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="p-12 bg-card border border-border rounded text-center">
-                <p className="font-body text-sm text-muted-foreground italic">
-                  Le mood board visuel sera bientôt disponible. Restez connecté(e).
-                </p>
-              </div>
-            )}
           </section>
         </FadeIn>
       </main>
