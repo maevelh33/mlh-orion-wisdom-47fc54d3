@@ -1,5 +1,6 @@
+import { useEffect } from "react";
 import { motion } from "framer-motion";
-import { BookOpen, ExternalLink, ArrowLeft } from "lucide-react";
+import { BookOpen, ExternalLink, ArrowLeft, Info } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const FadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) => (
@@ -11,10 +12,11 @@ const FadeIn = ({ children, delay = 0, className = "" }: { children: React.React
 const books = [
   {
     title: "Chaton",
+    slug: "chaton",
     description: [
-      "Aline, 17 ans, refuse le sort que sa vie — ou plutôt ceux qui en tiennent les ficelles — veulent lui imposer. Orpheline, elle a été placée dans une famille d'accueil où elle est maltraitée. Plutôt que de subir ce traitement, elle prend la fuite, quitte à se retrouver seule dans les rues. Par hasard, elle croise Sergueï, un homme lié à la mafia russe ; la Brava. Pour survivre, elle tente de gagner sa confiance… Mais peut-elle vraiment compter sur lui ? Est-il digne de confiance, ou va-t-il, comme tant d'autres, la décevoir ?",
-      "Cependant, le destin se montre cruel : l'ami le plus proche de Sergueï n'est autre que Mehran, qu'Aline croyait avoir relégué à son passé. Leur confrontation ravive d'anciennes blessures et met à nu tous les enjeux psychologiques qui sous-tendent leurs relations.",
-      "Vous suivrez leur aventure à tous les trois, et verrez comment leurs destins s'entrelacent. Leur histoire commune révélera ce qu'il y a de plus beau… mais aussi de plus vil, dans l'âme humaine, à travers un triangle où se mêlent victime, bourreau et sauveur. C'est également l'histoire du passé d'Aline, qui sera la protagoniste de mon prochain Roman.",
+      "Aline, une adolescente de dix-sept ans, refuse le sort que sa misère veut lui imposer. Orpheline, elle a été placée dans une famille d'accueil où elle est maltraitée. Plutôt que de subir ce traitement, elle prend la fuite, quitte à se retrouver seule dans les rues. Par hasard, elle croise Sergueï, un homme lié à la mafia russe ; la Bratva. Pour survivre, elle tente de gagner sa confiance… Mais peut-elle vraiment compter sur lui ? Est-il digne de confiance, ou va-t-il, comme tant d'autres, la décevoir ?",
+      "Cependant, le destin se montre cruel : l'ami le plus proche de Sergueï n'est autre que Mehran. Aline, qui croyait l'avoir relégué à son passé, n'est pas heureuse de le revoir. Leur confrontation ravive d'anciennes blessures et met à nu tous les enjeux psychologiques qui sous-tendent leurs relations.",
+      "Vous suivrez leur aventure à tous les trois, et verrez comment leurs destins s'entrelacent. Leur histoire commune révélera ce qu'il y a de plus beau… mais aussi de plus vil, dans l'âme humaine, à travers un triangle où se mêlent victime, bourreau et sauveur. C'est également l'histoire du passé d'Aline, qui sera la protagoniste de mon prochain Roman : HYBRIS",
     ],
     links: [
       { label: "Lire sur Amazon", url: "https://www.amazon.fr/CHATON-Ma%C3%ABve-Orion-ebook/dp/B0FY32HL79/ref=sr_1_1?crid=1G8BY6093UYNP&dib=eyJ2IjoiMSJ9.KUzbZmnlzmBdrK32UZe-LA.UvV9BZ1_XGJ61v5yKoMlF0mc6FDC71JTNzpFLVOUsXg&dib_tag=se&keywords=chaton+mlh+orion&qid=1772190463&sprefix=chaton+mlh%2Caps%2C245&sr=8-1" },
@@ -24,6 +26,10 @@ const books = [
 ];
 
 const Livres = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -36,7 +42,7 @@ const Livres = () => {
             <ArrowLeft className="w-4 h-4" />
             Retour
           </Link>
-          <span className="font-display text-lg tracking-wide text-foreground">MLH.ORION</span>
+          <span className="font-display text-lg tracking-wide text-foreground">MLH.<span className="text-bordeaux">ORION</span></span>
         </div>
       </header>
 
@@ -81,6 +87,12 @@ const Livres = () => {
                       {link.label} <ExternalLink className="w-3.5 h-3.5" />
                     </a>
                   ))}
+                  <Link
+                    to={`/livres/${book.slug}`}
+                    className="inline-flex items-center gap-2 font-body text-sm tracking-[0.15em] uppercase px-6 py-2.5 border border-bordeaux text-bordeaux hover:bg-bordeaux hover:text-background transition-colors"
+                  >
+                    Plus d'infos <Info className="w-3.5 h-3.5" />
+                  </Link>
                 </div>
               </div>
             </FadeIn>
@@ -116,7 +128,6 @@ const Livres = () => {
         </FadeIn>
       </main>
 
-      {/* Simple footer */}
       <footer className="border-t border-border py-8 px-6">
         <div className="max-w-3xl mx-auto text-center">
           <p className="font-body text-xs text-muted-foreground">
