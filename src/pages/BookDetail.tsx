@@ -184,7 +184,7 @@ const BookDetail = () => {
                 >
                   {/* Character image placeholder */}
                   {char.image ? (
-                    <img src={char.image} alt={char.name} className="w-full aspect-[3/4] object-cover rounded mb-4" />
+                    <img src={char.image} alt={char.name} className="w-full rounded mb-4" />
                   ) : (
                     <div className="w-full aspect-[3/4] bg-muted rounded mb-4 flex items-center justify-center">
                       <span className="font-display text-4xl text-muted-foreground/30">{char.name[0]}</span>
