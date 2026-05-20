@@ -47,8 +47,7 @@ const booksData: Record<string, BookData> = {
         description: "Dix-sept ans, orpheline et survivante. Derrière sa fragilité apparente se cache une détermination farouche. Elle refuse de se laisser briser par un système qui l'a abandonnée.",
         image: alineBoard,
         playlists: {
-          youtube: "",
-          spotify: "",
+          spotify: "https://open.spotify.com/playlist/2HzMHOqamfWnn09oICbuGb?si=c05c211d48b740fe",
         },
       },
       {
@@ -56,8 +55,7 @@ const booksData: Record<string, BookData> = {
         description: "Lié à la Bratva, Sergueï est un homme aux multiples facettes. Protecteur ou manipulateur ? La frontière est mince, et Aline devra apprendre à la discerner.",
         image: sergueiBoard,
         playlists: {
-          youtube: "",
-          spotify: "",
+          spotify: "https://open.spotify.com/playlist/5HbgWkhWwq43JBtq00dUIn?si=f9515048a74f4b37",
         },
       },
       {
@@ -65,8 +63,7 @@ const booksData: Record<string, BookData> = {
         description: "L'ami le plus proche de Sergueï, et un fantôme du passé d'Aline. Son retour bouleverse l'équilibre fragile qu'elle tentait de construire.",
         image: mehranBoard,
         playlists: {
-          youtube: "",
-          spotify: "",
+          spotify: "https://open.spotify.com/playlist/6KVhTXNzVZlYMIRI4NdzPK?si=59b63e65c1004c8e",
         },
       },
     ],
