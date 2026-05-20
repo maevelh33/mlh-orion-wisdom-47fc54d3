@@ -43,7 +43,7 @@ const HeroSection = () => {
           transition={{ duration: 0.8, delay: 1 }}
           className="font-display text-lg md:text-xl text-primary-foreground/80 italic leading-relaxed"
         >
-          Autrice · Créatrice de Contenu · Philosophe
+          Autrice · Actrice · Créatrice de Contenu · Philosophe
           <br />
           <span className="text-base not-italic text-primary-foreground/60">
             Indépendante, sans école, et sans maître.
