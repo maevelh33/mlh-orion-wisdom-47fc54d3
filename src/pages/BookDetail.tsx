@@ -60,7 +60,7 @@ const booksData: Record<string, BookData> = {
       },
       {
         name: "Mehran",
-        description: "L'ami le plus proche de Sergueï, et un fantôme du passé d'Aline. Son retour bouleverse l'équilibre fragile qu'elle tentait de construire.",
+        description: "L'ami le plus proche de Sergueï, et un fantôme du passé d'Aline. Son retour vient interrompre le déroulement des évènements en la faveur d'Aline.",
         image: mehranBoard,
         playlists: {
           spotify: "https://open.spotify.com/playlist/6KVhTXNzVZlYMIRI4NdzPK?si=59b63e65c1004c8e",
@@ -194,7 +194,7 @@ const BookDetail = () => {
                   <p className="font-body text-sm leading-relaxed text-muted-foreground mb-4">{char.description}</p>
                   
                   <p className="font-body text-xs text-muted-foreground/70 italic mb-3">
-                    (Les sons qui incarnent sa vibe, décrivent une part de son caractère en paroles — et ceux écoutés en écrivant.)
+                    (Les sons qui incarnent sa vibe, décrivent une part de son caractère en paroles, et ceux écoutés en écrivant.)
                   </p>
                   <a
                     href={char.playlists?.spotify || "#"}
