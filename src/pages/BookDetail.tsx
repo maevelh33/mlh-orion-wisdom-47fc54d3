@@ -48,6 +48,7 @@ const booksData: Record<string, BookData> = {
         image: alineBoard,
         playlists: {
           spotify: "https://open.spotify.com/playlist/2HzMHOqamfWnn09oICbuGb?si=c05c211d48b740fe",
+          youtube: "https://youtu.be/haSMlCQq-Ns?si=Ra0pR2HIBU8URwCP",
         },
       },
       {
@@ -56,6 +57,7 @@ const booksData: Record<string, BookData> = {
         image: sergueiBoard,
         playlists: {
           spotify: "https://open.spotify.com/playlist/5HbgWkhWwq43JBtq00dUIn?si=f9515048a74f4b37",
+          youtube: "https://youtu.be/dlWi9a5i4-0?si=RPm_jx9VJFjHCOVG",
         },
       },
       {
@@ -64,6 +66,7 @@ const booksData: Record<string, BookData> = {
         image: mehranBoard,
         playlists: {
           spotify: "https://open.spotify.com/playlist/6KVhTXNzVZlYMIRI4NdzPK?si=59b63e65c1004c8e",
+          youtube: "https://youtu.be/zZzXXM_9uW4?si=UMx0uaNwAuoxomS1",
         },
       },
     ],
@@ -196,14 +199,28 @@ const BookDetail = () => {
                   <p className="font-body text-xs text-muted-foreground/70 italic mb-3">
                     (Les sons qui incarnent sa vibe, décrivent une part de son caractère en paroles, et ceux écoutés en écrivant.)
                   </p>
-                  <a
-                    href={char.playlists?.spotify || "#"}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 font-body text-xs tracking-wider uppercase px-4 py-2 border border-border text-muted-foreground hover:text-foreground hover:border-foreground transition-colors rounded"
-                  >
-                    <Music className="w-4 h-4" /> Écouter la playlist Spotify
-                  </a>
+                  <div className="flex flex-col gap-2">
+                    {char.playlists?.spotify && (
+                      <a
+                        href={char.playlists.spotify}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 font-body text-xs tracking-wider uppercase px-4 py-2 border border-border text-muted-foreground hover:text-foreground hover:border-foreground transition-colors rounded"
+                      >
+                        <Music className="w-4 h-4" /> Écouter la playlist Spotify
+                      </a>
+                    )}
+                    {char.playlists?.youtube && (
+                      <a
+                        href={char.playlists.youtube}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 font-body text-xs tracking-wider uppercase px-4 py-2 border border-border text-muted-foreground hover:text-foreground hover:border-foreground transition-colors rounded"
+                      >
+                        <Youtube className="w-4 h-4" /> Écouter la playlist YouTube
+                      </a>
+                    )}
+                  </div>
                 </motion.div>
               ))}
             </div>
