@@ -109,7 +109,7 @@ const booksData: Record<string, BookData> = {
       { name: "Henry Hills", image: hybrisHenryHills.url, playlists: { spotify: "https://open.spotify.com/playlist/4LJ3HXiLuVQbDMe4QP8dlF?si=1333a04771924921" } },
       { name: "Adriel Varek", image: hybrisAdrielVarek.url, playlists: { spotify: "https://open.spotify.com/playlist/339TbdVchG6cP7ijwipuGT?si=ba585f2249c24c93" } },
       { name: "Raphaël Varek", image: hybrisRaphaelVarek.url, playlists: { spotify: "https://open.spotify.com/playlist/6hiVj0ETszTpjdDMw0FpNV?si=0a6387bca1e64c3a" } },
-      { name: "George Gassner", image: hybrisGeorgeGassner.url },
+      { name: "George Gassner", image: hybrisGeorgeGassner.url, playlists: { spotify: "https://open.spotify.com/playlist/5jp6NvuyFLiPYYDSbKD2eh?si=82679474a2494fbc" } },
       { name: "Lola Gassner", image: hybrisLolaGassner.url, playlists: { spotify: "https://open.spotify.com/playlist/3iH4XyL36FLR5f5fFq1t5W?si=b1a8572a3f7d4eed" } },
       { name: "Avner Orim", image: hybrisAvnerOrim.url, playlists: { spotify: "https://open.spotify.com/playlist/3YAQQGXKz1RVB56YB0GZgm?si=0a02ff6d966d46d9" } },
       { name: "Zohar Orim", image: hybrisZoharOrim.url, playlists: { spotify: "https://open.spotify.com/playlist/4YOO7flD6virAR187TAqWR?si=c86ba4f9833445cb" } },
