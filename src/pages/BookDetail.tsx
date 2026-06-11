@@ -239,27 +239,37 @@ const BookDetail = () => {
               ))}
             </div>
             {(book.links.length > 0 || book.slug === "hybris") && (
-              <div className="flex flex-wrap gap-3 mt-8">
-                {book.links.map((link) => (
-                  <a
-                    key={link.label}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 font-body text-sm tracking-[0.15em] uppercase px-6 py-2.5 border border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors"
-                  >
-                    {link.label} <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
-                ))}
+              <div className="mt-8">
+                <div className="flex flex-wrap gap-3">
+                  {book.links.map((link) => (
+                    <a
+                      key={link.label}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 font-body text-sm tracking-[0.15em] uppercase px-6 py-2.5 border border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors"
+                    >
+                      {link.label} <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  ))}
+                  {book.slug === "hybris" && (
+                    <a
+                      href="https://buy.stripe.com/3cIbJ2abCdVW7reb4Gfw402"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 font-body text-sm tracking-[0.15em] uppercase px-6 py-2.5 border border-[#c9a84c] text-[#f0d78c] hover:bg-[#c9a84c]/10 transition-colors"
+                    >
+                      Précommander <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  )}
+                </div>
                 {book.slug === "hybris" && (
-                  <a
-                    href="https://buy.stripe.com/3cIbJ2abCdVW7reb4Gfw402"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 font-body text-sm tracking-[0.15em] uppercase px-6 py-2.5 border border-[#c9a84c] text-[#f0d78c] hover:bg-[#c9a84c]/10 transition-colors"
-                  >
-                    Précommander <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
+                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#c9a84c]/10 border border-[#c9a84c]/25 rounded-sm mt-4">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#e8b84a] animate-pulse" />
+                    <p className="font-body text-sm text-[#f0d78c] font-medium tracking-wide">
+                      Dédicace personnalisée offerte — limitée aux 100 premiers acheteurs
+                    </p>
+                  </div>
                 )}
               </div>
             )}
