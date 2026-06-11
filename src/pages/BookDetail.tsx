@@ -13,6 +13,7 @@ import hybrisJerichoCaelim from "@/assets/hybris-jericho-caelim.png.asset.json";
 import hybrisHenryHills from "@/assets/hybris-henry-hills.png.asset.json";
 import hybrisJohnHills from "@/assets/hybris-john-hills.png.asset.json";
 import hybrisChristopheRetinguer from "@/assets/hybris-christophe-retinguer.png.asset.json";
+import hybrisNoeRetinguer from "@/assets/hybris-noe-retinguer.png.asset.json";
 import hybrisAdrielVarek from "@/assets/hybris-adriel-varek.png.asset.json";
 import hybrisRaphaelVarek from "@/assets/hybris-raphael-varek.png.asset.json";
 import hybrisGeorgeGassner from "@/assets/hybris-george-gassner.png.asset.json";
@@ -110,6 +111,7 @@ const booksData: Record<string, BookData> = {
       { name: "Avner Orim", image: hybrisAvnerOrim.url },
       { name: "Zohar Orim", image: hybrisZoharOrim.url },
       { name: "Christophe Retinguer", image: hybrisChristopheRetinguer.url },
+      { name: "Noé Retinguer", image: hybrisNoeRetinguer.url },
       { name: "Jéricho Caëlim", image: hybrisJerichoCaelim.url },
     ],
     aesthetic: [],
