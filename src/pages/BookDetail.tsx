@@ -187,44 +187,32 @@ const BookDetail = () => {
             <div className="mb-16 flex flex-col items-center">
               <div
                 className="relative w-full max-w-xs"
-                style={{ perspective: "1800px" }}
+                style={{ perspective: "1800px", aspectRatio: "2 / 3" }}
+                onClick={() => book.insidePage && setIsFlipped((f) => !f)}
+                role={book.insidePage ? "button" : undefined}
+                aria-label={book.insidePage ? (isFlipped ? "Refermer le livre" : "Feuilleter le livre") : undefined}
               >
-                <div
-                  className="relative w-full transition-transform duration-1000 ease-in-out cursor-pointer"
+                {book.insidePage && (
+                  <div className="absolute inset-0 shadow-lg rounded overflow-hidden bg-[hsl(var(--cream))]">
+                    <img
+                      src={book.insidePage}
+                      alt={`Première page de ${book.title}`}
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                )}
+                <img
+                  src={book.cover}
+                  alt={`Couverture de ${book.title}`}
+                  className={`absolute inset-0 w-full h-full object-cover shadow-2xl rounded transition-transform duration-1000 ease-in-out ${book.insidePage ? "cursor-pointer" : ""}`}
                   style={{
+                    transformOrigin: "left center",
                     transformStyle: "preserve-3d",
                     transform: isFlipped ? "rotateY(-160deg)" : "rotateY(0deg)",
-                    aspectRatio: "2 / 3",
+                    backfaceVisibility: "hidden",
+                    WebkitBackfaceVisibility: "hidden",
                   }}
-                  onClick={() => book.insidePage && setIsFlipped((f) => !f)}
-                  role={book.insidePage ? "button" : undefined}
-                  aria-label={book.insidePage ? (isFlipped ? "Refermer le livre" : "Feuilleter le livre") : undefined}
-                >
-                  {/* Inside page (revealed when flipped) */}
-                  {book.insidePage && (
-                    <div
-                      className="absolute inset-0 bg-cream shadow-lg rounded overflow-hidden"
-                      style={{ transform: "translateZ(-1px)" }}
-                    >
-                      <img
-                        src={book.insidePage}
-                        alt={`Première page de ${book.title}`}
-                        className="w-full h-full object-contain bg-[hsl(var(--cream))]"
-                      />
-                    </div>
-                  )}
-                  {/* Cover (front) */}
-                  <img
-                    src={book.cover}
-                    alt={`Couverture de ${book.title}`}
-                    className="absolute inset-0 w-full h-full object-cover shadow-lg rounded"
-                    style={{
-                      backfaceVisibility: "hidden",
-                      WebkitBackfaceVisibility: "hidden",
-                      transformOrigin: "left center",
-                    }}
-                  />
-                </div>
+                />
               </div>
               {book.insidePage && (
                 <button
