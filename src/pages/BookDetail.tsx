@@ -103,19 +103,19 @@ const booksData: Record<string, BookData> = {
       "Pour les éliminer, il engage une jeune espionne et tireuse d'élite : Aline. Il la fera passer pour sa fille, et elle deviendra ainsi Esmé. Elle devra s'infiltrer dans les demeures de chacune des familles, en découvrir les secrets, et y déposer des explosifs sans être démasquée.",
     ],
     characters: [
-      { name: "Wolfgang Warrold", image: hybrisWolfgangWarrold.url },
-      { name: "Esmé Warrold (Aline)", image: hybrisEsmeWarrold.url },
-      { name: "John Hills", image: hybrisJohnHills.url },
-      { name: "Henry Hills", image: hybrisHenryHills.url },
-      { name: "Adriel Varek", image: hybrisAdrielVarek.url },
-      { name: "Raphaël Varek", image: hybrisRaphaelVarek.url },
+      { name: "Wolfgang Warrold", image: hybrisWolfgangWarrold.url, playlists: { spotify: "https://open.spotify.com/playlist/1vHaaXlyaKsYnYyDKtLLgs?si=7d4d6f1fddaa4ebf" } },
+      { name: "Esmé Warrold (Aline)", image: hybrisEsmeWarrold.url, playlists: { spotify: "https://open.spotify.com/playlist/1eUrFx0cKhpv8BieyJF19H?si=fb96249123984ab6" } },
+      { name: "John Hills", image: hybrisJohnHills.url, playlists: { spotify: "https://open.spotify.com/playlist/79SMJodbk9eKPzbYcqTh5B?si=e9c8a48bb5974657" } },
+      { name: "Henry Hills", image: hybrisHenryHills.url, playlists: { spotify: "https://open.spotify.com/playlist/4LJ3HXiLuVQbDMe4QP8dlF?si=1333a04771924921" } },
+      { name: "Adriel Varek", image: hybrisAdrielVarek.url, playlists: { spotify: "https://open.spotify.com/playlist/339TbdVchG6cP7ijwipuGT?si=ba585f2249c24c93" } },
+      { name: "Raphaël Varek", image: hybrisRaphaelVarek.url, playlists: { spotify: "https://open.spotify.com/playlist/6hiVj0ETszTpjdDMw0FpNV?si=0a6387bca1e64c3a" } },
       { name: "George Gassner", image: hybrisGeorgeGassner.url },
-      { name: "Lola Gassner", image: hybrisLolaGassner.url },
-      { name: "Avner Orim", image: hybrisAvnerOrim.url },
-      { name: "Zohar Orim", image: hybrisZoharOrim.url },
-      { name: "Christophe Retinguer", image: hybrisChristopheRetinguer.url },
-      { name: "Noé Retinguer", image: hybrisNoeRetinguer.url },
-      { name: "Jéricho Caëlim", image: hybrisJerichoCaelim.url },
+      { name: "Lola Gassner", image: hybrisLolaGassner.url, playlists: { spotify: "https://open.spotify.com/playlist/3iH4XyL36FLR5f5fFq1t5W?si=b1a8572a3f7d4eed" } },
+      { name: "Avner Orim", image: hybrisAvnerOrim.url, playlists: { spotify: "https://open.spotify.com/playlist/3YAQQGXKz1RVB56YB0GZgm?si=0a02ff6d966d46d9" } },
+      { name: "Zohar Orim", image: hybrisZoharOrim.url, playlists: { spotify: "https://open.spotify.com/playlist/4YOO7flD6virAR187TAqWR?si=c86ba4f9833445cb" } },
+      { name: "Christophe Retinguer", image: hybrisChristopheRetinguer.url, playlists: { spotify: "https://open.spotify.com/playlist/6A5ZYPEpBKOXqN2xRGYeuh?si=4366d1e14190496a" } },
+      { name: "Noé Retinguer", image: hybrisNoeRetinguer.url, playlists: { spotify: "https://open.spotify.com/playlist/65UgZ20HKjTcaa15ICFTp8?si=b463c92e0f9e4996" } },
+      { name: "Jéricho Caëlim", image: hybrisJerichoCaelim.url, playlists: { spotify: "https://open.spotify.com/playlist/3RTJrrB98tWyLluf1zuTio?si=5fefc8d3454843ac" } },
     ],
     aesthetic: [],
     links: [],
@@ -291,9 +291,9 @@ const BookDetail = () => {
                       transition={{ duration: 0.6, delay: 0.3 + i * 0.08 }}
                       className="group"
                     >
-                      <div className="border border-border bg-card/60 p-4 md:p-5 rounded-sm h-full">
+                      <div className="border border-border bg-card/60 p-4 md:p-5 rounded-sm h-full flex flex-col">
                         {char.image ? (
-                          <div className="aspect-[4/5] bg-cream border border-border rounded-sm overflow-hidden mb-4 flex items-center justify-center p-2">
+                          <div className="aspect-[4/5] bg-cream border border-border rounded-sm overflow-hidden mb-3 flex items-center justify-center p-2">
                             <img
                               src={char.image}
                               alt={char.name}
@@ -301,25 +301,15 @@ const BookDetail = () => {
                             />
                           </div>
                         ) : (
-                          <div className="aspect-[4/5] bg-muted rounded-sm mb-4 flex items-center justify-center">
+                          <div className="aspect-[4/5] bg-muted rounded-sm mb-3 flex items-center justify-center">
                             <span className="font-display text-4xl text-muted-foreground/30">{char.name[0]}</span>
                           </div>
                         )}
 
-                        <h3 className="font-display text-xl md:text-2xl leading-tight text-foreground text-center mb-2">
-                          {char.name}
-                        </h3>
-
-                        {char.description && (
-                          <p className="font-body text-sm leading-relaxed text-muted-foreground mb-4 text-center">
-                            {char.description}
-                          </p>
-                        )}
-
                         {hasPlaylists && (
-                          <>
-                            <p className="font-body text-xs text-muted-foreground/70 italic mb-3 text-center">
-                              (Les sons qui incarnent sa vibe, décrivent une part de son caractère en paroles, et ceux écoutés en écrivant.)
+                          <div className="mb-3">
+                            <p className="font-body text-[10px] text-muted-foreground/50 italic mb-2 text-center leading-relaxed">
+                              (Chaque playlist représente l'état mental et l'énergie d'un personnage. Laisse la musique révéler son tempérament, ou tends l'oreille aux paroles.)
                             </p>
                             <div className="flex flex-col gap-2">
                               {char.playlists?.spotify && (
@@ -329,7 +319,7 @@ const BookDetail = () => {
                                   rel="noopener noreferrer"
                                   className="inline-flex items-center justify-center gap-2 font-body text-xs tracking-wider uppercase px-4 py-2 border border-border text-muted-foreground hover:text-foreground hover:border-foreground transition-colors rounded"
                                 >
-                                  <Music className="w-4 h-4" /> Écouter la playlist Spotify
+                                  <Music className="w-4 h-4" /> Lien vers la playlist spotify
                                 </a>
                               )}
                               {char.playlists?.youtube && (
@@ -343,7 +333,17 @@ const BookDetail = () => {
                                 </a>
                               )}
                             </div>
-                          </>
+                          </div>
+                        )}
+
+                        <h3 className="font-display text-xl md:text-2xl leading-tight text-foreground text-center mb-2">
+                          {char.name}
+                        </h3>
+
+                        {char.description && (
+                          <p className="font-body text-sm leading-relaxed text-muted-foreground mb-4 text-center">
+                            {char.description}
+                          </p>
                         )}
                       </div>
                     </motion.article>
