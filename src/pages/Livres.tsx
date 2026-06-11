@@ -4,6 +4,7 @@ import { ArrowLeft, Info } from "lucide-react";
 import { Link } from "react-router-dom";
 import chatonCover from "@/assets/chaton-cover.jpg";
 import hybrisCoverAsset from "@/assets/hybris-cover.png.asset.json";
+import { getAssetUrl } from "@/lib/assets";
 
 const FadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) => (
   <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay, ease: "easeOut" }} className={className}>
@@ -20,7 +21,7 @@ const books = [
   {
     title: "Hybris",
     slug: "hybris",
-    cover: hybrisCoverAsset.url,
+    cover: getAssetUrl(hybrisCoverAsset),
   },
 ];
 

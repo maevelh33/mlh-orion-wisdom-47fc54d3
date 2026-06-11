@@ -23,6 +23,7 @@ import hybrisGeorgeGassner from "@/assets/hybris-george-gassner.png.asset.json";
 import hybrisLolaGassner from "@/assets/hybris-lola-gassner.png.asset.json";
 import hybrisAvnerOrim from "@/assets/hybris-avner-orim.png.asset.json";
 import hybrisZoharOrim from "@/assets/hybris-zohar-orim.png.asset.json";
+import { getAssetUrl } from "@/lib/assets";
 
 const FadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) => (
   <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay, ease: "easeOut" }} className={className}>
@@ -98,28 +99,28 @@ const booksData: Record<string, BookData> = {
   hybris: {
     title: "Hybris",
     slug: "hybris",
-    cover: hybrisCoverAsset.url,
-    insidePage: hybrisInsidePage.url,
-    insidePages: [hybrisInsidePage.url, hybrisPreface1.url, hybrisPreface2.url],
+    cover: getAssetUrl(hybrisCoverAsset),
+    insidePage: getAssetUrl(hybrisInsidePage),
+    insidePages: [getAssetUrl(hybrisInsidePage), getAssetUrl(hybrisPreface1), getAssetUrl(hybrisPreface2)],
     synopsis: [
       "Wolfgang est un multi-milliardaire dans l'industrie de l'armement, appartenant à un ordre secret : les Sybarites. En son sein, des familles extrêmement puissantes complotent pour l'instauration d'un Nouvel Ordre Mondial. La dernière étape de leur plan millénaire est la Troisième Guerre Mondiale. À la suite de cet événement, tous les peuples devraient aspirer à la prétendue Paix Universelle qu'ils s'apprêteront, alors, à leur proposer.",
       "Cependant, la table hexagonale de ce nouvel ordre ne compte que six places, et les familles sont au nombre de sept. Wolfgang aurait dû se retirer du jeu après son grand final, et marier sa fille à John Hills, pour faire perdurer son sang, mais pas son nom, en son sein. Seulement, espérer qu'un être semblable à Mars s'efface sans demander son reste était illusoire. Il ne tirera pas sa révérence si aisément ; aussi décide-t-il d'anéantir les familles supérieures de l'Ordre Sybarite.",
       "Pour les éliminer, il engage une jeune espionne et tireuse d'élite : Aline. Il la fera passer pour sa fille, et elle deviendra ainsi Esmé. Elle devra s'infiltrer dans les demeures de chacune des familles, en découvrir les secrets, et y déposer des explosifs sans être démasquée.",
     ],
     characters: [
-      { name: "Wolfgang Warrold", image: hybrisWolfgangWarrold.url, playlists: { spotify: "https://open.spotify.com/playlist/1vHaaXlyaKsYnYyDKtLLgs?si=7d4d6f1fddaa4ebf" } },
-      { name: "Esmé Warrold (Aline)", image: hybrisEsmeWarrold.url, playlists: { spotify: "https://open.spotify.com/playlist/1eUrFx0cKhpv8BieyJF19H?si=fb96249123984ab6" } },
-      { name: "John Hills", image: hybrisJohnHills.url, playlists: { spotify: "https://open.spotify.com/playlist/79SMJodbk9eKPzbYcqTh5B?si=e9c8a48bb5974657" } },
-      { name: "Henry Hills", image: hybrisHenryHills.url, playlists: { spotify: "https://open.spotify.com/playlist/4LJ3HXiLuVQbDMe4QP8dlF?si=1333a04771924921" } },
-      { name: "Adriel Varek", image: hybrisAdrielVarek.url, playlists: { spotify: "https://open.spotify.com/playlist/339TbdVchG6cP7ijwipuGT?si=ba585f2249c24c93" } },
-      { name: "Raphaël Varek", image: hybrisRaphaelVarek.url, playlists: { spotify: "https://open.spotify.com/playlist/6hiVj0ETszTpjdDMw0FpNV?si=0a6387bca1e64c3a" } },
-      { name: "George Gassner", image: hybrisGeorgeGassner.url, playlists: { spotify: "https://open.spotify.com/playlist/5jp6NvuyFLiPYYDSbKD2eh?si=82679474a2494fbc" } },
-      { name: "Lola Gassner", image: hybrisLolaGassner.url, playlists: { spotify: "https://open.spotify.com/playlist/3iH4XyL36FLR5f5fFq1t5W?si=b1a8572a3f7d4eed" } },
-      { name: "Avner Orim", image: hybrisAvnerOrim.url, playlists: { spotify: "https://open.spotify.com/playlist/3YAQQGXKz1RVB56YB0GZgm?si=0a02ff6d966d46d9" } },
-      { name: "Zohar Orim", image: hybrisZoharOrim.url, playlists: { spotify: "https://open.spotify.com/playlist/4YOO7flD6virAR187TAqWR?si=c86ba4f9833445cb" } },
-      { name: "Christophe Retinguer", image: hybrisChristopheRetinguer.url, playlists: { spotify: "https://open.spotify.com/playlist/6A5ZYPEpBKOXqN2xRGYeuh?si=4366d1e14190496a" } },
-      { name: "Noé Retinguer", image: hybrisNoeRetinguer.url, playlists: { spotify: "https://open.spotify.com/playlist/65UgZ20HKjTcaa15ICFTp8?si=b463c92e0f9e4996" } },
-      { name: "Jéricho Caëlim", image: hybrisJerichoCaelim.url, playlists: { spotify: "https://open.spotify.com/playlist/3RTJrrB98tWyLluf1zuTio?si=5fefc8d3454843ac" } },
+      { name: "Wolfgang Warrold", image: getAssetUrl(hybrisWolfgangWarrold), playlists: { spotify: "https://open.spotify.com/playlist/1vHaaXlyaKsYnYyDKtLLgs?si=7d4d6f1fddaa4ebf" } },
+      { name: "Esmé Warrold (Aline)", image: getAssetUrl(hybrisEsmeWarrold), playlists: { spotify: "https://open.spotify.com/playlist/1eUrFx0cKhpv8BieyJF19H?si=fb96249123984ab6" } },
+      { name: "John Hills", image: getAssetUrl(hybrisJohnHills), playlists: { spotify: "https://open.spotify.com/playlist/79SMJodbk9eKPzbYcqTh5B?si=e9c8a48bb5974657" } },
+      { name: "Henry Hills", image: getAssetUrl(hybrisHenryHills), playlists: { spotify: "https://open.spotify.com/playlist/4LJ3HXiLuVQbDMe4QP8dlF?si=1333a04771924921" } },
+      { name: "Adriel Varek", image: getAssetUrl(hybrisAdrielVarek), playlists: { spotify: "https://open.spotify.com/playlist/339TbdVchG6cP7ijwipuGT?si=ba585f2249c24c93" } },
+      { name: "Raphaël Varek", image: getAssetUrl(hybrisRaphaelVarek), playlists: { spotify: "https://open.spotify.com/playlist/6hiVj0ETszTpjdDMw0FpNV?si=0a6387bca1e64c3a" } },
+      { name: "George Gassner", image: getAssetUrl(hybrisGeorgeGassner), playlists: { spotify: "https://open.spotify.com/playlist/5jp6NvuyFLiPYYDSbKD2eh?si=82679474a2494fbc" } },
+      { name: "Lola Gassner", image: getAssetUrl(hybrisLolaGassner), playlists: { spotify: "https://open.spotify.com/playlist/3iH4XyL36FLR5f5fFq1t5W?si=b1a8572a3f7d4eed" } },
+      { name: "Avner Orim", image: getAssetUrl(hybrisAvnerOrim), playlists: { spotify: "https://open.spotify.com/playlist/3YAQQGXKz1RVB56YB0GZgm?si=0a02ff6d966d46d9" } },
+      { name: "Zohar Orim", image: getAssetUrl(hybrisZoharOrim), playlists: { spotify: "https://open.spotify.com/playlist/4YOO7flD6virAR187TAqWR?si=c86ba4f9833445cb" } },
+      { name: "Christophe Retinguer", image: getAssetUrl(hybrisChristopheRetinguer), playlists: { spotify: "https://open.spotify.com/playlist/6A5ZYPEpBKOXqN2xRGYeuh?si=4366d1e14190496a" } },
+      { name: "Noé Retinguer", image: getAssetUrl(hybrisNoeRetinguer), playlists: { spotify: "https://open.spotify.com/playlist/65UgZ20HKjTcaa15ICFTp8?si=b463c92e0f9e4996" } },
+      { name: "Jéricho Caëlim", image: getAssetUrl(hybrisJerichoCaelim), playlists: { spotify: "https://open.spotify.com/playlist/3RTJrrB98tWyLluf1zuTio?si=5fefc8d3454843ac" } },
     ],
     aesthetic: [],
     links: [],
