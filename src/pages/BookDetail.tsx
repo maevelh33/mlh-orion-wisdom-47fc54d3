@@ -78,6 +78,29 @@ const booksData: Record<string, BookData> = {
       { label: "Lire gratuitement sur Wattpad", url: "https://www.wattpad.com/user/mlhorion" },
     ],
   },
+  hybris: {
+    title: "Hybris",
+    slug: "hybris",
+    cover: hybrisCoverAsset.url,
+    synopsis: [
+      "Wolfgang est un multi-milliardaire dans l'industrie de l'armement, appartenant à un ordre secret : les Sybarites. En son sein, des familles extrêmement puissantes complotent pour l'instauration d'un Nouvel Ordre Mondial. La dernière étape de leur plan millénaire est la Troisième Guerre Mondiale. À la suite de cet événement, tous les peuples devraient aspirer à la prétendue Paix Universelle qu'ils s'apprêteront, alors, à leur proposer.",
+      "Cependant, la table hexagonale de ce nouvel ordre ne compte que six places, et les familles sont au nombre de sept. Wolfgang aurait dû se retirer du jeu après son grand final, et marier sa fille à John Hills, pour faire perdurer son sang, mais pas son nom, en son sein. Seulement, espérer qu'un être semblable à Mars s'efface sans demander son reste était illusoire. Il ne tirera pas sa révérence si aisément ; aussi décide-t-il d'anéantir les familles supérieures de l'Ordre Sybarite.",
+      "Pour les éliminer, il engage une jeune espionne et tireuse d'élite : Aline. Il la fera passer pour sa fille, et elle deviendra ainsi Esmé. Elle devra s'infiltrer dans les demeures de chacune des familles, en découvrir les secrets, et y déposer des explosifs sans être démasquée.",
+    ],
+    characters: [],
+    aesthetic: [],
+    links: [],
+    titleNote: {
+      heading: "Pourquoi le titre Hybris ?",
+      paragraphs: [
+        "ὕβρις : démesure, outrage, péché d'orgueil.",
+        "Ce livre est à l'image de la démesure de certains grands de ce monde, et il est né lui-même d'une ambition démesurée : la mienne.",
+        "La protagoniste, bien qu'orpheline, s'élèvera également au rang le plus haut de la société ; si haut qu'elle pensera un instant faire partie des Dieux. Ainsi ce livre est nommé : Hybris, en honneur à ce péché.",
+        "L'hybris est le mouvement fautif de dépassement de la limite. Du point de vue philosophique et moral, c'est la tentation de démesure ou de folie imprudente des humains, tentés de rivaliser avec les dieux.",
+        "La démesure désigne le fait de désirer plus que ce que la juste mesure du destin nous a attribué. Ceci vaut en général, dans la mythologie grecque, de terribles punitions de leur part. Le châtiment de l'hybris, par les dieux, est la némésis, qui fait se rétracter l'individu à l'intérieur des limites qu'il a franchies. La mythologie regorge de récits mettant en scène un personnage puni pour son hybris envers les dieux.",
+      ],
+    },
+  },
 };
 
 const BookDetail = () => {
