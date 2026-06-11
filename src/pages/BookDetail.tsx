@@ -140,6 +140,9 @@ const BookDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const book = slug ? booksData[slug] : undefined;
   const [isFlipped, setIsFlipped] = useState(false);
+  const [pageIndex, setPageIndex] = useState(0);
+  const pages = book?.insidePages ?? (book?.insidePage ? [book.insidePage] : []);
+  const hasPages = pages.length > 0;
 
   useEffect(() => {
     window.scrollTo(0, 0);
