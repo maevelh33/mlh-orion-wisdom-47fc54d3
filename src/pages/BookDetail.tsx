@@ -27,9 +27,11 @@ interface BookData {
   characters: Character[];
   aesthetic: { image?: string; caption: string }[];
   links: { label: string; url: string }[];
+  titleNote?: { heading: string; paragraphs: string[] };
 }
 
 import chatonCover from "@/assets/chaton-cover.jpg";
+import hybrisCoverAsset from "@/assets/hybris-cover.png.asset.json";
 
 const booksData: Record<string, BookData> = {
   chaton: {
