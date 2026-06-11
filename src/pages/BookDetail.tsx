@@ -13,10 +13,12 @@ import hybrisJerichoCaelim from "@/assets/hybris-jericho-caelim.png.asset.json";
 import hybrisHenryHills from "@/assets/hybris-henry-hills.png.asset.json";
 import hybrisJohnHills from "@/assets/hybris-john-hills.png.asset.json";
 import hybrisChristopheRetinguer from "@/assets/hybris-christophe-retinguer.png.asset.json";
-import hybrisNoeRetinguer from "@/assets/hybris-noe-retinguer.png.asset.json";
 import hybrisAdrielVarek from "@/assets/hybris-adriel-varek.png.asset.json";
 import hybrisRaphaelVarek from "@/assets/hybris-raphael-varek.png.asset.json";
 import hybrisGeorgeGassner from "@/assets/hybris-george-gassner.png.asset.json";
+import hybrisLolaGassner from "@/assets/hybris-lola-gassner.png.asset.json";
+import hybrisAvnerOrim from "@/assets/hybris-avner-orim.png.asset.json";
+import hybrisZoharOrim from "@/assets/hybris-zohar-orim.png.asset.json";
 
 const FadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) => (
   <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay, ease: "easeOut" }} className={className}>
@@ -97,16 +99,18 @@ const booksData: Record<string, BookData> = {
       "Pour les éliminer, il engage une jeune espionne et tireuse d'élite : Aline. Il la fera passer pour sa fille, et elle deviendra ainsi Esmé. Elle devra s'infiltrer dans les demeures de chacune des familles, en découvrir les secrets, et y déposer des explosifs sans être démasquée.",
     ],
     characters: [
-      { name: "Esmé Warrold (Aline)", image: hybrisEsmeWarrold.url },
       { name: "Wolfgang Warrold", image: hybrisWolfgangWarrold.url },
-      { name: "Jéricho Caëlim", image: hybrisJerichoCaelim.url },
-      { name: "Henry Hills", image: hybrisHenryHills.url },
+      { name: "Esmé Warrold (Aline)", image: hybrisEsmeWarrold.url },
       { name: "John Hills", image: hybrisJohnHills.url },
-      { name: "Christophe Retinguer", image: hybrisChristopheRetinguer.url },
-      { name: "Noé Retinguer", image: hybrisNoeRetinguer.url },
+      { name: "Henry Hills", image: hybrisHenryHills.url },
       { name: "Adriel Varek", image: hybrisAdrielVarek.url },
       { name: "Raphaël Varek", image: hybrisRaphaelVarek.url },
       { name: "George Gassner", image: hybrisGeorgeGassner.url },
+      { name: "Lola Gassner", image: hybrisLolaGassner.url },
+      { name: "Avner Orim", image: hybrisAvnerOrim.url },
+      { name: "Zohar Orim", image: hybrisZoharOrim.url },
+      { name: "Christophe Retinguer", image: hybrisChristopheRetinguer.url },
+      { name: "Jéricho Caëlim", image: hybrisJerichoCaelim.url },
     ],
     aesthetic: [],
     links: [],
@@ -236,7 +240,7 @@ const BookDetail = () => {
               <h2 className="font-display text-2xl md:text-3xl font-light text-foreground mb-8">
                 Personnages
               </h2>
-              <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-8 sm:grid-cols-2">
                 {book.characters.map((char, i) => {
                   const hasPlaylists = Boolean(char.playlists?.spotify || char.playlists?.youtube);
 
