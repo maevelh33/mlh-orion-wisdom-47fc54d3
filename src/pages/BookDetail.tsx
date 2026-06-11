@@ -236,11 +236,8 @@ const BookDetail = () => {
         {book.characters.length > 0 && (
           <FadeIn delay={0.2}>
             <section className="mb-20">
-              <p className="font-body text-xs tracking-[0.4em] uppercase text-muted-foreground mb-4">
-                Les protagonistes
-              </p>
               <h2 className="font-display text-2xl md:text-3xl font-light text-foreground mb-8">
-                Personnages
+                Les Personnages :
               </h2>
               <div className="grid gap-8 sm:grid-cols-2">
                 {book.characters.map((char, i) => {
