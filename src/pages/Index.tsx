@@ -5,6 +5,7 @@ import YouTubeSection from "@/components/YouTubeSection";
 import FormationSection from "@/components/FormationSection";
 import ServicesSection from "@/components/ServicesSection";
 import ContactSection from "@/components/ContactSection";
+import HybrisBanner from "@/components/HybrisBanner";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -12,6 +13,7 @@ const Index = () => {
     <div className="min-h-screen">
       <Navbar />
       <HeroSection />
+      <HybrisBanner />
       <ServicesSection />
       <FormationSection />
       <AboutSection />
