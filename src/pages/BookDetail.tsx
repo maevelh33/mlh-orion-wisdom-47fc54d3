@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { ArrowLeft, ExternalLink, Music, Youtube } from "lucide-react";
 import alineBoard from "@/assets/aline-board.jpg";
 import hybrisInsidePage from "@/assets/hybris-inside-page.png.asset.json";
+import hybrisPreface1 from "@/assets/hybris-preface-1.png.asset.json";
+import hybrisPreface2 from "@/assets/hybris-preface-2.png.asset.json";
 import sergueiBoard from "@/assets/serguei-board.jpg";
 import mehranBoard from "@/assets/mehran-board.jpg";
 import chatonCover from "@/assets/chaton-cover.jpg";
@@ -40,6 +42,7 @@ interface BookData {
   slug: string;
   cover?: string;
   insidePage?: string;
+  insidePages?: string[];
   synopsis: string[];
   characters: Character[];
   aesthetic: { image?: string; caption: string }[];
@@ -97,6 +100,7 @@ const booksData: Record<string, BookData> = {
     slug: "hybris",
     cover: hybrisCoverAsset.url,
     insidePage: hybrisInsidePage.url,
+    insidePages: [hybrisInsidePage.url, hybrisPreface1.url, hybrisPreface2.url],
     synopsis: [
       "Wolfgang est un multi-milliardaire dans l'industrie de l'armement, appartenant à un ordre secret : les Sybarites. En son sein, des familles extrêmement puissantes complotent pour l'instauration d'un Nouvel Ordre Mondial. La dernière étape de leur plan millénaire est la Troisième Guerre Mondiale. À la suite de cet événement, tous les peuples devraient aspirer à la prétendue Paix Universelle qu'ils s'apprêteront, alors, à leur proposer.",
       "Cependant, la table hexagonale de ce nouvel ordre ne compte que six places, et les familles sont au nombre de sept. Wolfgang aurait dû se retirer du jeu après son grand final, et marier sa fille à John Hills, pour faire perdurer son sang, mais pas son nom, en son sein. Seulement, espérer qu'un être semblable à Mars s'efface sans demander son reste était illusoire. Il ne tirera pas sa révérence si aisément ; aussi décide-t-il d'anéantir les familles supérieures de l'Ordre Sybarite.",
@@ -136,6 +140,9 @@ const BookDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const book = slug ? booksData[slug] : undefined;
   const [isFlipped, setIsFlipped] = useState(false);
+  const [pageIndex, setPageIndex] = useState(0);
+  const pages = book?.insidePages ?? (book?.insidePage ? [book.insidePage] : []);
+  const hasPages = pages.length > 0;
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -188,15 +195,15 @@ const BookDetail = () => {
               <div
                 className="relative w-full max-w-xs"
                 style={{ perspective: "1800px", aspectRatio: "2 / 3" }}
-                onClick={() => book.insidePage && setIsFlipped((f) => !f)}
-                role={book.insidePage ? "button" : undefined}
-                aria-label={book.insidePage ? (isFlipped ? "Refermer le livre" : "Feuilleter le livre") : undefined}
+                onClick={() => hasPages && setIsFlipped((f) => !f)}
+                role={hasPages ? "button" : undefined}
+                aria-label={hasPages ? (isFlipped ? "Refermer le livre" : "Feuilleter le livre") : undefined}
               >
-                {book.insidePage && (
+                {hasPages && (
                   <div className="absolute inset-0 shadow-lg rounded overflow-hidden bg-[hsl(var(--cream))]">
                     <img
-                      src={book.insidePage}
-                      alt={`Première page de ${book.title}`}
+                      src={pages[pageIndex]}
+                      alt={`Page ${pageIndex + 1} de ${book.title}`}
                       className="w-full h-full object-contain"
                     />
                   </div>
@@ -204,7 +211,7 @@ const BookDetail = () => {
                 <img
                   src={book.cover}
                   alt={`Couverture de ${book.title}`}
-                  className={`absolute inset-0 w-full h-full object-cover shadow-2xl rounded transition-transform duration-1000 ease-in-out ${book.insidePage ? "cursor-pointer" : ""}`}
+                  className={`absolute inset-0 w-full h-full object-cover shadow-2xl rounded transition-transform duration-1000 ease-in-out ${hasPages ? "cursor-pointer" : ""}`}
                   style={{
                     transformOrigin: "left center",
                     transformStyle: "preserve-3d",
@@ -214,13 +221,39 @@ const BookDetail = () => {
                   }}
                 />
               </div>
-              {book.insidePage && (
-                <button
-                  onClick={() => setIsFlipped((f) => !f)}
-                  className="mt-6 font-body text-xs tracking-[0.25em] uppercase text-muted-foreground hover:text-bordeaux transition-colors"
-                >
-                  {isFlipped ? "← Refermer le livre" : "Feuilleter le livre →"}
-                </button>
+              {hasPages && (
+                <>
+                  <button
+                    onClick={() => {
+                      setIsFlipped((f) => !f);
+                      if (isFlipped) setPageIndex(0);
+                    }}
+                    className="mt-6 font-body text-xs tracking-[0.25em] uppercase text-muted-foreground hover:text-bordeaux transition-colors"
+                  >
+                    {isFlipped ? "← Refermer le livre" : "Feuilleter le livre →"}
+                  </button>
+                  {isFlipped && pages.length > 1 && (
+                    <div className="mt-4 flex items-center gap-6">
+                      <button
+                        onClick={() => setPageIndex((i) => Math.max(0, i - 1))}
+                        disabled={pageIndex === 0}
+                        className="font-body text-xs tracking-[0.2em] uppercase text-muted-foreground hover:text-bordeaux transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                      >
+                        ← Précédente
+                      </button>
+                      <span className="font-body text-xs tracking-[0.2em] uppercase text-muted-foreground">
+                        {pageIndex + 1} / {pages.length}
+                      </span>
+                      <button
+                        onClick={() => setPageIndex((i) => Math.min(pages.length - 1, i + 1))}
+                        disabled={pageIndex === pages.length - 1}
+                        className="font-body text-xs tracking-[0.2em] uppercase text-muted-foreground hover:text-bordeaux transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                      >
+                        Suivante →
+                      </button>
+                    </div>
+                  )}
+                </>
               )}
             </div>
           </FadeIn>
