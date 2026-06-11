@@ -213,6 +213,7 @@ const BookDetail = () => {
         )}
 
         {/* Characters */}
+        {book.characters.length > 0 && (
         <FadeIn delay={0.2}>
           <section className="mb-20">
             <p className="font-body text-xs tracking-[0.4em] uppercase text-muted-foreground mb-4">
