@@ -27,9 +27,11 @@ interface BookData {
   characters: Character[];
   aesthetic: { image?: string; caption: string }[];
   links: { label: string; url: string }[];
+  titleNote?: { heading: string; paragraphs: string[] };
 }
 
 import chatonCover from "@/assets/chaton-cover.jpg";
+import hybrisCoverAsset from "@/assets/hybris-cover.png.asset.json";
 
 const booksData: Record<string, BookData> = {
   chaton: {
@@ -75,6 +77,29 @@ const booksData: Record<string, BookData> = {
       { label: "Lire sur Amazon", url: "https://www.amazon.fr/CHATON-Ma%C3%ABve-Orion-ebook/dp/B0FY32HL79/ref=sr_1_1?crid=1G8BY6093UYNP&dib=eyJ2IjoiMSJ9.KUzbZmnlzmBdrK32UZe-LA.UvV9BZ1_XGJ61v5yKoMlF0mc6FDC71JTNzpFLVOUsXg&dib_tag=se&keywords=chaton+mlh+orion&qid=1772190463&sprefix=chaton+mlh%2Caps%2C245&sr=8-1" },
       { label: "Lire gratuitement sur Wattpad", url: "https://www.wattpad.com/user/mlhorion" },
     ],
+  },
+  hybris: {
+    title: "Hybris",
+    slug: "hybris",
+    cover: hybrisCoverAsset.url,
+    synopsis: [
+      "Wolfgang est un multi-milliardaire dans l'industrie de l'armement, appartenant à un ordre secret : les Sybarites. En son sein, des familles extrêmement puissantes complotent pour l'instauration d'un Nouvel Ordre Mondial. La dernière étape de leur plan millénaire est la Troisième Guerre Mondiale. À la suite de cet événement, tous les peuples devraient aspirer à la prétendue Paix Universelle qu'ils s'apprêteront, alors, à leur proposer.",
+      "Cependant, la table hexagonale de ce nouvel ordre ne compte que six places, et les familles sont au nombre de sept. Wolfgang aurait dû se retirer du jeu après son grand final, et marier sa fille à John Hills, pour faire perdurer son sang, mais pas son nom, en son sein. Seulement, espérer qu'un être semblable à Mars s'efface sans demander son reste était illusoire. Il ne tirera pas sa révérence si aisément ; aussi décide-t-il d'anéantir les familles supérieures de l'Ordre Sybarite.",
+      "Pour les éliminer, il engage une jeune espionne et tireuse d'élite : Aline. Il la fera passer pour sa fille, et elle deviendra ainsi Esmé. Elle devra s'infiltrer dans les demeures de chacune des familles, en découvrir les secrets, et y déposer des explosifs sans être démasquée.",
+    ],
+    characters: [],
+    aesthetic: [],
+    links: [],
+    titleNote: {
+      heading: "Pourquoi le titre Hybris ?",
+      paragraphs: [
+        "ὕβρις : démesure, outrage, péché d'orgueil.",
+        "Ce livre est à l'image de la démesure de certains grands de ce monde, et il est né lui-même d'une ambition démesurée : la mienne.",
+        "La protagoniste, bien qu'orpheline, s'élèvera également au rang le plus haut de la société ; si haut qu'elle pensera un instant faire partie des Dieux. Ainsi ce livre est nommé : Hybris, en honneur à ce péché.",
+        "L'hybris est le mouvement fautif de dépassement de la limite. Du point de vue philosophique et moral, c'est la tentation de démesure ou de folie imprudente des humains, tentés de rivaliser avec les dieux.",
+        "La démesure désigne le fait de désirer plus que ce que la juste mesure du destin nous a attribué. Ceci vaut en général, dans la mythologie grecque, de terribles punitions de leur part. Le châtiment de l'hybris, par les dieux, est la némésis, qui fait se rétracter l'individu à l'intérieur des limites qu'il a franchies. La mythologie regorge de récits mettant en scène un personnage puni pour son hybris envers les dieux.",
+      ],
+    },
   },
 };
 
@@ -151,23 +176,44 @@ const BookDetail = () => {
                 </p>
               ))}
             </div>
-            <div className="flex flex-wrap gap-3 mt-8">
-              {book.links.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 font-body text-sm tracking-[0.15em] uppercase px-6 py-2.5 border border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors"
-                >
-                  {link.label} <ExternalLink className="w-3.5 h-3.5" />
-                </a>
-              ))}
-            </div>
+            {book.links.length > 0 && (
+              <div className="flex flex-wrap gap-3 mt-8">
+                {book.links.map((link) => (
+                  <a
+                    key={link.label}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 font-body text-sm tracking-[0.15em] uppercase px-6 py-2.5 border border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors"
+                  >
+                    {link.label} <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                ))}
+              </div>
+            )}
           </section>
         </FadeIn>
 
+        {/* Title note (e.g. why this title) */}
+        {book.titleNote && (
+          <FadeIn delay={0.18}>
+            <section className="mb-20">
+              <h2 className="font-display text-2xl md:text-3xl font-light text-foreground mb-6">
+                {book.titleNote.heading}
+              </h2>
+              <div className="space-y-4">
+                {book.titleNote.paragraphs.map((p, i) => (
+                  <p key={i} className="font-body text-base leading-[1.9] text-muted-foreground">
+                    {p}
+                  </p>
+                ))}
+              </div>
+            </section>
+          </FadeIn>
+        )}
+
         {/* Characters */}
+        {book.characters.length > 0 && (
         <FadeIn delay={0.2}>
           <section className="mb-20">
             <p className="font-body text-xs tracking-[0.4em] uppercase text-muted-foreground mb-4">
@@ -226,6 +272,7 @@ const BookDetail = () => {
             </div>
           </section>
         </FadeIn>
+        )}
       </main>
 
       <footer className="border-t border-border py-8 px-6">
