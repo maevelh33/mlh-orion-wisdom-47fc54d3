@@ -135,6 +135,7 @@ const booksData: Record<string, BookData> = {
 const BookDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const book = slug ? booksData[slug] : undefined;
+  const [isFlipped, setIsFlipped] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
