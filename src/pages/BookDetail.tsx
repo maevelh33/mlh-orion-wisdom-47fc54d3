@@ -42,6 +42,7 @@ interface BookData {
   slug: string;
   cover?: string;
   insidePage?: string;
+  insidePages?: string[];
   synopsis: string[];
   characters: Character[];
   aesthetic: { image?: string; caption: string }[];
