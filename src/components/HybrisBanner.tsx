@@ -39,11 +39,11 @@ const HybrisBanner = () => {
               </h2>
               <div className="w-16 h-px bg-[#c9a84c] mb-6" />
 
-              <p className="font-body text-base md:text-lg text-white/90 leading-relaxed mb-6">
+              <p className="font-display text-sm md:text-base text-[#f5f0e0] leading-relaxed mb-6">
                 Le résultat de 10 000 heures d'écritures, 10 ans de vie, et 10 manuscrits brûlés (versions antérieures jetées au feu). Ce livre est l'œuvre vers laquelle j'ai dirigé tous les efforts de ma vie de manière obsessionnelle. Chaque expérience que j'ai faite, rencontres et voyages, était dans le but d'avoir le vécu nécessaire à son écriture.
               </p>
 
-              <ul className="font-body text-sm text-white/75 space-y-1.5 mb-8">
+              <ul className="font-display text-xs md:text-sm text-[#f5f0e0]/80 space-y-1.5 mb-8 italic">
                 <li>— Découvrez les 7 Familles qui contrôlent ce monde</li>
                 <li>— Rencontrez des personnages uniques et extravagants</li>
                 <li>— Voyagez dans des lieux fastueux et inaccessibles</li>
