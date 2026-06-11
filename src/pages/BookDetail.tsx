@@ -111,6 +111,7 @@ const booksData: Record<string, BookData> = {
       { name: "Avner Orim", image: hybrisAvnerOrim.url },
       { name: "Zohar Orim", image: hybrisZoharOrim.url },
       { name: "Christophe Retinguer", image: hybrisChristopheRetinguer.url },
+      { name: "Noé Retinguer", image: hybrisNoeRetinguer.url },
       { name: "Jéricho Caëlim", image: hybrisJerichoCaelim.url },
     ],
     aesthetic: [],
