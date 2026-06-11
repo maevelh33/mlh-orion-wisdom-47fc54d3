@@ -291,9 +291,9 @@ const BookDetail = () => {
                       transition={{ duration: 0.6, delay: 0.3 + i * 0.08 }}
                       className="group"
                     >
-                      <div className="border border-border bg-card/60 p-4 md:p-5 rounded-sm h-full">
+                      <div className="border border-border bg-card/60 p-4 md:p-5 rounded-sm h-full flex flex-col">
                         {char.image ? (
-                          <div className="aspect-[4/5] bg-cream border border-border rounded-sm overflow-hidden mb-4 flex items-center justify-center p-2">
+                          <div className="aspect-[4/5] bg-cream border border-border rounded-sm overflow-hidden mb-3 flex items-center justify-center p-2">
                             <img
                               src={char.image}
                               alt={char.name}
@@ -301,25 +301,15 @@ const BookDetail = () => {
                             />
                           </div>
                         ) : (
-                          <div className="aspect-[4/5] bg-muted rounded-sm mb-4 flex items-center justify-center">
+                          <div className="aspect-[4/5] bg-muted rounded-sm mb-3 flex items-center justify-center">
                             <span className="font-display text-4xl text-muted-foreground/30">{char.name[0]}</span>
                           </div>
                         )}
 
-                        <h3 className="font-display text-xl md:text-2xl leading-tight text-foreground text-center mb-2">
-                          {char.name}
-                        </h3>
-
-                        {char.description && (
-                          <p className="font-body text-sm leading-relaxed text-muted-foreground mb-4 text-center">
-                            {char.description}
-                          </p>
-                        )}
-
                         {hasPlaylists && (
-                          <>
-                            <p className="font-body text-xs text-muted-foreground/70 italic mb-3 text-center">
-                              (Les sons qui incarnent sa vibe, décrivent une part de son caractère en paroles, et ceux écoutés en écrivant.)
+                          <div className="mb-3">
+                            <p className="font-body text-[10px] text-muted-foreground/50 italic mb-2 text-center leading-relaxed">
+                              (Chaque playlist représente l'état mental et l'énergie d'un personnage. Laisse la musique révéler son tempérament, ou tends l'oreille aux paroles.)
                             </p>
                             <div className="flex flex-col gap-2">
                               {char.playlists?.spotify && (
@@ -329,7 +319,7 @@ const BookDetail = () => {
                                   rel="noopener noreferrer"
                                   className="inline-flex items-center justify-center gap-2 font-body text-xs tracking-wider uppercase px-4 py-2 border border-border text-muted-foreground hover:text-foreground hover:border-foreground transition-colors rounded"
                                 >
-                                  <Music className="w-4 h-4" /> Écouter la playlist Spotify
+                                  <Music className="w-4 h-4" /> Lien vers la playlist spotify
                                 </a>
                               )}
                               {char.playlists?.youtube && (
@@ -343,7 +333,17 @@ const BookDetail = () => {
                                 </a>
                               )}
                             </div>
-                          </>
+                          </div>
+                        )}
+
+                        <h3 className="font-display text-xl md:text-2xl leading-tight text-foreground text-center mb-2">
+                          {char.name}
+                        </h3>
+
+                        {char.description && (
+                          <p className="font-body text-sm leading-relaxed text-muted-foreground mb-4 text-center">
+                            {char.description}
+                          </p>
                         )}
                       </div>
                     </motion.article>
