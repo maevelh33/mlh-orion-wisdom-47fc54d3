@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { ArrowLeft, ExternalLink, Music, Youtube } from "lucide-react";
 import alineBoard from "@/assets/aline-board.jpg";
 import hybrisInsidePage from "@/assets/hybris-inside-page.png.asset.json";
+import hybrisPreface1 from "@/assets/hybris-preface-1.png.asset.json";
+import hybrisPreface2 from "@/assets/hybris-preface-2.png.asset.json";
 import sergueiBoard from "@/assets/serguei-board.jpg";
 import mehranBoard from "@/assets/mehran-board.jpg";
 import chatonCover from "@/assets/chaton-cover.jpg";
