@@ -39,18 +39,14 @@ const HybrisBanner = () => {
               </h2>
               <div className="w-16 h-px bg-[#c9a84c] mb-6" />
 
-              <p className="font-display italic text-lg md:text-xl text-white/90 leading-relaxed mb-6">
-                10&nbsp;000 heures d'écriture. 10 ans d'une vie. 10 manuscrits brûlés.
-                <br />
-                <span className="text-white/70 text-base">
-                  Un seul livre, taillé dans le silence des voyages et l'épreuve des rencontres.
-                </span>
+              <p className="font-body text-base md:text-lg text-white/90 leading-relaxed mb-6">
+                Le résultat de 10 000 heures d'écritures, 10 ans de vie, et 10 manuscrits brûlés (versions antérieures jetées au feu). Ce livre est l'œuvre vers laquelle j'ai dirigé tous les efforts de ma vie de manière obsessionnelle. Chaque expérience que j'ai faite, rencontres et voyages, était dans le but d'avoir le vécu nécessaire à son écriture.
               </p>
 
               <ul className="font-body text-sm text-white/75 space-y-1.5 mb-8">
-                <li>— Une décennie d'écriture obsessionnelle</li>
-                <li>— Des centaines de voyages, des milliers de visages</li>
-                <li>— Dix versions antérieures, jetées au feu</li>
+                <li>— Découvrez les 7 Familles qui contrôlent ce monde</li>
+                <li>— Rencontrez des personnages uniques et extravagants</li>
+                <li>— Voyagez dans des lieux fastueux et inaccessibles</li>
               </ul>
 
               <div>
