@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import banner from "@/assets/hybris-banner.png.asset.json";
+import { getAssetUrl } from "@/lib/assets";
 
 const HybrisBanner = () => {
   return (
@@ -13,7 +14,7 @@ const HybrisBanner = () => {
           {/* Background image */}
           <div className="absolute inset-0">
             <img
-              src={banner.url}
+              src={getAssetUrl(banner)}
               alt=""
               className="w-full h-full object-cover transition-transform duration-[1500ms] group-hover:scale-105"
             />
