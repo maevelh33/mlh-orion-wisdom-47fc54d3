@@ -240,7 +240,7 @@ const BookDetail = () => {
               <h2 className="font-display text-2xl md:text-3xl font-light text-foreground mb-8">
                 Personnages
               </h2>
-              <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-8 sm:grid-cols-2">
                 {book.characters.map((char, i) => {
                   const hasPlaylists = Boolean(char.playlists?.spotify || char.playlists?.youtube);
 
