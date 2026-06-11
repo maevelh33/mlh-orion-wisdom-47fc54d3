@@ -176,21 +176,41 @@ const BookDetail = () => {
                 </p>
               ))}
             </div>
-            <div className="flex flex-wrap gap-3 mt-8">
-              {book.links.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 font-body text-sm tracking-[0.15em] uppercase px-6 py-2.5 border border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors"
-                >
-                  {link.label} <ExternalLink className="w-3.5 h-3.5" />
-                </a>
-              ))}
-            </div>
+            {book.links.length > 0 && (
+              <div className="flex flex-wrap gap-3 mt-8">
+                {book.links.map((link) => (
+                  <a
+                    key={link.label}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 font-body text-sm tracking-[0.15em] uppercase px-6 py-2.5 border border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors"
+                  >
+                    {link.label} <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                ))}
+              </div>
+            )}
           </section>
         </FadeIn>
+
+        {/* Title note (e.g. why this title) */}
+        {book.titleNote && (
+          <FadeIn delay={0.18}>
+            <section className="mb-20">
+              <h2 className="font-display text-2xl md:text-3xl font-light text-foreground mb-6">
+                {book.titleNote.heading}
+              </h2>
+              <div className="space-y-4">
+                {book.titleNote.paragraphs.map((p, i) => (
+                  <p key={i} className="font-body text-base leading-[1.9] text-muted-foreground">
+                    {p}
+                  </p>
+                ))}
+              </div>
+            </section>
+          </FadeIn>
+        )}
 
         {/* Characters */}
         <FadeIn delay={0.2}>
