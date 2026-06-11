@@ -48,18 +48,34 @@ const HybrisBanner = () => {
                 <li>— Voyagez dans des lieux fastueux et inaccessibles</li>
               </ul>
 
-              <div>
-                <span className="inline-flex items-center gap-3 font-body text-xs md:text-sm tracking-[0.25em] uppercase px-7 py-3.5 bg-[#c9a84c] text-black hover:bg-[#f0d78c] transition-colors">
+              <div className="flex flex-col gap-4">
+                <Link
+                  to="/livres/hybris"
+                  className="inline-flex items-center gap-3 font-body text-xs md:text-sm tracking-[0.25em] uppercase px-7 py-3.5 bg-[#c9a84c] text-black hover:bg-[#f0d78c] transition-colors w-fit"
+                >
                   Découvrir Hybris
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </span>
+                </Link>
+
+                <a
+                  href="https://buy.stripe.com/3cIbJ2abCdVW7reb4Gfw402"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-3 font-body text-xs md:text-sm tracking-[0.25em] uppercase px-7 py-3.5 border border-[#c9a84c] text-[#f0d78c] hover:bg-[#c9a84c]/10 transition-colors w-fit"
+                >
+                  Précommander
+                  <ArrowRight className="w-4 h-4" />
+                </a>
+                <p className="font-display text-xs text-[#f5f0e0]/60 italic -mt-1">
+                  Dédicace personnalisée pour les 100 premiers acheteurs
+                </p>
               </div>
             </motion.div>
 
             {/* Right column kept empty so the hexagon background shines through */}
             <div className="hidden md:block" />
           </div>
-        </Link>
+        </div>
       </div>
     </section>
   );
