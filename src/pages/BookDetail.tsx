@@ -100,6 +100,7 @@ const booksData: Record<string, BookData> = {
     slug: "hybris",
     cover: hybrisCoverAsset.url,
     insidePage: hybrisInsidePage.url,
+    insidePages: [hybrisInsidePage.url, hybrisPreface1.url, hybrisPreface2.url],
     synopsis: [
       "Wolfgang est un multi-milliardaire dans l'industrie de l'armement, appartenant à un ordre secret : les Sybarites. En son sein, des familles extrêmement puissantes complotent pour l'instauration d'un Nouvel Ordre Mondial. La dernière étape de leur plan millénaire est la Troisième Guerre Mondiale. À la suite de cet événement, tous les peuples devraient aspirer à la prétendue Paix Universelle qu'ils s'apprêteront, alors, à leur proposer.",
       "Cependant, la table hexagonale de ce nouvel ordre ne compte que six places, et les familles sont au nombre de sept. Wolfgang aurait dû se retirer du jeu après son grand final, et marier sa fille à John Hills, pour faire perdurer son sang, mais pas son nom, en son sein. Seulement, espérer qu'un être semblable à Mars s'efface sans demander son reste était illusoire. Il ne tirera pas sa révérence si aisément ; aussi décide-t-il d'anéantir les familles supérieures de l'Ordre Sybarite.",
