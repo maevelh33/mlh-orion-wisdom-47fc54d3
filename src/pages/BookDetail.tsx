@@ -13,10 +13,12 @@ import hybrisJerichoCaelim from "@/assets/hybris-jericho-caelim.png.asset.json";
 import hybrisHenryHills from "@/assets/hybris-henry-hills.png.asset.json";
 import hybrisJohnHills from "@/assets/hybris-john-hills.png.asset.json";
 import hybrisChristopheRetinguer from "@/assets/hybris-christophe-retinguer.png.asset.json";
-import hybrisNoeRetinguer from "@/assets/hybris-noe-retinguer.png.asset.json";
 import hybrisAdrielVarek from "@/assets/hybris-adriel-varek.png.asset.json";
 import hybrisRaphaelVarek from "@/assets/hybris-raphael-varek.png.asset.json";
 import hybrisGeorgeGassner from "@/assets/hybris-george-gassner.png.asset.json";
+import hybrisLolaGassner from "@/assets/hybris-lola-gassner.png.asset.json";
+import hybrisAvnerOrim from "@/assets/hybris-avner-orim.png.asset.json";
+import hybrisZoharOrim from "@/assets/hybris-zohar-orim.png.asset.json";
 
 const FadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) => (
   <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay, ease: "easeOut" }} className={className}>
