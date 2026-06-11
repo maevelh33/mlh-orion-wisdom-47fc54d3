@@ -5,6 +5,18 @@ import { ArrowLeft, ExternalLink, Music, Youtube } from "lucide-react";
 import alineBoard from "@/assets/aline-board.jpg";
 import sergueiBoard from "@/assets/serguei-board.jpg";
 import mehranBoard from "@/assets/mehran-board.jpg";
+import chatonCover from "@/assets/chaton-cover.jpg";
+import hybrisCoverAsset from "@/assets/hybris-cover.png.asset.json";
+import hybrisEsmeWarrold from "@/assets/hybris-esme-warrold.png.asset.json";
+import hybrisWolfgangWarrold from "@/assets/hybris-wolfgang-warrold.png.asset.json";
+import hybrisJerichoCaelim from "@/assets/hybris-jericho-caelim.png.asset.json";
+import hybrisHenryHills from "@/assets/hybris-henry-hills.png.asset.json";
+import hybrisJohnHills from "@/assets/hybris-john-hills.png.asset.json";
+import hybrisChristopheRetinguer from "@/assets/hybris-christophe-retinguer.png.asset.json";
+import hybrisNoeRetinguer from "@/assets/hybris-noe-retinguer.png.asset.json";
+import hybrisAdrielVarek from "@/assets/hybris-adriel-varek.png.asset.json";
+import hybrisRaphaelVarek from "@/assets/hybris-raphael-varek.png.asset.json";
+import hybrisGeorgeGassner from "@/assets/hybris-george-gassner.png.asset.json";
 
 const FadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) => (
   <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay, ease: "easeOut" }} className={className}>
@@ -14,7 +26,7 @@ const FadeIn = ({ children, delay = 0, className = "" }: { children: React.React
 
 interface Character {
   name: string;
-  description: string;
+  description?: string;
   image?: string;
   playlists?: { youtube?: string; spotify?: string };
 }
@@ -29,9 +41,6 @@ interface BookData {
   links: { label: string; url: string }[];
   titleNote?: { heading: string; paragraphs: string[] };
 }
-
-import chatonCover from "@/assets/chaton-cover.jpg";
-import hybrisCoverAsset from "@/assets/hybris-cover.png.asset.json";
 
 const booksData: Record<string, BookData> = {
   chaton: {
@@ -87,7 +96,18 @@ const booksData: Record<string, BookData> = {
       "Cependant, la table hexagonale de ce nouvel ordre ne compte que six places, et les familles sont au nombre de sept. Wolfgang aurait dû se retirer du jeu après son grand final, et marier sa fille à John Hills, pour faire perdurer son sang, mais pas son nom, en son sein. Seulement, espérer qu'un être semblable à Mars s'efface sans demander son reste était illusoire. Il ne tirera pas sa révérence si aisément ; aussi décide-t-il d'anéantir les familles supérieures de l'Ordre Sybarite.",
       "Pour les éliminer, il engage une jeune espionne et tireuse d'élite : Aline. Il la fera passer pour sa fille, et elle deviendra ainsi Esmé. Elle devra s'infiltrer dans les demeures de chacune des familles, en découvrir les secrets, et y déposer des explosifs sans être démasquée.",
     ],
-    characters: [],
+    characters: [
+      { name: "Esmé Warrold (Aline)", image: hybrisEsmeWarrold.url },
+      { name: "Wolfgang Warrold", image: hybrisWolfgangWarrold.url },
+      { name: "Jéricho Caëlim", image: hybrisJerichoCaelim.url },
+      { name: "Henry Hills", image: hybrisHenryHills.url },
+      { name: "John Hills", image: hybrisJohnHills.url },
+      { name: "Christophe Retinguer", image: hybrisChristopheRetinguer.url },
+      { name: "Noé Retinguer", image: hybrisNoeRetinguer.url },
+      { name: "Adriel Varek", image: hybrisAdrielVarek.url },
+      { name: "Raphaël Varek", image: hybrisRaphaelVarek.url },
+      { name: "George Gassner", image: hybrisGeorgeGassner.url },
+    ],
     aesthetic: [],
     links: [],
     titleNote: {
@@ -126,7 +146,6 @@ const BookDetail = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
       <header className="py-8 px-6 border-b border-border">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <Link
@@ -143,7 +162,6 @@ const BookDetail = () => {
       </header>
 
       <main className="max-w-4xl mx-auto px-6 py-16 md:py-24">
-        {/* Title & Cover */}
         <FadeIn>
           <p className="font-body text-xs tracking-[0.4em] uppercase text-muted-foreground mb-4">
             Roman
@@ -154,7 +172,6 @@ const BookDetail = () => {
           <div className="w-12 h-px bg-bordeaux mb-12" />
         </FadeIn>
 
-        {/* Cover placeholder */}
         {book.cover && (
           <FadeIn delay={0.1}>
             <div className="mb-16 flex justify-center">
@@ -163,7 +180,6 @@ const BookDetail = () => {
           </FadeIn>
         )}
 
-        {/* Synopsis */}
         <FadeIn delay={0.15}>
           <section className="mb-20">
             <h2 className="font-display text-2xl md:text-3xl font-light text-foreground mb-6">
@@ -194,7 +210,6 @@ const BookDetail = () => {
           </section>
         </FadeIn>
 
-        {/* Title note (e.g. why this title) */}
         {book.titleNote && (
           <FadeIn delay={0.18}>
             <section className="mb-20">
@@ -212,66 +227,88 @@ const BookDetail = () => {
           </FadeIn>
         )}
 
-        {/* Characters */}
         {book.characters.length > 0 && (
-        <FadeIn delay={0.2}>
-          <section className="mb-20">
-            <p className="font-body text-xs tracking-[0.4em] uppercase text-muted-foreground mb-4">
-              Les protagonistes
-            </p>
-            <h2 className="font-display text-2xl md:text-3xl font-light text-foreground mb-8">
-              Personnages
-            </h2>
-            <div className="grid gap-8 md:grid-cols-3">
-              {book.characters.map((char, i) => (
-                <motion.div
-                  key={char.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.3 + i * 0.1 }}
-                  className="p-6 bg-card border border-border rounded"
-                >
-                  {/* Character image placeholder */}
-                  {char.image ? (
-                    <img src={char.image} alt={char.name} className="w-full rounded mb-4" />
-                  ) : (
-                    <div className="w-full aspect-[3/4] bg-muted rounded mb-4 flex items-center justify-center">
-                      <span className="font-display text-4xl text-muted-foreground/30">{char.name[0]}</span>
-                    </div>
-                  )}
-                  <h3 className="font-display text-xl font-medium text-foreground mb-2">{char.name}</h3>
-                  <p className="font-body text-sm leading-relaxed text-muted-foreground mb-4">{char.description}</p>
-                  
-                  <p className="font-body text-xs text-muted-foreground/70 italic mb-3">
-                    (Les sons qui incarnent sa vibe, décrivent une part de son caractère en paroles, et ceux écoutés en écrivant.)
-                  </p>
-                  <div className="flex flex-col gap-2">
-                    {char.playlists?.spotify && (
-                      <a
-                        href={char.playlists.spotify}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 font-body text-xs tracking-wider uppercase px-4 py-2 border border-border text-muted-foreground hover:text-foreground hover:border-foreground transition-colors rounded"
-                      >
-                        <Music className="w-4 h-4" /> Écouter la playlist Spotify
-                      </a>
-                    )}
-                    {char.playlists?.youtube && (
-                      <a
-                        href={char.playlists.youtube}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 font-body text-xs tracking-wider uppercase px-4 py-2 border border-border text-muted-foreground hover:text-foreground hover:border-foreground transition-colors rounded"
-                      >
-                        <Youtube className="w-4 h-4" /> Écouter la playlist YouTube
-                      </a>
-                    )}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </section>
-        </FadeIn>
+          <FadeIn delay={0.2}>
+            <section className="mb-20">
+              <p className="font-body text-xs tracking-[0.4em] uppercase text-muted-foreground mb-4">
+                Les protagonistes
+              </p>
+              <h2 className="font-display text-2xl md:text-3xl font-light text-foreground mb-8">
+                Personnages
+              </h2>
+              <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                {book.characters.map((char, i) => {
+                  const hasPlaylists = Boolean(char.playlists?.spotify || char.playlists?.youtube);
+
+                  return (
+                    <motion.article
+                      key={char.name}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: 0.3 + i * 0.08 }}
+                      className="group"
+                    >
+                      <div className="border border-border bg-card/60 p-4 md:p-5 rounded-sm h-full">
+                        {char.image ? (
+                          <div className="aspect-[4/5] bg-cream border border-border rounded-sm overflow-hidden mb-4 flex items-center justify-center p-2">
+                            <img
+                              src={char.image}
+                              alt={char.name}
+                              className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-[1.02]"
+                            />
+                          </div>
+                        ) : (
+                          <div className="aspect-[4/5] bg-muted rounded-sm mb-4 flex items-center justify-center">
+                            <span className="font-display text-4xl text-muted-foreground/30">{char.name[0]}</span>
+                          </div>
+                        )}
+
+                        <h3 className="font-display text-xl md:text-2xl leading-tight text-foreground text-center mb-2">
+                          {char.name}
+                        </h3>
+
+                        {char.description && (
+                          <p className="font-body text-sm leading-relaxed text-muted-foreground mb-4 text-center">
+                            {char.description}
+                          </p>
+                        )}
+
+                        {hasPlaylists && (
+                          <>
+                            <p className="font-body text-xs text-muted-foreground/70 italic mb-3 text-center">
+                              (Les sons qui incarnent sa vibe, décrivent une part de son caractère en paroles, et ceux écoutés en écrivant.)
+                            </p>
+                            <div className="flex flex-col gap-2">
+                              {char.playlists?.spotify && (
+                                <a
+                                  href={char.playlists.spotify}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center justify-center gap-2 font-body text-xs tracking-wider uppercase px-4 py-2 border border-border text-muted-foreground hover:text-foreground hover:border-foreground transition-colors rounded"
+                                >
+                                  <Music className="w-4 h-4" /> Écouter la playlist Spotify
+                                </a>
+                              )}
+                              {char.playlists?.youtube && (
+                                <a
+                                  href={char.playlists.youtube}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center justify-center gap-2 font-body text-xs tracking-wider uppercase px-4 py-2 border border-border text-muted-foreground hover:text-foreground hover:border-foreground transition-colors rounded"
+                                >
+                                  <Youtube className="w-4 h-4" /> Écouter la playlist YouTube
+                                </a>
+                              )}
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    </motion.article>
+                  );
+                })}
+              </div>
+            </section>
+          </FadeIn>
         )}
       </main>
 
