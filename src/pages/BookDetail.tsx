@@ -238,7 +238,7 @@ const BookDetail = () => {
                 </p>
               ))}
             </div>
-            {book.links.length > 0 && (
+            {(book.links.length > 0 || book.slug === "hybris") && (
               <div className="flex flex-wrap gap-3 mt-8">
                 {book.links.map((link) => (
                   <a
@@ -251,6 +251,16 @@ const BookDetail = () => {
                     {link.label} <ExternalLink className="w-3.5 h-3.5" />
                   </a>
                 ))}
+                {book.slug === "hybris" && (
+                  <a
+                    href="https://buy.stripe.com/3cIbJ2abCdVW7reb4Gfw402"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 font-body text-sm tracking-[0.15em] uppercase px-6 py-2.5 border border-[#c9a84c] text-[#f0d78c] hover:bg-[#c9a84c]/10 transition-colors"
+                  >
+                    Précommander <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                )}
               </div>
             )}
           </section>
