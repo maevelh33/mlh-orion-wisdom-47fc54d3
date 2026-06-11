@@ -7,8 +7,7 @@ const HybrisBanner = () => {
   return (
     <section className="px-4 md:px-6 py-16 md:py-24 bg-background">
       <div className="max-w-6xl mx-auto">
-        <Link
-          to="/livres/hybris"
+        <div
           className="group block relative overflow-hidden rounded-lg shadow-2xl border border-bordeaux/20"
         >
           {/* Background image */}
