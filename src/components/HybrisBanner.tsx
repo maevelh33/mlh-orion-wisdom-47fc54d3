@@ -66,9 +66,12 @@ const HybrisBanner = () => {
                   Précommander
                   <ArrowRight className="w-4 h-4" />
                 </a>
-                <p className="font-display text-xs text-[#f5f0e0]/60 italic -mt-1">
-                  Dédicace personnalisée pour les 100 premiers acheteurs
-                </p>
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#c9a84c]/15 border border-[#c9a84c]/30 rounded-sm">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#e8b84a] animate-pulse" />
+                  <p className="font-body text-sm text-[#f0d78c] font-medium tracking-wide">
+                    Dédicace personnalisée offerte — limitée aux 100 premiers acheteurs
+                  </p>
+                </div>
               </div>
             </motion.div>
 
