@@ -2,40 +2,23 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
-  BookOpen,
-  Layers,
-  Users,
-  Trophy,
   ChevronDown,
   Library,
   Brain,
   GraduationCap,
   Quote,
   HelpCircle,
+  Users,
+  Trophy,
   TreePine,
   Gamepad2,
   Landmark,
 } from "lucide-react";
-import preview from "@/assets/metis-preview.png.asset.json";
 import logoAsset from "@/assets/metis-logo.png.asset.json";
 import { getAssetUrl } from "@/lib/assets";
 import { Button } from "@/components/ui/button";
 
 const METIS_URL = "https://metisapp.fr";
-
-const stats = [
-  { value: "70 000+", label: "Livres référencés" },
-  { value: "1 000+", label: "Citations sourcées" },
-  { value: "50", label: "Courants philosophiques" },
-  { value: "0 €", label: "Pour commencer" },
-];
-
-const features = [
-  { icon: BookOpen, label: "Bibliothèque" },
-  { icon: Layers, label: "Cartes mémoire" },
-  { icon: Users, label: "Agora" },
-  { icon: Trophy, label: "Concours philosophique" },
-];
 
 const sections = [
   { icon: Landmark, label: "Encyclopédie", desc: "Un savoir structuré, vérifié et sourcé." },
