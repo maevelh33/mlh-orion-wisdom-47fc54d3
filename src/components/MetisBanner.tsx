@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   ArrowRight,
   BookOpen,
@@ -161,15 +161,12 @@ const MetisBanner = () => {
           </div>
 
           {/* Section dépliée : En apprendre + sur Mètis */}
-          <AnimatePresence initial={false}>
-            {open && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
-                className="overflow-hidden"
-              >
+          {open && (
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+            >
                 <div className="px-6 md:px-12 py-12 md:py-16 bg-[#efeae0] border-t border-[#c9a44c]/30">
                   {/* Logo */}
                   <div className="flex justify-center mb-10">
@@ -281,10 +278,9 @@ const MetisBanner = () => {
                       <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                     </a>
                   </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+              </div>
+            </motion.div>
+          )}
         </motion.div>
       </div>
     </section>
