@@ -1,6 +1,23 @@
-import { motion } from "framer-motion";
-import { ArrowRight, BookOpen, Layers, Users, Trophy } from "lucide-react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  ArrowRight,
+  BookOpen,
+  Layers,
+  Users,
+  Trophy,
+  ChevronDown,
+  Library,
+  Brain,
+  GraduationCap,
+  Quote,
+  HelpCircle,
+  TreePine,
+  Gamepad2,
+  Landmark,
+} from "lucide-react";
 import preview from "@/assets/metis-preview.png.asset.json";
+import logoAsset from "@/assets/metis-logo.png.asset.json";
 import { getAssetUrl } from "@/lib/assets";
 
 const METIS_URL = "https://metisapp.fr";
@@ -19,7 +36,22 @@ const features = [
   { icon: Trophy, label: "Concours philosophique" },
 ];
 
+const sections = [
+  { icon: Landmark, label: "Encyclopédie", desc: "Un savoir structuré, vérifié et sourcé." },
+  { icon: Library, label: "Bibliothèque", desc: "Des milliers d'ouvrages référencés." },
+  { icon: Brain, label: "Psychologie", desc: "Les courants, les concepts, les outils." },
+  { icon: GraduationCap, label: "Académie", desc: "Des parcours guidés pour apprendre pas à pas." },
+  { icon: Quote, label: "Citations", desc: "Des pensées sourcées, prêtes à méditer." },
+  { icon: HelpCircle, label: "Quizz", desc: "Tester ses connaissances en s'amusant." },
+  { icon: Users, label: "Agora", desc: "Discuter, échanger, penser à plusieurs." },
+  { icon: Trophy, label: "Concours", desc: "Se mesurer aux autres, progresser." },
+  { icon: TreePine, label: "Arbre", desc: "Visualiser les liens entre les idées." },
+  { icon: Gamepad2, label: "Games", desc: "Apprendre par le jeu, retenir par le plaisir." },
+];
+
 const MetisBanner = () => {
+  const [open, setOpen] = useState(false);
+
   return (
     <section className="px-4 md:px-6 py-16 md:py-24 bg-[#efeae0]">
       <div className="max-w-6xl mx-auto">
@@ -34,7 +66,7 @@ const MetisBanner = () => {
             {/* Texte */}
             <div className="p-8 md:p-12 lg:p-14 flex flex-col justify-center">
               <p className="font-body text-[10px] md:text-xs tracking-[0.4em] uppercase text-[#a8853a] mb-4">
-                Application · Philosophie &amp; Psychologie
+                Application · Philosophie & Psychologie
               </p>
               <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-light tracking-wider text-[#2e2a22] mb-3">
                 MÈTIS
@@ -50,21 +82,22 @@ const MetisBanner = () => {
               </p>
               <p className="font-display text-sm md:text-base text-[#4a4438] leading-relaxed mb-8">
                 Une plateforme pour apprendre la philosophie et la psychologie de manière
-                ludique : bibliothèque, cartes mémoire, arbre interactif, quiz &amp; dilemmes,
+                ludique : bibliothèque, cartes mémoire, arbre interactif, quiz & dilemmes,
                 discussions dans l'Agora. Des textes sourcés, des définitions vérifiées, une
                 pédagogie pensée avec des enseignants et des psychologues.
               </p>
 
               <div className="flex flex-col gap-4">
-                <a
-                  href={METIS_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  type="button"
+                  onClick={() => setOpen((v) => !v)}
                   className="group inline-flex items-center gap-3 font-body text-xs md:text-sm tracking-[0.25em] uppercase px-8 py-4 bg-[#a8853a] text-[#f9f5ec] hover:bg-[#c9a44c] transition-colors w-fit shadow-lg"
                 >
-                  Apprendre sur Mètis
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </a>
+                  En apprendre + sur Mètis
+                  <ChevronDown
+                    className={`w-4 h-4 transition-transform duration-300 ${open ? "rotate-180" : ""}`}
+                  />
+                </button>
 
                 <a
                   href={METIS_URL}
@@ -126,6 +159,132 @@ const MetisBanner = () => {
               ))}
             </div>
           </div>
+
+          {/* Section dépliée : En apprendre + sur Mètis */}
+          <AnimatePresence initial={false}>
+            {open && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+                className="overflow-hidden"
+              >
+                <div className="px-6 md:px-12 py-12 md:py-16 bg-[#efeae0] border-t border-[#c9a44c]/30">
+                  {/* Logo */}
+                  <div className="flex justify-center mb-10">
+                    <img
+                      src={getAssetUrl(logoAsset)}
+                      alt="Logo de Mètis"
+                      loading="lazy"
+                      className="w-40 md:w-48 h-auto"
+                    />
+                  </div>
+
+                  {/* Pourquoi Metis existe ? */}
+                  <div className="max-w-3xl mx-auto mb-12">
+                    <h3 className="font-display text-2xl md:text-3xl text-[#2e2a22] mb-4 text-center">
+                      Pourquoi Mètis existe ?
+                    </h3>
+                    <div className="w-12 h-px bg-[#c9a44c] mx-auto mb-6" />
+                    <p className="font-display text-base md:text-lg text-[#3c362c] leading-relaxed mb-4">
+                      Metis est né d'une conviction simple : la sagesse ne devrait pas rester
+                      enfermée dans les amphithéâtres.
+                    </p>
+                    <p className="font-display text-sm md:text-base text-[#4a4438] leading-relaxed mb-4">
+                      J'ai commencé seule, à poser les fondations de cette application avec
+                      l'ambition de la faire moi-même. Puis j'ai rencontré un développeur prêt à
+                      s'associer au projet, et à résoudre ce que je ne savais pas résoudre seule.
+                      Nous sommes deux aujourd'hui, sans budget ni investisseurs, seulement de
+                      l'espoir, du travail, et ce que nous savions faire.
+                    </p>
+                    <p className="font-display text-sm md:text-base text-[#4a4438] leading-relaxed mb-4">
+                      J'ai construit ici tout ce que j'aurais aimé trouver quand j'ai découvert la
+                      philosophie et la psychologie : un endroit qui rend accessible ce qui reste
+                      trop souvent réservé à quelques cercles fermés, ou hors de portée pour
+                      beaucoup. La philosophie et la psychologie s'y rejoignent pour offrir une
+                      sagesse pratique, pas seulement théorique, celle qui s'exerce, pas
+                      seulement celle qu'on récite. Et parce qu'on pense souvent seul alors
+                      qu'on est nombreux à se poser les mêmes questions, Metis est aussi pensé
+                      comme un lieu où se retrouver.
+                    </p>
+                    <p className="font-display text-sm md:text-base italic text-[#8a6c2c] text-right">
+                      — MLH.ORION, créatrice de Metis
+                    </p>
+                  </div>
+
+                  {/* Que signifie Metis ? */}
+                  <div className="max-w-3xl mx-auto mb-12">
+                    <h3 className="font-display text-2xl md:text-3xl text-[#2e2a22] mb-4 text-center">
+                      Que signifie Mètis ?
+                    </h3>
+                    <div className="w-12 h-px bg-[#c9a44c] mx-auto mb-6" />
+                    <p className="font-display text-sm md:text-base text-[#4a4438] leading-relaxed mb-4">
+                      Dans la mythologie grecque, la mètis (μῆτις) est bien plus qu'un nom :
+                      c'est une forme d'intelligence à part entière. Ni la force brute d'un
+                      héros, ni la sagesse contemplative d'un philosophe assis, la mètis est un
+                      savoir de l'action : la ruse, le flair, la capacité à s'adapter à l'instant
+                      qui compte. Elle s'oppose au savoir théorique et figé, pour lui préférer
+                      une intelligence vivante, qui s'ajuste au terrain.
+                    </p>
+                    <p className="font-display text-sm md:text-base text-[#4a4438] leading-relaxed mb-4">
+                      Métis est aussi une déesse : Océanide, première épouse de Zeus, réputée
+                      plus rusée qu'aucun dieu ou mortel. Une prophétie annonçait qu'elle
+                      enfanterait un enfant plus puissant que son propre père. Zeus, pour
+                      empêcher cela, et pour s'approprier sa sagesse, l'avala. Mais Métis continua
+                      de le conseiller de l'intérieur ; et de cette union naquit Athéna, jaillie
+                      tout armée du crâne de Zeus, déesse de la stratégie et de l'intelligence
+                      guerrière.
+                    </p>
+                    <p className="font-display text-base md:text-lg text-[#3c362c] leading-relaxed italic">
+                      C'est cet héritage que porte le nom de cette application : une sagesse qui
+                      ne reste pas enfermée dans la théorie, mais qui s'exerce, s'adapte et se
+                      transmet. Penser avec sagesse. Agir avec ruse.
+                    </p>
+                  </div>
+
+                  {/* Explorer toutes les sections */}
+                  <div className="max-w-4xl mx-auto">
+                    <h3 className="font-display text-2xl md:text-3xl text-[#2e2a22] mb-2 text-center">
+                      Explorer toutes les sections
+                    </h3>
+                    <p className="font-body text-xs md:text-sm text-[#8a7a5c] text-center mb-8 tracking-wide">
+                      Dix espaces pour apprendre, selon ses envies.
+                    </p>
+                    <div className="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4">
+                      {sections.map(({ icon: Icon, label, desc }) => (
+                        <div
+                          key={label}
+                          className="flex flex-col items-center text-center px-3 py-5 border border-[#c9a44c]/30 bg-[#faf6ee] hover:bg-[#c9a44c]/10 transition-colors"
+                        >
+                          <Icon className="w-6 h-6 text-[#a8853a] mb-2" />
+                          <span className="font-body text-[11px] md:text-xs tracking-[0.15em] uppercase text-[#4a4438] mb-1">
+                            {label}
+                          </span>
+                          <span className="font-display text-[11px] md:text-xs text-[#8a7a5c] leading-snug">
+                            {desc}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* CTA */}
+                  <div className="flex justify-center mt-12">
+                    <a
+                      href={METIS_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group inline-flex items-center gap-3 font-body text-xs md:text-sm tracking-[0.25em] uppercase px-8 py-4 bg-[#a8853a] text-[#f9f5ec] hover:bg-[#c9a44c] transition-colors w-fit shadow-lg"
+                    >
+                      Aller sur metisapp.fr
+                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                    </a>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
       </div>
     </section>
