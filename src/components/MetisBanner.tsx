@@ -19,6 +19,7 @@ import {
 import preview from "@/assets/metis-preview.png.asset.json";
 import logoAsset from "@/assets/metis-logo.png.asset.json";
 import { getAssetUrl } from "@/lib/assets";
+import { Button } from "@/components/ui/button";
 
 const METIS_URL = "https://metisapp.fr";
 
@@ -51,6 +52,20 @@ const sections = [
 
 const MetisBanner = () => {
   const [open, setOpen] = useState(false);
+
+  const toggleDetails = () => {
+    const willOpen = !open;
+    setOpen(willOpen);
+
+    if (willOpen) {
+      window.setTimeout(() => {
+        document.getElementById("metis-details")?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }, 100);
+    }
+  };
 
   return (
     <section className="px-4 md:px-6 py-16 md:py-24 bg-[#efeae0]">
@@ -88,16 +103,18 @@ const MetisBanner = () => {
               </p>
 
               <div className="flex flex-col gap-4">
-                <button
+                <Button
                   type="button"
-                  onClick={() => setOpen((v) => !v)}
-                  className="group inline-flex items-center gap-3 font-body text-xs md:text-sm tracking-[0.25em] uppercase px-8 py-4 bg-[#a8853a] text-[#f9f5ec] hover:bg-[#c9a44c] transition-colors w-fit shadow-lg"
+                  onClick={toggleDetails}
+                  aria-expanded={open}
+                  aria-controls="metis-details"
+                  className="group h-auto inline-flex items-center gap-3 rounded-none font-body text-xs md:text-sm tracking-[0.25em] uppercase px-8 py-4 bg-[#a8853a] text-[#f9f5ec] hover:bg-[#c9a44c] transition-colors w-fit shadow-lg"
                 >
-                  En apprendre + sur Mètis
+                  {open ? "Refermer" : "En apprendre + sur Mètis"}
                   <ChevronDown
                     className={`w-4 h-4 transition-transform duration-300 ${open ? "rotate-180" : ""}`}
                   />
-                </button>
+                </Button>
 
                 <a
                   href={METIS_URL}
@@ -163,6 +180,7 @@ const MetisBanner = () => {
           {/* Section dépliée : En apprendre + sur Mètis */}
           {open && (
             <motion.div
+              id="metis-details"
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, ease: "easeOut" }}
