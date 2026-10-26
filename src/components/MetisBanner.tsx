@@ -14,8 +14,7 @@ import {
   Gamepad2,
   Landmark,
 } from "lucide-react";
-import logoAsset from "@/assets/metis-logo.png.asset.json";
-import { getAssetUrl } from "@/lib/assets";
+import logoAsset from "@/assets/metis-logo.webp";
 import { Button } from "@/components/ui/button";
 
 const METIS_URL = "https://metisapp.fr";
@@ -128,7 +127,7 @@ const MetisBanner = () => {
                   {/* Logo */}
                   <div className="flex justify-center mb-10">
                     <img
-                      src={getAssetUrl(logoAsset)}
+                      src={logoAsset}
                       alt="Logo de Mètis"
                       loading="lazy"
                       className="w-40 md:w-48 h-auto"

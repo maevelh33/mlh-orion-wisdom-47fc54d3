@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
   <head>
     <meta charset="utf-8">
+    <meta name="robots" content="noindex">
+    <title>Page introuvable | MLH.ORION</title>
     <script>
-      // Redirect all routes to index.html for SPA client-side routing
-      var path = window.location.pathname;
-      window.location.replace('/' + '?redirect=' + encodeURIComponent(path));
+      // GitHub Pages : renvoie les adresses inconnues vers l'application,
+      // qui affiche sa propre page « introuvable ».
+      var l = window.location;
+      l.replace('/?redirect=' + encodeURIComponent(l.pathname + l.search + l.hash));
     </script>
   </head>
   <body></body>

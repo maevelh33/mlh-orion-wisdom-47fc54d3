@@ -1,0 +1,49 @@
+{
+  "site": {
+    "url": "https://mlhorion.com",
+    "name": "MLH.ORION",
+    "author": "Maëve Orion",
+    "locale": "fr_FR",
+    "sameAs": [
+      "https://www.youtube.com/@mlhorion",
+      "https://www.instagram.com/mlh.orion",
+      "https://ko-fi.com/mlhorion",
+      "https://www.wattpad.com/user/mlhorion",
+      "https://substack.com/@mlhorion"
+    ]
+  },
+  "pages": {
+    "/": {
+      "title": "Maëve Orion — Autrice, philosophe et créatrice YouTube | MLH.ORION",
+      "description": "Maëve Orion, autrice de Chaton et Hybris, philosophe et créatrice de la chaîne YouTube MLH.ORION. Philosophie, psychologie, littérature, formation d'écriture et appels personnalisés.",
+      "image": "/og/accueil.jpg",
+      "imageAlt": "Une bibliothèque baroque aux plafonds peints"
+    },
+    "/livres": {
+      "title": "Livres de Maëve Orion — Chaton, Hybris | MLH.ORION",
+      "description": "Les romans de Maëve Orion : Chaton, disponible sur Amazon et Wattpad, et Hybris, son nouveau roman en précommande.",
+      "image": "/og/hybris.jpg",
+      "imageAlt": "Couverture du roman Hybris"
+    },
+    "/livres/chaton": {
+      "title": "Chaton — roman de Maëve Orion | MLH.ORION",
+      "description": "Aline, dix-sept ans, fuit sa famille d'accueil et croise Sergueï, lié à la Bratva. Un roman sur la survie, la confiance et le triangle victime, bourreau, sauveur.",
+      "image": "/og/chaton.jpg",
+      "imageAlt": "Couverture du roman Chaton",
+      "book": {
+        "name": "Chaton",
+        "url": "https://www.amazon.fr/dp/B0FY32HL79"
+      }
+    },
+    "/livres/hybris": {
+      "title": "Hybris — le nouveau roman de Maëve Orion | MLH.ORION",
+      "description": "Sept familles contrôlent le monde. Pour les anéantir, Wolfgang engage Aline, espionne et tireuse d'élite. Hybris, le nouveau roman de Maëve Orion, en précommande avec dédicace.",
+      "image": "/og/hybris.jpg",
+      "imageAlt": "Couverture du roman Hybris",
+      "book": {
+        "name": "Hybris",
+        "url": "https://buy.stripe.com/3cIbJ2abCdVW7reb4Gfw402"
+      }
+    }
+  }
+}

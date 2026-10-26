@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Inter:wght@300;400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -119,5 +118,12 @@
   }
   .border-bordeaux {
     border-color: hsl(var(--bordeaux));
+  }
+}
+
+@layer base {
+  /* Laisse la place à la barre de navigation fixe quand on saute à une section */
+  section[id] {
+    scroll-margin-top: 4.5rem;
   }
 }
