@@ -1,0 +1,18 @@
+# Configuration Netlify (hébergeur de mlhorion.com).
+# Netlify lit ce fichier à chaque push sur main : il construit le site et publie dist/.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Les adresses inconnues reçoivent dist/404.html (automatique sur Netlify),
+# qui renvoie vers l'application et sa page « Page introuvable ».
+
+# Fichiers avec une empreinte dans leur nom (dist/assets) : jamais modifiés, cache long.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
