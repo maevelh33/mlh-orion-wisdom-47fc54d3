@@ -32,6 +32,14 @@ const Navbar = () => {
 
   const isActive = (to: string) => to === "/livres" && pathname.startsWith("/livres");
 
+  // Sur la photo sombre de l'accueil, le texte passe en clair pour rester lisible.
+  const linkColor = (to: string) =>
+    isActive(to)
+      ? "text-bordeaux"
+      : solid
+        ? "text-muted-foreground hover:text-foreground"
+        : "text-primary-foreground/85 hover:text-primary-foreground";
+
   return (
     <nav
       aria-label="Navigation principale"
@@ -40,8 +48,13 @@ const Navbar = () => {
       }`}
     >
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-        <Link to="/" className="font-display text-2xl font-semibold tracking-wide text-foreground">
-          MLH.<span className="text-bordeaux">ORION</span>
+        <Link
+          to="/"
+          className={`font-display text-2xl font-semibold tracking-wide transition-colors ${
+            solid ? "text-foreground" : "text-primary-foreground"
+          }`}
+        >
+          MLH.<span className={solid ? "text-bordeaux" : "text-primary-foreground/70"}>ORION</span>
         </Link>
 
         {/* Desktop */}
@@ -51,9 +64,7 @@ const Navbar = () => {
               key={link.to}
               to={link.to}
               aria-current={isActive(link.to) ? "page" : undefined}
-              className={`font-body text-sm tracking-widest uppercase transition-colors hover:text-foreground ${
-                isActive(link.to) ? "text-bordeaux" : "text-muted-foreground"
-              }`}
+              className={`font-body text-sm tracking-widest uppercase transition-colors ${linkColor(link.to)}`}
             >
               {link.label}
             </Link>
@@ -63,7 +74,7 @@ const Navbar = () => {
         {/* Mobile toggle */}
         <button
           onClick={() => setOpen(!open)}
-          className="md:hidden text-foreground"
+          className={`md:hidden transition-colors ${solid ? "text-foreground" : "text-primary-foreground"}`}
           aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
           aria-expanded={open}
           aria-controls="menu-mobile"

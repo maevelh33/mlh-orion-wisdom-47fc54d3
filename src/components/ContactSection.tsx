@@ -3,7 +3,7 @@ import FadeIn from "@/components/FadeIn";
 
 const ContactSection = () => {
   return (
-    <section id="contact" className="py-24 md:py-32 bg-cream">
+    <section id="contact" className="py-24 md:py-32 bg-background">
       <div className="max-w-xl mx-auto px-6 text-center">
         <FadeIn>
           <p className="font-body text-xs tracking-[0.4em] uppercase text-muted-foreground mb-4">

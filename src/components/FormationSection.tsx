@@ -12,10 +12,10 @@ const STRIPE_LINK = "https://buy.stripe.com/bJe6oI3Ne9FG26UdcOfw401";
 
 const FormationSection = () => {
   return (
-    <section id="formation" className="py-24 md:py-32 bg-cream">
+    <section id="formation" className="py-24 md:py-32 bg-background">
       <div className="max-w-3xl mx-auto px-6">
         <FadeIn>
-          <div className="p-8 md:p-12 bg-background rounded border border-border text-center">
+          <div className="p-8 md:p-12 bg-cream rounded border border-border text-center">
             <GraduationCap className="w-6 h-6 text-bordeaux mx-auto mb-4" />
             <h3 className="font-display text-2xl md:text-3xl font-light text-foreground mb-3">
               Écrire un livre de A à Z

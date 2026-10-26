@@ -1,4 +1,9 @@
+import { Youtube } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
+
+const CHANNEL_URL = "https://www.youtube.com/@mlhorion";
+// Playlist de toutes les vidéos mises en ligne (identifiant de chaîne avec « UU » au lieu de « UC »)
+const UPLOADS_PLAYLIST = "UUyWM4YRwHwAxld74qQ-6wMA";
 
 const YouTubeSection = () => {
   return (
@@ -36,6 +41,34 @@ const YouTubeSection = () => {
             Je n'avais pas imaginé que ce que je cherchais puisse aider, et passionner tant de personnes.
             Et pourtant, me voilà, toujours en quête, mais désormais accompagnée.
           </p>
+        </FadeIn>
+
+        {/* Dernières vidéos : la playlist « uploads » de la chaîne se met à jour toute seule */}
+        <FadeIn delay={0.4}>
+          <div className="mt-6">
+            <div className="relative aspect-video overflow-hidden rounded border border-border bg-foreground shadow-lg">
+              <iframe
+                src={`https://www.youtube-nocookie.com/embed/videoseries?list=${UPLOADS_PLAYLIST}`}
+                title="Dernières vidéos de la chaîne MLH.ORION"
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+                className="absolute inset-0 w-full h-full"
+              />
+            </div>
+            <div className="mt-6 text-center">
+              <a
+                href={CHANNEL_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2.5 font-body text-sm tracking-[0.2em] uppercase px-8 py-3 border border-vert-antique text-vert-antique hover:bg-vert-antique hover:text-background transition-colors"
+              >
+                <Youtube className="w-4 h-4" />
+                Voir la chaîne
+              </a>
+            </div>
+          </div>
         </FadeIn>
 
         {/* Value proposition */}
