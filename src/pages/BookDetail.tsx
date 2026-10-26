@@ -1,35 +1,31 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, ExternalLink, Music, Youtube } from "lucide-react";
 import alineBoard from "@/assets/aline-board.jpg";
-import hybrisInsidePage from "@/assets/hybris-inside-page.png.asset.json";
-import hybrisPreface1 from "@/assets/hybris-preface-1.png.asset.json";
-import hybrisPreface2 from "@/assets/hybris-preface-2.png.asset.json";
+import hybrisInsidePage from "@/assets/hybris-inside-page.webp";
+import hybrisPreface1 from "@/assets/hybris-preface-1.webp";
+import hybrisPreface2 from "@/assets/hybris-preface-2.webp";
 import sergueiBoard from "@/assets/serguei-board.jpg";
 import mehranBoard from "@/assets/mehran-board.jpg";
-import chatonCover from "@/assets/chaton-cover.jpg";
-import hybrisCoverAsset from "@/assets/hybris-cover.png.asset.json";
-import hybrisEsmeWarrold from "@/assets/hybris-esme-warrold.png.asset.json";
-import hybrisWolfgangWarrold from "@/assets/hybris-wolfgang-warrold.png.asset.json";
-import hybrisJerichoCaelim from "@/assets/hybris-jericho-caelim.png.asset.json";
-import hybrisHenryHills from "@/assets/hybris-henry-hills.png.asset.json";
-import hybrisJohnHills from "@/assets/hybris-john-hills.png.asset.json";
-import hybrisChristopheRetinguer from "@/assets/hybris-christophe-retinguer.png.asset.json";
-import hybrisNoeRetinguer from "@/assets/hybris-noe-retinguer.png.asset.json";
-import hybrisAdrielVarek from "@/assets/hybris-adriel-varek.png.asset.json";
-import hybrisRaphaelVarek from "@/assets/hybris-raphael-varek.png.asset.json";
-import hybrisGeorgeGassner from "@/assets/hybris-george-gassner.png.asset.json";
-import hybrisLolaGassner from "@/assets/hybris-lola-gassner.png.asset.json";
-import hybrisAvnerOrim from "@/assets/hybris-avner-orim.png.asset.json";
-import hybrisZoharOrim from "@/assets/hybris-zohar-orim.png.asset.json";
-import { getAssetUrl } from "@/lib/assets";
-
-const FadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) => (
-  <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay, ease: "easeOut" }} className={className}>
-    {children}
-  </motion.div>
-);
+import chatonCover from "@/assets/chaton-cover.webp";
+import hybrisCoverAsset from "@/assets/hybris-cover.webp";
+import hybrisEsmeWarrold from "@/assets/hybris-esme-warrold.webp";
+import hybrisWolfgangWarrold from "@/assets/hybris-wolfgang-warrold.webp";
+import hybrisJerichoCaelim from "@/assets/hybris-jericho-caelim.webp";
+import hybrisHenryHills from "@/assets/hybris-henry-hills.webp";
+import hybrisJohnHills from "@/assets/hybris-john-hills.webp";
+import hybrisChristopheRetinguer from "@/assets/hybris-christophe-retinguer.webp";
+import hybrisNoeRetinguer from "@/assets/hybris-noe-retinguer.webp";
+import hybrisAdrielVarek from "@/assets/hybris-adriel-varek.webp";
+import hybrisRaphaelVarek from "@/assets/hybris-raphael-varek.webp";
+import hybrisGeorgeGassner from "@/assets/hybris-george-gassner.webp";
+import hybrisLolaGassner from "@/assets/hybris-lola-gassner.webp";
+import hybrisAvnerOrim from "@/assets/hybris-avner-orim.webp";
+import hybrisZoharOrim from "@/assets/hybris-zohar-orim.webp";
+import FadeIn from "@/components/FadeIn";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 interface Character {
   name: string;
@@ -99,28 +95,28 @@ const booksData: Record<string, BookData> = {
   hybris: {
     title: "Hybris",
     slug: "hybris",
-    cover: getAssetUrl(hybrisCoverAsset),
-    insidePage: getAssetUrl(hybrisInsidePage),
-    insidePages: [getAssetUrl(hybrisInsidePage), getAssetUrl(hybrisPreface1), getAssetUrl(hybrisPreface2)],
+    cover: hybrisCoverAsset,
+    insidePage: hybrisInsidePage,
+    insidePages: [hybrisInsidePage, hybrisPreface1, hybrisPreface2],
     synopsis: [
       "Wolfgang est un multi-milliardaire dans l'industrie de l'armement, appartenant à un ordre secret : les Sybarites. En son sein, des familles extrêmement puissantes complotent pour l'instauration d'un Nouvel Ordre Mondial. La dernière étape de leur plan millénaire est la Troisième Guerre Mondiale. À la suite de cet événement, tous les peuples devraient aspirer à la prétendue Paix Universelle qu'ils s'apprêteront, alors, à leur proposer.",
       "Cependant, la table hexagonale de ce nouvel ordre ne compte que six places, et les familles sont au nombre de sept. Wolfgang aurait dû se retirer du jeu après son grand final, et marier sa fille à John Hills, pour faire perdurer son sang, mais pas son nom, en son sein. Seulement, espérer qu'un être semblable à Mars s'efface sans demander son reste était illusoire. Il ne tirera pas sa révérence si aisément ; aussi décide-t-il d'anéantir les familles supérieures de l'Ordre Sybarite.",
       "Pour les éliminer, il engage une jeune espionne et tireuse d'élite : Aline. Il la fera passer pour sa fille, et elle deviendra ainsi Esmé. Elle devra s'infiltrer dans les demeures de chacune des familles, en découvrir les secrets, et y déposer des explosifs sans être démasquée.",
     ],
     characters: [
-      { name: "Wolfgang Warrold", image: getAssetUrl(hybrisWolfgangWarrold), playlists: { spotify: "https://open.spotify.com/playlist/1vHaaXlyaKsYnYyDKtLLgs?si=7d4d6f1fddaa4ebf" } },
-      { name: "Esmé Warrold (Aline)", image: getAssetUrl(hybrisEsmeWarrold), playlists: { spotify: "https://open.spotify.com/playlist/1eUrFx0cKhpv8BieyJF19H?si=fb96249123984ab6" } },
-      { name: "John Hills", image: getAssetUrl(hybrisJohnHills), playlists: { spotify: "https://open.spotify.com/playlist/79SMJodbk9eKPzbYcqTh5B?si=e9c8a48bb5974657" } },
-      { name: "Henry Hills", image: getAssetUrl(hybrisHenryHills), playlists: { spotify: "https://open.spotify.com/playlist/4LJ3HXiLuVQbDMe4QP8dlF?si=1333a04771924921" } },
-      { name: "Adriel Varek", image: getAssetUrl(hybrisAdrielVarek), playlists: { spotify: "https://open.spotify.com/playlist/339TbdVchG6cP7ijwipuGT?si=ba585f2249c24c93" } },
-      { name: "Raphaël Varek", image: getAssetUrl(hybrisRaphaelVarek), playlists: { spotify: "https://open.spotify.com/playlist/6hiVj0ETszTpjdDMw0FpNV?si=0a6387bca1e64c3a" } },
-      { name: "George Gassner", image: getAssetUrl(hybrisGeorgeGassner), playlists: { spotify: "https://open.spotify.com/playlist/5jp6NvuyFLiPYYDSbKD2eh?si=82679474a2494fbc" } },
-      { name: "Lola Gassner", image: getAssetUrl(hybrisLolaGassner), playlists: { spotify: "https://open.spotify.com/playlist/3iH4XyL36FLR5f5fFq1t5W?si=b1a8572a3f7d4eed" } },
-      { name: "Avner Orim", image: getAssetUrl(hybrisAvnerOrim), playlists: { spotify: "https://open.spotify.com/playlist/3YAQQGXKz1RVB56YB0GZgm?si=0a02ff6d966d46d9" } },
-      { name: "Zohar Orim", image: getAssetUrl(hybrisZoharOrim), playlists: { spotify: "https://open.spotify.com/playlist/4YOO7flD6virAR187TAqWR?si=c86ba4f9833445cb" } },
-      { name: "Christophe Retinguer", image: getAssetUrl(hybrisChristopheRetinguer), playlists: { spotify: "https://open.spotify.com/playlist/6A5ZYPEpBKOXqN2xRGYeuh?si=4366d1e14190496a" } },
-      { name: "Noé Retinguer", image: getAssetUrl(hybrisNoeRetinguer), playlists: { spotify: "https://open.spotify.com/playlist/65UgZ20HKjTcaa15ICFTp8?si=b463c92e0f9e4996" } },
-      { name: "Jéricho Caëlim", image: getAssetUrl(hybrisJerichoCaelim), playlists: { spotify: "https://open.spotify.com/playlist/3RTJrrB98tWyLluf1zuTio?si=5fefc8d3454843ac" } },
+      { name: "Wolfgang Warrold", image: hybrisWolfgangWarrold, playlists: { spotify: "https://open.spotify.com/playlist/1vHaaXlyaKsYnYyDKtLLgs?si=7d4d6f1fddaa4ebf" } },
+      { name: "Esmé Warrold (Aline)", image: hybrisEsmeWarrold, playlists: { spotify: "https://open.spotify.com/playlist/1eUrFx0cKhpv8BieyJF19H?si=fb96249123984ab6" } },
+      { name: "John Hills", image: hybrisJohnHills, playlists: { spotify: "https://open.spotify.com/playlist/79SMJodbk9eKPzbYcqTh5B?si=e9c8a48bb5974657" } },
+      { name: "Henry Hills", image: hybrisHenryHills, playlists: { spotify: "https://open.spotify.com/playlist/4LJ3HXiLuVQbDMe4QP8dlF?si=1333a04771924921" } },
+      { name: "Adriel Varek", image: hybrisAdrielVarek, playlists: { spotify: "https://open.spotify.com/playlist/339TbdVchG6cP7ijwipuGT?si=ba585f2249c24c93" } },
+      { name: "Raphaël Varek", image: hybrisRaphaelVarek, playlists: { spotify: "https://open.spotify.com/playlist/6hiVj0ETszTpjdDMw0FpNV?si=0a6387bca1e64c3a" } },
+      { name: "George Gassner", image: hybrisGeorgeGassner, playlists: { spotify: "https://open.spotify.com/playlist/5jp6NvuyFLiPYYDSbKD2eh?si=82679474a2494fbc" } },
+      { name: "Lola Gassner", image: hybrisLolaGassner, playlists: { spotify: "https://open.spotify.com/playlist/3iH4XyL36FLR5f5fFq1t5W?si=b1a8572a3f7d4eed" } },
+      { name: "Avner Orim", image: hybrisAvnerOrim, playlists: { spotify: "https://open.spotify.com/playlist/3YAQQGXKz1RVB56YB0GZgm?si=0a02ff6d966d46d9" } },
+      { name: "Zohar Orim", image: hybrisZoharOrim, playlists: { spotify: "https://open.spotify.com/playlist/4YOO7flD6virAR187TAqWR?si=c86ba4f9833445cb" } },
+      { name: "Christophe Retinguer", image: hybrisChristopheRetinguer, playlists: { spotify: "https://open.spotify.com/playlist/6A5ZYPEpBKOXqN2xRGYeuh?si=4366d1e14190496a" } },
+      { name: "Noé Retinguer", image: hybrisNoeRetinguer, playlists: { spotify: "https://open.spotify.com/playlist/65UgZ20HKjTcaa15ICFTp8?si=b463c92e0f9e4996" } },
+      { name: "Jéricho Caëlim", image: hybrisJerichoCaelim, playlists: { spotify: "https://open.spotify.com/playlist/3RTJrrB98tWyLluf1zuTio?si=5fefc8d3454843ac" } },
     ],
     aesthetic: [],
     links: [],
@@ -145,10 +141,6 @@ const BookDetail = () => {
   const pages = book?.insidePages ?? (book?.insidePage ? [book.insidePage] : []);
   const hasPages = pages.length > 0;
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   if (!book) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -164,22 +156,18 @@ const BookDetail = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="py-8 px-6 border-b border-border">
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <Link
-            to="/livres"
-            className="inline-flex items-center gap-2 font-body text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Retour aux livres
-          </Link>
-          <Link to="/" className="font-display text-lg tracking-wide text-foreground">
-            MLH.<span className="text-bordeaux">ORION</span>
-          </Link>
-        </div>
-      </header>
+      <Navbar />
 
-      <main className="max-w-4xl mx-auto px-6 py-16 md:py-24">
+
+      <main className="max-w-4xl mx-auto px-6 pt-28 pb-16 md:pt-36 md:pb-24">
+        <Link
+          to="/livres"
+          className="inline-flex items-center gap-2 mb-10 font-body text-sm text-muted-foreground hover:text-foreground transition-colors"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Tous les livres
+        </Link>
+
         <FadeIn>
           <p className="font-body text-xs tracking-[0.4em] uppercase text-muted-foreground mb-4">
             Roman
@@ -291,16 +279,16 @@ const BookDetail = () => {
                       href="https://buy.stripe.com/3cIbJ2abCdVW7reb4Gfw402"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 font-body text-sm tracking-[0.15em] uppercase px-6 py-2.5 border border-[#c9a84c] text-[#f0d78c] hover:bg-[#c9a84c]/10 transition-colors"
+                      className="inline-flex items-center gap-2 font-body text-sm tracking-[0.15em] uppercase px-6 py-2.5 border border-[#c9a84c] bg-[#14100a] text-[#f0d78c] hover:bg-[#2a2114] transition-colors"
                     >
                       Précommander <ExternalLink className="w-3.5 h-3.5" />
                     </a>
                   )}
                 </div>
                 {book.slug === "hybris" && (
-                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#c9a84c]/10 border border-[#c9a84c]/25 rounded-sm mt-4">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#e8b84a] animate-pulse" />
-                    <p className="font-body text-sm text-[#f0d78c] font-medium tracking-wide">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#c9a84c]/15 border border-[#c9a84c]/40 rounded-sm mt-4">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#a8853a] animate-pulse" />
+                    <p className="font-body text-sm text-[#6f5722] font-medium tracking-wide">
                       Dédicace personnalisée offerte — limitée aux 100 premiers acheteurs
                     </p>
                   </div>
@@ -351,6 +339,8 @@ const BookDetail = () => {
                             <img
                               src={char.image}
                               alt={char.name}
+                              loading="lazy"
+                              decoding="async"
                               className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-[1.02]"
                             />
                           </div>
@@ -409,13 +399,7 @@ const BookDetail = () => {
         )}
       </main>
 
-      <footer className="border-t border-border py-8 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <p className="font-body text-xs text-muted-foreground">
-            © {new Date().getFullYear()} MLH.ORION — Tous droits réservés.
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

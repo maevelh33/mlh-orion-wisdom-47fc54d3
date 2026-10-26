@@ -1,73 +1,49 @@
-# Welcome to your Lovable project
+# MLH.ORION — site de Maëve Orion
 
-## Project info
+Code source de [mlhorion.com](https://mlhorion.com) : présentation, livres (Chaton, Hybris), Mètis, formation, services et contact.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+Fait avec Vite, React, TypeScript, Tailwind CSS et framer-motion.
 
-## How can I edit this code?
+## Travailler sur le site
 
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+Il faut [Node.js](https://nodejs.org) (version 20 ou plus).
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+npm install      # une seule fois, installe les dépendances
+npm run dev      # aperçu en direct sur http://localhost:8080
+npm run build    # construit le site final dans dist/
+npm run preview  # affiche le site construit, comme en ligne
 ```
 
-**Edit a file directly in GitHub**
+## Mise en ligne
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Chaque push sur la branche `main` publie automatiquement le site sur GitHub Pages
+(voir `.github/workflows/static.yml`). Le domaine est défini dans `CNAME`.
 
-**Use GitHub Codespaces**
+## Où modifier quoi
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+| Je veux changer…                         | Fichier                                           |
+| ---------------------------------------- | ------------------------------------------------- |
+| Les sections de l'accueil                | `src/components/*Section.tsx`, `*Banner.tsx`      |
+| L'ordre des sections                     | `src/pages/Index.tsx`                             |
+| Le menu                                  | `src/components/Navbar.tsx`                       |
+| Les livres, synopsis, personnages        | `src/pages/BookDetail.tsx` et `src/pages/Livres.tsx` |
+| Titres Google, descriptions, aperçus de partage | `src/seo/pages.json`                       |
+| Les images                               | `src/assets/` (pages) et `public/og/` (aperçus de partage) |
 
-## What technologies are used for this project?
+### Ajouter une page
 
-This project is built with:
+1. Créer la page dans `src/pages/` et sa route dans `src/App.tsx`.
+2. Ajouter son titre, sa description et son image de partage dans `src/seo/pages.json`.
+   Au build, `scripts/seo-pages.mjs` génère alors sa vraie page HTML (pour Google et
+   les aperçus Instagram/WhatsApp) et l'ajoute au `sitemap.xml`.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Images
 
-## How can I deploy this project?
+Les images sont stockées dans le dépôt, en WebP. Pour en convertir une :
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+```sh
+cwebp -q 80 mon-image.png -o src/assets/mon-image.webp
+```
 
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Les images de partage (`public/og/`) restent en JPEG, le format que tous les réseaux acceptent.

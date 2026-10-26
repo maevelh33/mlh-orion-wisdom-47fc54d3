@@ -1,15 +1,9 @@
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { Youtube } from "lucide-react";
+import FadeIn from "@/components/FadeIn";
 
-const FadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
-  return (
-    <motion.div ref={ref} initial={{ opacity: 0, y: 30 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, delay, ease: "easeOut" }} className={className}>
-      {children}
-    </motion.div>
-  );
-};
+const CHANNEL_URL = "https://www.youtube.com/@mlhorion";
+// Playlist de toutes les vidéos mises en ligne (identifiant de chaîne avec « UU » au lieu de « UC »)
+const UPLOADS_PLAYLIST = "UUyWM4YRwHwAxld74qQ-6wMA";
 
 const YouTubeSection = () => {
   return (
@@ -17,36 +11,40 @@ const YouTubeSection = () => {
       <div className="max-w-3xl mx-auto px-6">
         <FadeIn>
           <p className="font-body text-xs tracking-[0.4em] uppercase text-muted-foreground mb-4">
-            La Chaîne
+            YouTube
           </p>
           <h2 className="font-display text-3xl md:text-5xl font-light text-foreground mb-2">
-            Comment tout a commencé
+            La Chaîne
           </h2>
           <div className="w-12 h-px bg-vert-antique mb-10" />
         </FadeIn>
 
-        <FadeIn delay={0.15}>
-          <p className="font-body text-base leading-[1.9] text-muted-foreground mb-6">
-            J'avais passé des années seule, à lire, à m'inspirer de contenus instructifs, à écrire
-            des livres, des essais, à vivre dans un monde imaginaire. Puis j'ai découvert qu'enseigner
-            à voix haute permet de mieux retenir, comprendre, et structurer les idées.
-          </p>
-        </FadeIn>
-
-        <FadeIn delay={0.25}>
-          <p className="font-body text-base leading-[1.9] text-muted-foreground mb-6">
-            C'est ce qui m'a poussée à ouvrir ma chaîne, pour approfondir mes savoirs,
-            améliorer ma diction, et affiner ma pensée par la parole. J'ai investi dans une caméra
-            et j'ai décidé, malgré mon inclination au retrait, de prendre la parole.
-            Non pas par goût de l'exposition, mais par besoin de m'améliorer.
-          </p>
-        </FadeIn>
-
-        <FadeIn delay={0.35}>
-          <p className="font-body text-base leading-[1.9] text-muted-foreground mb-6">
-            Je n'avais pas imaginé que ce que je cherchais puisse aider, et passionner tant de personnes.
-            Et pourtant, me voilà, toujours en quête, mais désormais accompagnée.
-          </p>
+        {/* Dernières vidéos : la playlist « uploads » de la chaîne se met à jour toute seule */}
+        <FadeIn delay={0.1}>
+          <div>
+            <div className="relative aspect-video overflow-hidden rounded border border-border bg-foreground shadow-lg">
+              <iframe
+                src={`https://www.youtube-nocookie.com/embed/videoseries?list=${UPLOADS_PLAYLIST}`}
+                title="Dernières vidéos de la chaîne MLH.ORION"
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+                className="absolute inset-0 w-full h-full"
+              />
+            </div>
+            <div className="mt-6 text-center">
+              <a
+                href={CHANNEL_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2.5 font-body text-sm tracking-[0.2em] uppercase px-8 py-3 border border-vert-antique text-vert-antique hover:bg-vert-antique hover:text-background transition-colors"
+              >
+                <Youtube className="w-4 h-4" />
+                Voir la chaîne
+              </a>
+            </div>
+          </div>
         </FadeIn>
 
         {/* Value proposition */}

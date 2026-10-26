@@ -1,16 +1,10 @@
-import { useEffect } from "react";
-import { motion } from "framer-motion";
-import { ArrowLeft, Info } from "lucide-react";
+import { Info } from "lucide-react";
 import { Link } from "react-router-dom";
-import chatonCover from "@/assets/chaton-cover.jpg";
-import hybrisCoverAsset from "@/assets/hybris-cover.png.asset.json";
-import { getAssetUrl } from "@/lib/assets";
-
-const FadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) => (
-  <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay, ease: "easeOut" }} className={className}>
-    {children}
-  </motion.div>
-);
+import chatonCover from "@/assets/chaton-cover.webp";
+import hybrisCoverAsset from "@/assets/hybris-cover.webp";
+import FadeIn from "@/components/FadeIn";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const books = [
   {
@@ -21,32 +15,18 @@ const books = [
   {
     title: "Hybris",
     slug: "hybris",
-    cover: getAssetUrl(hybrisCoverAsset),
+    cover: hybrisCoverAsset,
   },
 ];
 
 const Livres = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="py-8 px-6 border-b border-border">
-        <div className="max-w-3xl mx-auto flex items-center justify-between">
-          <Link
-            to="/"
-            className="inline-flex items-center gap-2 font-body text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Retour
-          </Link>
-          <span className="font-display text-lg tracking-wide text-foreground">MLH.<span className="text-bordeaux">ORION</span></span>
-        </div>
-      </header>
+      <Navbar />
 
-      <main className="max-w-3xl mx-auto px-6 py-20 md:py-28">
+
+      <main className="max-w-3xl mx-auto px-6 pt-32 pb-20 md:pt-40 md:pb-28">
         <FadeIn>
           <p className="font-body text-xs tracking-[0.4em] uppercase text-muted-foreground mb-4">
             Bibliographie
@@ -112,13 +92,7 @@ const Livres = () => {
         </FadeIn>
       </main>
 
-      <footer className="border-t border-border py-8 px-6">
-        <div className="max-w-3xl mx-auto text-center">
-          <p className="font-body text-xs text-muted-foreground">
-            © {new Date().getFullYear()} MLH.ORION — Tous droits réservés.
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

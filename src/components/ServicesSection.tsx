@@ -1,27 +1,18 @@
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
 import { Youtube, Instagram, BookOpen, Calendar, Heart, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
-
-const FadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
-  return (
-    <motion.div ref={ref} initial={{ opacity: 0, y: 30 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, delay, ease: "easeOut" }} className={className}>
-      {children}
-    </motion.div>
-  );
-};
+import FadeIn from "@/components/FadeIn";
+import TikTok from "@/components/icons/TikTok";
 
 const externalLinks = [
   { icon: Youtube, label: "YouTube", desc: "Philosophie, psychologie, patrimoine", href: "https://www.youtube.com/@mlhorion", external: true },
   { icon: Instagram, label: "Instagram", desc: "Réflexions & coulisses", href: "https://www.instagram.com/mlh.orion", external: true },
+  { icon: TikTok, label: "TikTok", desc: "Vidéos courtes", href: "https://www.tiktok.com/@mlhorion", external: true },
   { icon: Heart, label: "Ko-fi", desc: "Me soutenir par un don", href: "https://ko-fi.com/mlhorion", external: true },
 ];
 
 const ServicesSection = () => {
   return (
-    <section id="services" className="py-24 md:py-32 bg-background">
+    <section id="services" className="py-24 md:py-32 bg-cream">
       <div className="max-w-4xl mx-auto px-6">
         <FadeIn>
           <p className="font-body text-xs tracking-[0.4em] uppercase text-muted-foreground mb-4">
@@ -35,7 +26,7 @@ const ServicesSection = () => {
 
         {/* PRIMARY OFFER — Réserver un appel */}
         <FadeIn delay={0.1}>
-          <div className="relative p-8 md:p-14 bg-cream rounded border-2 border-bordeaux/30 shadow-[0_20px_60px_-30px_hsl(var(--bordeaux)/0.4)] text-center mb-16 overflow-hidden">
+          <div className="relative p-8 md:p-14 bg-background rounded border-2 border-bordeaux/30 shadow-[0_20px_60px_-30px_hsl(var(--bordeaux)/0.4)] text-center mb-16 overflow-hidden">
             <div className="absolute top-4 right-4 inline-flex items-center gap-1.5 font-body text-[10px] tracking-[0.25em] uppercase text-bordeaux">
               <Sparkles className="w-3 h-3" /> Recommandé
             </div>
@@ -92,7 +83,7 @@ const ServicesSection = () => {
         </div>
 
         {/* Other links */}
-        <div className="grid sm:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {externalLinks.map((link, i) => (
             <FadeIn key={link.label} delay={0.25 + i * 0.08}>
               <a
