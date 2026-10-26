@@ -1,10 +1,12 @@
 import { Youtube, Instagram, BookOpen, Calendar, Heart, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import FadeIn from "@/components/FadeIn";
+import TikTok from "@/components/icons/TikTok";
 
 const externalLinks = [
   { icon: Youtube, label: "YouTube", desc: "Philosophie, psychologie, patrimoine", href: "https://www.youtube.com/@mlhorion", external: true },
   { icon: Instagram, label: "Instagram", desc: "Réflexions & coulisses", href: "https://www.instagram.com/mlh.orion", external: true },
+  { icon: TikTok, label: "TikTok", desc: "Vidéos courtes", href: "https://www.tiktok.com/@mlhorion", external: true },
   { icon: Heart, label: "Ko-fi", desc: "Me soutenir par un don", href: "https://ko-fi.com/mlhorion", external: true },
 ];
 
@@ -81,7 +83,7 @@ const ServicesSection = () => {
         </div>
 
         {/* Other links */}
-        <div className="grid sm:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {externalLinks.map((link, i) => (
             <FadeIn key={link.label} delay={0.25 + i * 0.08}>
               <a
