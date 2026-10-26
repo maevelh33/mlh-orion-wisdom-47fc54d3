@@ -11,41 +11,17 @@ const YouTubeSection = () => {
       <div className="max-w-3xl mx-auto px-6">
         <FadeIn>
           <p className="font-body text-xs tracking-[0.4em] uppercase text-muted-foreground mb-4">
-            La Chaîne
+            YouTube
           </p>
           <h2 className="font-display text-3xl md:text-5xl font-light text-foreground mb-2">
-            Comment tout a commencé
+            La Chaîne
           </h2>
           <div className="w-12 h-px bg-vert-antique mb-10" />
         </FadeIn>
 
-        <FadeIn delay={0.15}>
-          <p className="font-body text-base leading-[1.9] text-muted-foreground mb-6">
-            J'avais passé des années seule, à lire, à m'inspirer de contenus instructifs, à écrire
-            des livres, des essais, à vivre dans un monde imaginaire. Puis j'ai découvert qu'enseigner
-            à voix haute permet de mieux retenir, comprendre, et structurer les idées.
-          </p>
-        </FadeIn>
-
-        <FadeIn delay={0.25}>
-          <p className="font-body text-base leading-[1.9] text-muted-foreground mb-6">
-            C'est ce qui m'a poussée à ouvrir ma chaîne, pour approfondir mes savoirs,
-            améliorer ma diction, et affiner ma pensée par la parole. J'ai investi dans une caméra
-            et j'ai décidé, malgré mon inclination au retrait, de prendre la parole.
-            Non pas par goût de l'exposition, mais par besoin de m'améliorer.
-          </p>
-        </FadeIn>
-
-        <FadeIn delay={0.35}>
-          <p className="font-body text-base leading-[1.9] text-muted-foreground mb-6">
-            Je n'avais pas imaginé que ce que je cherchais puisse aider, et passionner tant de personnes.
-            Et pourtant, me voilà, toujours en quête, mais désormais accompagnée.
-          </p>
-        </FadeIn>
-
         {/* Dernières vidéos : la playlist « uploads » de la chaîne se met à jour toute seule */}
-        <FadeIn delay={0.4}>
-          <div className="mt-6">
+        <FadeIn delay={0.1}>
+          <div>
             <div className="relative aspect-video overflow-hidden rounded border border-border bg-foreground shadow-lg">
               <iframe
                 src={`https://www.youtube-nocookie.com/embed/videoseries?list=${UPLOADS_PLAYLIST}`}
