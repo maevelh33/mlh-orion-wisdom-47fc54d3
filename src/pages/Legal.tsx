@@ -72,10 +72,11 @@ const Cgv = () => (
     </P>
     <H>3. Livraison du livre papier</H>
     <P>
-      Le livre papier est expédié à l'adresse indiquée lors du paiement, en France ou dans l'Union européenne selon les zones ouvertes, au plus
-      tard 30 jours après la sortie du livre (ou après la commande, si le livre est déjà paru). Délai indicatif d'acheminement après
-      expédition : 3 à 7 jours ouvrés en France métropolitaine, 5 à 12 jours ouvrés vers les autres pays de l'Union européenne. Le statut
-      « Expédié » apparaît alors dans l'espace client.
+      Le livre papier est expédié à l'adresse indiquée lors du paiement, en France ou dans l'Union européenne selon les zones ouvertes. Un livre
+      en précommande n'est pas expédié avant sa date de sortie, indiquée sur sa page (début 2027 pour Hybris) : tous les délais ci-dessous
+      courent à partir de cette date. Le livre est expédié au plus tard 30 jours après sa sortie (ou après la commande, s'il est déjà paru),
+      puis acheminé en 3 à 7 jours ouvrés en France métropolitaine et en 5 à 12 jours ouvrés vers les autres pays de l'Union européenne. Le
+      statut « Expédié » apparaît alors dans l'espace client.
     </P>
     <H>4. Accès à l'ebook</H>
     <P>
