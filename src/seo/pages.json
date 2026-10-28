@@ -22,18 +22,17 @@
     },
     "/livres": {
       "title": "Livres de Maëve Orion — Chaton, Hybris | MLH.ORION",
-      "description": "Les romans de Maëve Orion : Chaton, disponible sur Amazon et Wattpad, et Hybris, son nouveau roman en précommande.",
+      "description": "Les romans de Maëve Orion : Chaton, en cours de réédition, et Hybris, son nouveau roman en précommande.",
       "image": "/og/hybris.jpg",
       "imageAlt": "Couverture du roman Hybris"
     },
     "/livres/chaton": {
       "title": "Chaton — roman de Maëve Orion | MLH.ORION",
-      "description": "Aline, dix-sept ans, fuit sa famille d'accueil et croise Sergueï, lié à la Bratva. Un roman sur la survie, la confiance et le triangle victime, bourreau, sauveur.",
+      "description": "Aline, dix-sept ans, fuit sa famille d'accueil et croise Sergueï, lié à la Bratva. Chaton, roman de Maëve Orion, est en cours de réédition.",
       "image": "/og/chaton.jpg",
       "imageAlt": "Couverture du roman Chaton",
       "book": {
-        "name": "Chaton",
-        "url": "https://www.amazon.fr/dp/B0FY32HL79"
+        "name": "Chaton"
       }
     },
     "/livres/hybris": {
