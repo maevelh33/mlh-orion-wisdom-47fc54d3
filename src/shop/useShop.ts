@@ -40,7 +40,9 @@ export const useMyOrders = (userId: string | undefined) =>
     queryKey: ["orders", userId],
     enabled: Boolean(supabase && userId),
     queryFn: async (): Promise<Order[]> => {
-      const { data, error } = await supabase!.from("orders").select("*").order("created_at", { ascending: false });
+      // Filtre explicite : l'administratrice a le droit de lire toutes les commandes,
+      // mais son espace personnel ne doit montrer que les siennes.
+      const { data, error } = await supabase!.from("orders").select("*").eq("user_id", userId!).order("created_at", { ascending: false });
       if (error) throw error;
       return data as Order[];
     },
@@ -60,7 +62,12 @@ export const useNotifications = (userId: string | undefined) =>
     queryKey: ["notifications", userId],
     enabled: Boolean(supabase && userId),
     queryFn: async (): Promise<Notification[]> => {
-      const { data, error } = await supabase!.from("notifications").select("*").order("created_at", { ascending: false }).limit(20);
+      const { data, error } = await supabase!
+        .from("notifications")
+        .select("*")
+        .eq("user_id", userId!)
+        .order("created_at", { ascending: false })
+        .limit(20);
       if (error) throw error;
       return data as Notification[];
     },
