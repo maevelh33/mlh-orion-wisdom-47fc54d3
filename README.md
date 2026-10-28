@@ -13,6 +13,8 @@ npm install      # une seule fois, installe les dépendances
 npm run dev      # aperçu en direct sur http://localhost:8080
 npm run build    # construit le site final dans dist/
 npm run preview  # affiche le site construit, comme en ligne
+npm test         # tests (boutique, paiements, base de données)
+npm run typecheck
 ```
 
 ## Mise en ligne
@@ -28,6 +30,11 @@ l'onglet **Deploys** du site sur Netlify.
 - Si une mise en ligne échoue, Netlify garde la version précédente en ligne : le site
   ne tombe pas en panne. Le message d'erreur est dans le détail du déploiement.
 
+## Boutique et espace client
+
+Précommandes (Stripe), comptes clients avec connexion par lien e-mail (Supabase), bibliothèque d'ebooks,
+e-mails (Brevo) et administration (`/admin`). Mise en service et gestion au quotidien : **[docs/BOUTIQUE.md](docs/BOUTIQUE.md)**.
+
 ## Où modifier quoi
 
 | Je veux changer…                         | Fichier                                           |
@@ -37,6 +44,8 @@ l'onglet **Deploys** du site sur Netlify.
 | Le menu                                  | `src/components/Navbar.tsx`                       |
 | Les livres, synopsis, personnages        | `src/pages/BookDetail.tsx` et `src/pages/Livres.tsx` |
 | Titres Google, descriptions, aperçus de partage | `src/seo/pages.json`                       |
+| Prix, dates de sortie, fichiers d'ebook  | Page **Administration** du site (`/admin`)        |
+| Textes légaux (CGV, mentions…)           | `src/pages/Legal.tsx`                             |
 | Les images                               | `src/assets/` (pages) et `public/og/` (aperçus de partage) |
 
 ### Ajouter une page
