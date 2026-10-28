@@ -206,6 +206,12 @@ describe("session de paiement", () => {
     expect(params.customer_email).toBe("client@example.com");
   });
 
+  it("livre vendu seulement en ebook (Chaton) : le papier est refusé", () => {
+    const chaton = { ...hybris, id: "chaton", title: "Chaton", ebook_price_cents: 1250, paper_price_cents: null };
+    expect(buildCheckoutParams({ product: chaton, format: "ebook", siteUrl: site }).line_items?.[0].price_data?.unit_amount).toBe(1250);
+    expect(() => buildCheckoutParams({ product: chaton, format: "paper", zone: "fr", siteUrl: site })).toThrow("Ce format n'est pas en vente.");
+  });
+
   it("refuse une zone sans tarif et un papier sans zone", () => {
     expect(() => buildCheckoutParams({ product: hybris, format: "paper", zone: "eu", siteUrl: site })).toThrow(CheckoutError);
     expect(() => buildCheckoutParams({ product: hybris, format: "paper", siteUrl: site })).toThrow(CheckoutError);

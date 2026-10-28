@@ -22,7 +22,7 @@
     },
     "/livres": {
       "title": "Livres de Maëve Orion — Chaton, Hybris | MLH.ORION",
-      "description": "Les romans de Maëve Orion : Chaton, en cours de réédition, et Hybris, son nouveau roman en précommande.",
+      "description": "Les romans de Maëve Orion : Chaton, en cours de réédition et en précommande en ebook, et Hybris, son nouveau roman en précommande.",
       "image": "/og/hybris.jpg",
       "imageAlt": "Couverture du roman Hybris"
     },
@@ -50,6 +50,12 @@
       "description": "Précommandez Hybris, le nouveau roman de Maëve Orion : livre papier dédicacé (33,99 €) ou ebook (15 €). Sortie prévue début 2027. Résumé et extrait.",
       "image": "/og/hybris.jpg",
       "imageAlt": "Couverture du roman Hybris"
+    },
+    "/livres/chaton/precommander": {
+      "title": "Précommander Chaton en ebook | MLH.ORION",
+      "description": "Précommandez Chaton, le roman de Maëve Orion, en ebook (12,50 €) : vous le lirez dans votre espace dès sa réédition.",
+      "image": "/og/chaton.jpg",
+      "imageAlt": "Couverture du roman Chaton"
     },
     "/mentions-legales": {
       "title": "Mentions légales | MLH.ORION",

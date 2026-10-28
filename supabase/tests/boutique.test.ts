@@ -6,7 +6,7 @@ import { join } from "node:path";
 import { PGlite } from "@electric-sql/pglite";
 import { beforeAll, describe, expect, it } from "vitest";
 
-const migration = ["20261028000000_boutique.sql", "20261028010000_bienvenue.sql"]
+const migration = ["20261028000000_boutique.sql", "20261028010000_bienvenue.sql", "20261028020000_chaton.sql"]
   .map((f) => readFileSync(join(__dirname, "../migrations", f), "utf8"))
   .join("\n");
 
@@ -73,6 +73,11 @@ describe("migration boutique", () => {
       "select * from public.products where id = 'hybris'",
     )).rows;
     expect(p).toMatchObject({ ebook_price_cents: 1500, paper_price_cents: 3399, ebook_status: "preorder" });
+  });
+
+  it("ajoute Chaton en ebook seulement, à 12,50 €", async () => {
+    const [p] = (await db.query("select * from public.products where id = 'chaton'")).rows as Record<string, unknown>[];
+    expect(p).toMatchObject({ title: "Chaton", ebook_price_cents: 1250, paper_price_cents: null, ebook_status: "preorder" });
   });
 
   it("crée un profil et rattache les commandes du même e-mail à l'inscription", async () => {
