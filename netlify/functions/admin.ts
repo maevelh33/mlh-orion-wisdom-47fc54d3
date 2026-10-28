@@ -1,12 +1,13 @@
 // POST /api/admin { action, ... } : actions réservées à l'administratrice.
 //   notify-availability { productId }            → e-mail « disponible » aux acheteurs de l'ebook
 //   import-stripe { paymentLinkUrl, productId, format } → importe les anciennes précommandes
+//   welcome-preview                               → s'envoie l'invitation à soi-même, pour la relire
 //   welcome-list / welcome                        → invite les acheteurs importés à découvrir leur espace
 //   test-email                                    → s'envoie un e-mail d'essai (vérifie Brevo)
 import type { Config } from "@netlify/functions";
 import { importPaymentLink, listWelcomePending, notifyAvailability, sendWelcome } from "../lib/admin";
 import { getStripe, getSupabaseAdmin } from "../lib/clients";
-import { brevoMailer, layout } from "../lib/email";
+import { brevoMailer, layout, welcomeEmail } from "../lib/email";
 import { siteUrl } from "../lib/env";
 import { fail, getUser, isAdmin, json } from "../lib/http";
 
@@ -39,6 +40,14 @@ export default async (req: Request) => {
         );
       case "welcome-list":
         return json({ people: await listWelcomePending(db) });
+      case "welcome-preview": {
+        const { data: product } = await db.from("products").select("*").eq("id", "hybris").maybeSingle();
+        const { data: profile } = await db.from("profiles").select("full_name").eq("id", user.id).maybeSingle();
+        if (!product) return fail("Livre introuvable", 404);
+        const mail = welcomeEmail({ email: user.email!, customer_name: profile?.full_name ?? null } as never, product, siteUrl());
+        await brevoMailer({ ...mail, subject: `[Aperçu] ${mail.subject}` });
+        return json({ sent: user.email });
+      }
       case "welcome":
         return json(await sendWelcome(db, brevoMailer, siteUrl()));
       case "test-email":

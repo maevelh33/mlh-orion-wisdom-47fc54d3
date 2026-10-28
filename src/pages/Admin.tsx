@@ -488,6 +488,17 @@ const WelcomeSection = () => {
   const [message, setMessage] = useState<{ tone: "success" | "danger" | "neutral"; text: string } | null>(null);
   const count = people.length;
 
+  const preview = async () => {
+    setBusy(true);
+    try {
+      const r = await callApi<{ sent: string }>("admin", { action: "welcome-preview" });
+      setMessage({ tone: "success", text: `Aperçu envoyé à ${r.sent}. Vérifiez votre boîte (et les indésirables).` });
+    } catch (e) {
+      setMessage({ tone: "danger", text: e instanceof Error ? e.message : String(e) });
+    }
+    setBusy(false);
+  };
+
   const send = async () => {
     if (!confirm(`Envoyer l'e-mail « Votre espace vous attend » à ${count} personne${count > 1 ? "s" : ""} ?`)) return;
     setBusy(true);
@@ -540,9 +551,14 @@ const WelcomeSection = () => {
           ))}
         </ul>
       )}
-      <PrimaryButton onClick={send} disabled={busy || count === 0}>
-        <Mail className="w-4 h-4" /> Envoyer l'invitation
-      </PrimaryButton>
+      <div className="flex flex-wrap gap-3">
+        <SecondaryButton onClick={preview} disabled={busy}>
+          M'envoyer un aperçu
+        </SecondaryButton>
+        <PrimaryButton onClick={send} disabled={busy || count === 0}>
+          <Mail className="w-4 h-4" /> Envoyer l'invitation
+        </PrimaryButton>
+      </div>
       {message && (
         <div className="mt-6">
           <Notice tone={message.tone}>{message.text}</Notice>
