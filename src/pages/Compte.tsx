@@ -91,7 +91,7 @@ const Compte = () => {
   const unread = (notifications.data ?? []).filter((n) => !n.read_at);
 
   const markRead = async (id?: string) => {
-    const query = supabase!.from("notifications").update({ read_at: new Date().toISOString() }).is("read_at", null);
+    const query = supabase!.from("notifications").update({ read_at: new Date().toISOString() }).eq("user_id", userId!).is("read_at", null);
     await (id ? query.eq("id", id) : query);
     queryClient.invalidateQueries({ queryKey: ["notifications", userId] });
   };
