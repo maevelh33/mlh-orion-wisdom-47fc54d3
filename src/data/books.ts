@@ -39,8 +39,10 @@ export interface BookData {
   aesthetic: { image?: string; caption: string }[];
   links: { label: string; url: string }[];
   titleNote?: { heading: string; paragraphs: string[] };
-  /** Mention affichée à la place des liens d'achat (ex. « Réédition en cours »). */
+  /** Mention affichée sous le titre (ex. « Réédition en cours »). */
   notice?: string;
+  /** Précommandable sur la boutique (page /livres/:slug/precommander, prix dans la table products). */
+  preorder?: boolean;
 }
 
 export const booksData: Record<string, BookData> = {
@@ -85,6 +87,7 @@ export const booksData: Record<string, BookData> = {
     aesthetic: [],
     links: [],
     notice: "Réédition en cours",
+    preorder: true,
   },
   hybris: {
     title: "Hybris",
@@ -114,6 +117,8 @@ export const booksData: Record<string, BookData> = {
     ],
     aesthetic: [],
     links: [],
+    notice: "Écriture en cours",
+    preorder: true,
     titleNote: {
       heading: "Pourquoi le titre Hybris ?",
       paragraphs: [

@@ -32,7 +32,7 @@ const Precommande = () => {
   const { product, isLoading } = useProduct(slug);
   const { session } = useAuth();
 
-  const [format, setFormat] = useState<Format>("paper");
+  const [chosenFormat, setFormat] = useState<Format | null>(null);
   const [zone, setZone] = useState<ShippingZone>("fr");
   const [accepted, setAccepted] = useState(false);
   const [showExtract, setShowExtract] = useState(false);
@@ -48,6 +48,8 @@ const Precommande = () => {
     );
   }
 
+  // Par défaut le livre papier s'il existe, sinon l'ebook (ex. Chaton, vendu seulement en ebook).
+  const format: Format = chosenFormat ?? (product.paper_price_cents ? "paper" : "ebook");
   const price = priceFor(product, format) ?? 0;
   const shipping = format === "paper" ? shippingFor(product, zone) : 0;
   const shippingOpen = format === "ebook" || shipping != null;

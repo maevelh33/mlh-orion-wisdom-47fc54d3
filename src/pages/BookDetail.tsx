@@ -136,7 +136,7 @@ const BookDetail = () => {
                 </p>
               ))}
             </div>
-            {(book.links.length > 0 || book.slug === "hybris") && (
+            {(book.links.length > 0 || book.preorder) && (
               <div className="mt-8">
                 <div className="flex flex-wrap gap-3">
                   {book.links.map((link) => (
@@ -150,12 +150,16 @@ const BookDetail = () => {
                       {link.label} <ExternalLink className="w-3.5 h-3.5" />
                     </a>
                   ))}
-                  {book.slug === "hybris" && (
+                  {book.preorder && (
                     <Link
-                      to="/livres/hybris/precommander"
-                      className="inline-flex items-center gap-2 font-body text-sm tracking-[0.15em] uppercase px-6 py-2.5 border border-[#c9a84c] bg-[#14100a] text-[#f0d78c] hover:bg-[#2a2114] transition-colors"
+                      to={`/livres/${book.slug}/precommander`}
+                      className={`inline-flex items-center gap-2 font-body text-sm tracking-[0.15em] uppercase px-6 py-2.5 transition-colors ${
+                        book.slug === "hybris"
+                          ? "border border-[#c9a84c] bg-[#14100a] text-[#f0d78c] hover:bg-[#2a2114]"
+                          : "bg-bordeaux text-primary-foreground hover:bg-bordeaux/90"
+                      }`}
                     >
-                      Précommander
+                      {book.slug === "hybris" ? "Précommander" : "Précommander l'ebook"}
                     </Link>
                   )}
                 </div>
