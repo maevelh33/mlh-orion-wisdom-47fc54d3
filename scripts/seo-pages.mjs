@@ -39,7 +39,7 @@ const structuredData = (path, page) => {
       description: page.description,
       inLanguage: "fr",
       author: person,
-      offers: { "@type": "Offer", url: page.book.url },
+      ...(page.book.url ? { offers: { "@type": "Offer", url: page.book.url } } : {}),
     };
   }
   if (path === "/") {

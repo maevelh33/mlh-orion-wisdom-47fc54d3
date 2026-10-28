@@ -6,6 +6,7 @@ import FadeIn from "@/components/FadeIn";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { booksData } from "@/data/books";
+import BookNotice from "@/components/BookNotice";
 
 const BookDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -49,7 +50,8 @@ const BookDetail = () => {
           <h1 className="font-display text-4xl md:text-6xl font-light text-foreground mb-2">
             {book.title}
           </h1>
-          <div className="w-12 h-px bg-bordeaux mb-12" />
+          <div className={`w-12 h-px bg-bordeaux ${book.notice ? "mb-6" : "mb-12"}`} />
+          {book.notice && <BookNotice className="mb-12">{book.notice}</BookNotice>}
         </FadeIn>
 
         {book.cover && (

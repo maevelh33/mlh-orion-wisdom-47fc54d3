@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import chatonCover from "@/assets/chaton-cover.webp";
 import hybrisCoverAsset from "@/assets/hybris-cover.webp";
 import FadeIn from "@/components/FadeIn";
+import BookNotice from "@/components/BookNotice";
+import { booksData } from "@/data/books";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -52,6 +54,7 @@ const Livres = () => {
                 <h2 className="font-display text-2xl font-medium text-foreground mb-4">
                   {book.title}
                 </h2>
+                {booksData[book.slug]?.notice && <BookNotice className="mb-4">{booksData[book.slug].notice}</BookNotice>}
                 <Link
                   to={`/livres/${book.slug}`}
                   className="inline-flex items-center gap-2 font-body text-sm tracking-[0.15em] uppercase px-6 py-2.5 border border-bordeaux text-bordeaux hover:bg-bordeaux hover:text-background transition-colors"

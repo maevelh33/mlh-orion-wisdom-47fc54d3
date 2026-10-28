@@ -39,6 +39,8 @@ export interface BookData {
   aesthetic: { image?: string; caption: string }[];
   links: { label: string; url: string }[];
   titleNote?: { heading: string; paragraphs: string[] };
+  /** Mention affichée à la place des liens d'achat (ex. « Réédition en cours »). */
+  notice?: string;
 }
 
 export const booksData: Record<string, BookData> = {
@@ -81,10 +83,8 @@ export const booksData: Record<string, BookData> = {
       },
     ],
     aesthetic: [],
-    links: [
-      { label: "Lire sur Amazon", url: "https://www.amazon.fr/CHATON-Ma%C3%ABve-Orion-ebook/dp/B0FY32HL79/ref=sr_1_1?crid=1G8BY6093UYNP&dib=eyJ2IjoiMSJ9.KUzbZmnlzmBdrK32UZe-LA.UvV9BZ1_XGJ61v5yKoMlF0mc6FDC71JTNzpFLVOUsXg&dib_tag=se&keywords=chaton+mlh+orion&qid=1772190463&sprefix=chaton+mlh%2Caps%2C245&sr=8-1" },
-      { label: "Lire gratuitement sur Wattpad", url: "https://www.wattpad.com/user/mlhorion" },
-    ],
+    links: [],
+    notice: "Réédition en cours",
   },
   hybris: {
     title: "Hybris",
