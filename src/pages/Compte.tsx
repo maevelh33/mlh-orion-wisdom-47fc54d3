@@ -10,6 +10,7 @@ import { displayStatus, formatLabel, formatPrice, grantsEbook, type Order, type 
 import { useMyOrders, useNotifications, useProducts } from "@/shop/useShop";
 import { Eyebrow, formatDate, Notice, SecondaryButton, StatusBadge, Title } from "@/shop/ui";
 import { PageShell } from "@/shop/ui";
+import PasswordForm from "@/shop/PasswordForm";
 
 const SectionTitle = ({ children }: { children: React.ReactNode }) => (
   <h2 className="font-body text-xs tracking-[0.3em] uppercase text-bordeaux mb-6">{children}</h2>
@@ -254,6 +255,7 @@ const Compte = () => {
           <SecondaryButton type="submit">{savedName ? "Enregistré" : "Enregistrer"}</SecondaryButton>
         </form>
         <p className="font-body text-sm text-muted-foreground mb-8">E-mail : {session?.user.email}</p>
+        <PasswordForm />
         <div className="flex flex-wrap gap-3">
           <SecondaryButton onClick={signOut}>
             <LogOut className="w-4 h-4" /> Se déconnecter
