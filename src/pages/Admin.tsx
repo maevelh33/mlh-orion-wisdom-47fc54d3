@@ -474,6 +474,85 @@ const BooksTab = () => {
 };
 
 // ---------------------------------------------------------------------------
+// Invitation des acheteurs des anciennes précommandes
+// ---------------------------------------------------------------------------
+const WelcomeSection = () => {
+  const queryClient = useQueryClient();
+  const pending = useQuery({
+    queryKey: ["admin", "welcome-list"],
+    queryFn: () =>
+      callApi<{ people: { email: string; name: string | null; paid_cents: number; orders: number }[] }>("admin", { action: "welcome-list" }),
+  });
+  const people = pending.data?.people ?? [];
+  const [busy, setBusy] = useState(false);
+  const [message, setMessage] = useState<{ tone: "success" | "danger" | "neutral"; text: string } | null>(null);
+  const count = people.length;
+
+  const send = async () => {
+    if (!confirm(`Envoyer l'e-mail « Votre espace vous attend » à ${count} personne${count > 1 ? "s" : ""} ?`)) return;
+    setBusy(true);
+    let total = 0;
+    const failures: string[] = [];
+    try {
+      for (;;) {
+        const r = await callApi<{ sent: number; remaining: number; failures: string[] }>("admin", { action: "welcome" });
+        total += r.sent;
+        failures.push(...r.failures);
+        setMessage({ tone: "neutral", text: `${total} e-mail${total > 1 ? "s" : ""} envoyé${total > 1 ? "s" : ""}…` });
+        if (r.remaining === 0 || r.sent === 0) break;
+      }
+      setMessage(
+        failures.length
+          ? { tone: "danger", text: `${total} envoyés, ${failures.length} en échec : ${failures.join(" ; ")}` }
+          : { tone: "success", text: `${total} personne${total > 1 ? "s" : ""} invitée${total > 1 ? "s" : ""}.` },
+      );
+    } catch (e) {
+      setMessage({ tone: "danger", text: e instanceof Error ? e.message : String(e) });
+    }
+    setBusy(false);
+    queryClient.invalidateQueries({ queryKey: ["admin"] });
+  };
+
+  return (
+    <section className="p-6 md:p-8 bg-card/50 border border-border rounded-sm">
+      <h3 className="font-display text-2xl text-foreground mb-2">Inviter les premiers acheteurs</h3>
+      <p className="font-body text-sm text-muted-foreground mb-6">
+        Envoie un e-mail « Votre espace vous attend » aux personnes qui ont payé le livre papier de Hybris avec l'ancien lien Stripe (commandes
+        importées et payées uniquement : jamais les appels, la formation ni les commandes remboursées). Une seule fois par personne. Vérifiez la
+        liste ci-dessous avant d'envoyer.
+      </p>
+      <p className="font-body text-sm text-foreground mb-3">
+        {pending.isLoading ? "Calcul…" : pending.isError ? "Liste indisponible." : `${count} personne${count > 1 ? "s" : ""} à inviter`}
+      </p>
+      {count > 0 && (
+        <ul className="mb-6 max-h-72 overflow-y-auto divide-y divide-border border-y border-border font-body text-sm">
+          {people.map((p) => (
+            <li key={p.email} className="py-2 flex justify-between gap-4">
+              <span className="min-w-0 truncate">
+                {p.name ? `${p.name} · ` : ""}
+                <span className="text-muted-foreground">{p.email}</span>
+              </span>
+              <span className="shrink-0 text-foreground">
+                {formatPrice(p.paid_cents)}
+                {p.orders > 1 && <span className="text-muted-foreground"> ({p.orders} commandes)</span>}
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
+      <PrimaryButton onClick={send} disabled={busy || count === 0}>
+        <Mail className="w-4 h-4" /> Envoyer l'invitation
+      </PrimaryButton>
+      {message && (
+        <div className="mt-6">
+          <Notice tone={message.tone}>{message.text}</Notice>
+        </div>
+      )}
+    </section>
+  );
+};
+
+// ---------------------------------------------------------------------------
 // Outils : import des anciennes précommandes, test des e-mails
 // ---------------------------------------------------------------------------
 const ToolsTab = () => {
@@ -536,6 +615,8 @@ const ToolsTab = () => {
           </PrimaryButton>
         </div>
       </section>
+
+      <WelcomeSection />
 
       <section className="p-6 md:p-8 bg-card/50 border border-border rounded-sm">
         <h3 className="font-display text-2xl text-foreground mb-2">Tester les e-mails</h3>

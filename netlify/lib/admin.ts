@@ -1,7 +1,7 @@
 import type Stripe from "stripe";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Format, Order, Product } from "../../src/lib/shop";
-import { bookAvailableEmail, type Mailer } from "./email";
+import { bookAvailableEmail, welcomeEmail, type Mailer } from "./email";
 import { orderFromSession } from "./orders";
 
 /** Nombre d'e-mails envoyés par appel : la page d'administration rappelle tant qu'il en reste. */
@@ -113,4 +113,74 @@ export const importPaymentLink = async (
     imported++;
   }
   return { imported, skipped };
+};
+
+/** Seules les précommandes du livre papier de Hybris faites avec l'ancien lien Stripe sont concernées. */
+export const WELCOME_SCOPE = { productId: "hybris", format: "paper" } as const;
+
+/**
+ * Commandes importées (ancien lien de paiement), payées, du livre papier de Hybris,
+ * dont l'acheteur n'a pas encore reçu l'e-mail de bienvenue. Les autres paiements
+ * Stripe (appels, formation…) ne sont jamais importés, donc jamais concernés.
+ */
+const welcomePending = (db: SupabaseClient) =>
+  db
+    .from("orders")
+    .select("*")
+    .eq("source", "import")
+    .eq("product_id", WELCOME_SCOPE.productId)
+    .eq("format", WELCOME_SCOPE.format)
+    .eq("status", "paid")
+    .is("welcome_sent_at", null)
+    .order("created_at");
+
+/** Liste des personnes (une par adresse e-mail) qui recevront l'invitation, pour vérification. */
+export const listWelcomePending = async (db: SupabaseClient) => {
+  const { data, error } = await welcomePending(db).returns<Order[]>();
+  if (error) throw new Error(error.message);
+  const people = new Map<string, { email: string; name: string | null; paid_cents: number; orders: number }>();
+  for (const o of data ?? []) {
+    const p = people.get(o.email) ?? { email: o.email, name: o.customer_name, paid_cents: 0, orders: 0 };
+    p.paid_cents += o.amount_total_cents - o.amount_refunded_cents;
+    p.orders++;
+    people.set(o.email, p);
+  }
+  return [...people.values()];
+};
+
+/**
+ * Invite les acheteurs des anciennes précommandes à découvrir leur espace :
+ * un seul e-mail par personne, même si elle a plusieurs commandes, et jamais deux fois.
+ */
+export const sendWelcome = async (db: SupabaseClient, mail: Mailer, site: string) => {
+  const { data, error } = await welcomePending(db).returns<Order[]>();
+  if (error) throw new Error(error.message);
+
+  const byEmail = new Map<string, Order>();
+  for (const o of data ?? []) if (!byEmail.has(o.email.toLowerCase())) byEmail.set(o.email.toLowerCase(), o);
+
+  const products = new Map<string, Product>();
+  let sent = 0;
+  const failures: string[] = [];
+  for (const [email, order] of [...byEmail].slice(0, AVAILABILITY_BATCH)) {
+    try {
+      let product = products.get(order.product_id);
+      if (!product) {
+        const { data: p } = await db.from("products").select("*").eq("id", order.product_id).maybeSingle<Product>();
+        if (!p) throw new Error("livre introuvable");
+        products.set(order.product_id, (product = p));
+      }
+      await mail(welcomeEmail(order, product, site));
+      await db
+        .from("orders")
+        .update({ welcome_sent_at: new Date().toISOString() })
+        .eq("source", "import")
+        .eq("email", order.email); // les e-mails des commandes sont enregistrés en minuscules
+      sent++;
+    } catch (e) {
+      failures.push(`${email} : ${e instanceof Error ? e.message : e}`);
+    }
+  }
+  const remaining = Math.max(0, byEmail.size - sent - failures.length);
+  return { sent, remaining, failures };
 };

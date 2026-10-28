@@ -6,7 +6,9 @@ import { join } from "node:path";
 import { PGlite } from "@electric-sql/pglite";
 import { beforeAll, describe, expect, it } from "vitest";
 
-const migration = readFileSync(join(__dirname, "../migrations/20261028000000_boutique.sql"), "utf8");
+const migration = ["20261028000000_boutique.sql", "20261028010000_bienvenue.sql"]
+  .map((f) => readFileSync(join(__dirname, "../migrations", f), "utf8"))
+  .join("\n");
 
 const SUPABASE_STUB = `
   create schema auth;

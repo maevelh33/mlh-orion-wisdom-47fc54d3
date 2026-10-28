@@ -121,7 +121,11 @@ Après avoir ajouté les variables : **Deploys** → **Trigger deploy** → **Cl
 2. Passez Stripe en production (étape 3) et mettez à jour `STRIPE_SECRET_KEY` et `STRIPE_WEBHOOK_SECRET` dans Netlify.
 3. **Importez les anciennes précommandes** : Administration → **Outils** → **Importer** (le lien `buy.stripe.com/…` actuel est déjà rempli).
    Vérifiez le format de chaque commande importée dans l'onglet **Commandes**.
-4. Désactivez l'ancien lien de paiement dans Stripe (**Liens de paiement** → … → **Désactiver**), pour que tout passe par la boutique.
+4. Prévenez ces premiers acheteurs : Administration → **Outils** → **Inviter les premiers acheteurs**.
+   Vérifiez la liste affichée (seules les précommandes papier importées et payées y figurent), puis envoyez :
+   chacun reçoit une seule fois l'e-mail « Votre espace vous attend », avec un lien qui ouvre la connexion, son adresse déjà remplie.
+   (Exécutez d'abord `supabase/migrations/20261028010000_bienvenue.sql` dans le SQL Editor.)
+5. Désactivez l'ancien lien de paiement dans Stripe (**Liens de paiement** → … → **Désactiver**), pour que tout passe par la boutique.
 
 ---
 

@@ -1,4 +1,4 @@
-import { formatLabel, formatPrice, type Order, type Product } from "../../src/lib/shop";
+import { de, formatLabel, formatPrice, type Order, type Product } from "../../src/lib/shop";
 import { requireEnv } from "./env";
 
 export interface Email {
@@ -82,7 +82,7 @@ export const orderConfirmationEmail = (order: Order, product: Product, site: str
   return {
     to: order.email,
     toName: order.customer_name,
-    subject: ready ? `Votre ebook ${product.title} est prêt` : `Votre précommande de ${product.title} est confirmée`,
+    subject: ready ? `Votre ebook ${product.title} est prêt` : `Votre précommande ${de(product.title)} est confirmée`,
     html: layout(
       ready ? "Merci pour votre achat" : "Merci pour votre précommande",
       greeting(order) +
@@ -102,7 +102,7 @@ export const paymentFailedEmail = (order: Order, product: Product, site: string)
   html: layout(
     "Le paiement n'a pas abouti",
     greeting(order) +
-      p(`Votre banque a refusé le paiement de votre commande de <strong>${esc(product.title)}</strong> (${formatLabel(order.format).toLowerCase()}). Aucune somme n'a été prélevée.`) +
+      p(`Votre banque a refusé le paiement de votre commande ${de(`<strong>${esc(product.title)}</strong>`)} (${formatLabel(order.format).toLowerCase()}). Aucune somme n'a été prélevée.`) +
       p("Vous pouvez recommencer quand vous le souhaitez :") +
       `<p style="text-align:center;margin:28px 0 8px">${button(`${site}/livres/${product.id}/precommander`, "Réessayer")}</p>`,
     site,
@@ -114,11 +114,11 @@ export const refundEmail = (order: Order, product: Product, site: string): Email
   return {
     to: order.email,
     toName: order.customer_name,
-    subject: `Remboursement de votre commande ${product.title}`,
+    subject: `Remboursement de votre commande ${de(product.title)}`,
     html: layout(
       full ? "Votre commande a été remboursée" : "Remboursement partiel effectué",
       greeting(order) +
-        p(`Un remboursement de <strong>${formatPrice(order.amount_refunded_cents, order.currency)}</strong> a été effectué pour votre commande de ${esc(product.title)} (${formatLabel(order.format).toLowerCase()}).`) +
+        p(`Un remboursement de <strong>${formatPrice(order.amount_refunded_cents, order.currency)}</strong> a été effectué pour votre commande ${de(esc(product.title))} (${formatLabel(order.format).toLowerCase()}).`) +
         p("Il apparaîtra sur votre compte bancaire sous 5 à 10 jours ouvrés, selon votre banque.") +
         (full && order.format === "ebook" ? p("L'accès à cet ebook a été retiré de votre espace.") : ""),
       site,
@@ -139,3 +139,38 @@ export const bookAvailableEmail = (order: Order, product: Product, site: string)
     site,
   ),
 });
+
+/** Lien de connexion avec l'adresse pré-remplie (dans le fragment #, qui n'est jamais envoyé au serveur). */
+export const loginLink = (site: string, email: string) => `${site}/connexion#email=${encodeURIComponent(email)}`;
+
+/** Invitation des acheteurs des anciennes précommandes (importées) à découvrir leur espace. */
+export const welcomeEmail = (order: Order, product: Product, site: string): Email => {
+  const link = loginLink(site, order.email);
+  const li = (text: string) => `<li style="margin:0 0 8px">${text}</li>`;
+  return {
+    to: order.email,
+    toName: order.customer_name,
+    subject: "Votre espace vous attend sur mlhorion.com",
+    html: layout(
+      "Votre espace vous attend",
+      greeting(order) +
+        p(
+          `Vous avez fait partie des tout premiers à précommander <strong>${esc(product.title)}</strong>, avant même que la boutique n'existe. Merci : votre confiance compte énormément pour moi.`,
+        ) +
+        p("Pour vous accueillir comme il se doit, j'ai ouvert sur mon site un espace rien qu'à vous. Vous y retrouverez :") +
+        `<ul style="margin:0 0 20px;padding-left:20px">${[
+          `votre précommande ${de(esc(product.title))} et son suivi, jusqu'à l'expédition de votre exemplaire ;`,
+          "les nouvelles de la sortie, dès qu'elles tombent ;",
+          "bientôt, mes livres numériques à lire directement en ligne.",
+        ]
+          .map(li)
+          .join("")}</ul>` +
+        p(`Pas de mot de passe à retenir : connectez-vous simplement avec cette adresse e-mail (<strong>${esc(order.email)}</strong>), et un lien de connexion vous sera envoyé.`) +
+        `<p style="text-align:center;margin:28px 0 12px">${button(link, "Découvrir mon espace")}</p>` +
+        `<p style="margin:0 0 24px;text-align:center;font-size:12px">Ou copiez ce lien : <a href="${esc(link)}" style="color:${C.bordeaux};word-break:break-all">${esc(link)}</a></p>` +
+        p(`À très bientôt dans les pages ${de(esc(product.title))},`) +
+        `<p style="margin:0;font-family:Georgia,'Cormorant Garamond',serif;font-size:20px;color:${C.ink}">Maëve</p>`,
+      site,
+    ),
+  };
+};

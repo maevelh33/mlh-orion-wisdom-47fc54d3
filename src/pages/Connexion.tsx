@@ -8,6 +8,17 @@ import { Eyebrow, Notice, PageShell, PrimaryButton, Title } from "@/shop/ui";
 // Seules les adresses internes au site sont acceptées comme destination après connexion.
 const safeNext = (value: string | null) => (value && value.startsWith("/") && !value.startsWith("//") ? value : "/compte");
 
+/** Adresse transmise par le lien de l'e-mail d'invitation (/connexion#email=…), jamais envoyée au serveur. */
+const emailFromLink = () => {
+  const match = window.location.hash.match(/(?:^#|&)email=([^&]+)/);
+  if (!match) return "";
+  try {
+    return decodeURIComponent(match[1]);
+  } catch {
+    return "";
+  }
+};
+
 const inputClass =
   "w-full px-4 py-3 bg-background border border-border rounded-sm font-body text-base text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:border-bordeaux transition-colors";
 
@@ -16,7 +27,7 @@ const Connexion = () => {
   const next = safeNext(params.get("suite"));
   const { session, loading } = useAuth();
 
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(emailFromLink);
   const [code, setCode] = useState("");
   const [step, setStep] = useState<"email" | "sent">("email");
   const [busy, setBusy] = useState(false);

@@ -39,6 +39,7 @@ export interface Order {
   receipt_url: string | null;
   source: "checkout" | "import";
   availability_notified_at: string | null;
+  welcome_sent_at?: string | null;
   created_at: string;
   paid_at: string | null;
   refunded_at: string | null;
@@ -62,6 +63,9 @@ export const EU_COUNTRIES = [
 
 export const formatPrice = (cents: number, currency = "eur") =>
   new Intl.NumberFormat("fr-FR", { style: "currency", currency: currency.toUpperCase() }).format(cents / 100);
+
+/** « de » élidé devant une voyelle ou un h muet : « d'Hybris », « de Chaton ». */
+export const de = (word: string) => (/^[aeiouyhàâéèêëîïôûù]/i.test(word.replace(/^<[^>]+>/, "")) ? `d'${word}` : `de ${word}`);
 
 export const formatLabel = (format: Format) => (format === "ebook" ? "Ebook" : "Livre papier");
 

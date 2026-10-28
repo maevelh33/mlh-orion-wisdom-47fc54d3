@@ -103,7 +103,7 @@ describe("webhook Stripe", () => {
       receipt_url: "https://pay.stripe.com/receipts/1",
     });
     expect(sent).toEqual(["confirmation:client@example.com"]);
-    expect(db.notifications).toEqual([{ userId: "user-client", title: "Précommande de Hybris confirmée" }]);
+    expect(db.notifications).toEqual([{ userId: "user-client", title: "Précommande d'Hybris confirmée" }]);
   });
 
   it("livre papier : adresse, frais de port et dédicace", async () => {
