@@ -19,6 +19,8 @@ export const describeConfigError = (error: unknown): string | null => {
   const e = error as { type?: string; message?: string } | null;
   if (e?.type === "StripeAuthenticationError") return "clé Stripe refusée (STRIPE_SECRET_KEY)";
   if (e?.type === "StripePermissionError") return "clé Stripe sans les droits nécessaires (STRIPE_SECRET_KEY)";
+  // Refus de Stripe lié au compte ou à la demande (ex. nom d'entreprise manquant) : message sans secret.
+  if (e?.type === "StripeInvalidRequestError") return `Stripe refuse la demande : ${e.message}`;
   return null;
 };
 
