@@ -19,11 +19,11 @@ const HybrisBanner = () => {
               <img
                 src={bannerTall}
                 alt=""
-                className="w-full h-full object-cover object-center lg:object-[78%_50%] transition-transform duration-[1500ms] group-hover:scale-105"
+                className="w-full h-full object-contain object-bottom md:object-cover md:object-center lg:object-[78%_50%] transition-transform duration-[1500ms] group-hover:scale-105"
               />
             </picture>
             {/* Dark overlay for text legibility on the left */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-black/20 md:from-black/90 md:via-black/50 md:to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black via-black/75 to-black/20 md:bg-gradient-to-r md:from-black/90 md:via-black/50 md:to-transparent" />
           </div>
 
           {/* Content */}
