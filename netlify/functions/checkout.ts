@@ -38,7 +38,9 @@ export default async (req: Request) => {
     if (error instanceof CheckoutError) return fail(error.message);
     console.error("checkout", error);
     const config = describeConfigError(error);
-    return fail(`Le paiement est momentanément indisponible.${config ? ` Réglage à vérifier : ${config}.` : " Réessayez dans quelques minutes."}`, 500);
+    // Type d'erreur seul (sans son contenu) : aide au diagnostic sans rien révéler.
+    const kind = (error as { type?: string; name?: string } | null)?.type ?? (error as Error | null)?.name ?? "inconnue";
+    return fail(`Le paiement est momentanément indisponible.${config ? ` Réglage à vérifier : ${config}.` : ` Réessayez dans quelques minutes. (${kind})`}`, 500);
   }
 };
 
