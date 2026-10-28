@@ -3,7 +3,7 @@ import type { Config } from "@netlify/functions";
 import type { Format, Product, ShippingZone } from "../../src/lib/shop";
 import { buildCheckoutParams, CheckoutError } from "../lib/checkout";
 import { getStripe, getSupabaseAdmin } from "../lib/clients";
-import { siteUrl } from "../lib/env";
+import { ConfigError, describeConfigError, siteUrl } from "../lib/env";
 import { fail, getUser, json } from "../lib/http";
 
 export default async (req: Request) => {
@@ -20,7 +20,8 @@ export default async (req: Request) => {
 
   try {
     const db = getSupabaseAdmin();
-    const { data: product } = await db.from("products").select("*").eq("id", body.productId).maybeSingle<Product>();
+    const { data: product, error: dbError } = await db.from("products").select("*").eq("id", body.productId).maybeSingle<Product>();
+    if (dbError) throw new ConfigError(`base Supabase inaccessible (SUPABASE_URL ou SUPABASE_SERVICE_ROLE_KEY ?) : ${dbError.message}`);
     if (!product) return fail("Livre introuvable", 404);
 
     const user = await getUser(req, db);
@@ -36,7 +37,8 @@ export default async (req: Request) => {
   } catch (error) {
     if (error instanceof CheckoutError) return fail(error.message);
     console.error("checkout", error);
-    return fail("Le paiement est momentanément indisponible. Réessayez dans quelques minutes.", 500);
+    const config = describeConfigError(error);
+    return fail(`Le paiement est momentanément indisponible.${config ? ` Réglage à vérifier : ${config}.` : " Réessayez dans quelques minutes."}`, 500);
   }
 };
 
