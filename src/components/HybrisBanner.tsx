@@ -2,23 +2,28 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import banner from "@/assets/hybris-banner.webp";
+import bannerTall from "@/assets/hybris-banner-tall.webp";
 
 const HybrisBanner = () => {
   return (
     <section className="px-4 md:px-6 py-16 md:py-24 bg-background">
       <div className="max-w-6xl mx-auto">
         <div
-          className="group block relative overflow-hidden rounded-lg shadow-2xl border border-bordeaux/20"
+          className="group block relative overflow-hidden rounded-lg shadow-2xl border border-bordeaux/20 bg-black"
         >
           {/* Background image */}
-          <div className="absolute inset-0">
-            <img
-              src={banner}
-              alt=""
-              className="w-full h-full object-cover transition-transform duration-[1500ms] group-hover:scale-105"
-            />
+          {/* Téléphone : image en fond ; tablette : dans la moitié droite, à côté du texte ; grand écran : bannière large */}
+          <div className="absolute inset-0 md:left-1/2 lg:left-0">
+            <picture>
+              <source media="(min-width: 1024px)" srcSet={banner} />
+              <img
+                src={bannerTall}
+                alt=""
+                className="w-full h-full object-contain object-bottom md:object-cover md:object-center lg:object-[78%_50%] transition-transform duration-[1500ms] group-hover:scale-105"
+              />
+            </picture>
             {/* Dark overlay for text legibility on the left */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-black/20 md:from-black/90 md:via-black/50 md:to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black via-black/75 to-black/20 md:bg-gradient-to-r md:from-black/90 md:via-black/50 md:to-transparent" />
           </div>
 
           {/* Content */}
