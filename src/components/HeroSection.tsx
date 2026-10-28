@@ -1,7 +1,11 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import { User } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
+import { useAuth } from "@/auth/AuthProvider";
 
 const HeroSection = () => {
+  const { session } = useAuth();
   return (
     <section id="accueil" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background image */}
@@ -52,15 +56,23 @@ const HeroSection = () => {
           </span>
         </motion.p>
 
-        <motion.a
-          href="#presentation"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.4 }}
-          className="inline-block mt-12 font-body text-xs tracking-[0.3em] uppercase text-primary-foreground/60 hover:text-primary-foreground transition-colors border-b border-primary-foreground/30 pb-1"
+          className="mt-12 flex flex-col items-center"
         >
-          Découvrir
-        </motion.a>
+          <Link
+            to="/compte"
+            className="inline-flex items-center gap-2.5 font-body text-xs tracking-[0.3em] uppercase px-8 py-3.5 border border-primary-foreground/50 text-primary-foreground hover:bg-primary-foreground hover:text-foreground transition-colors"
+          >
+            <User className="w-4 h-4" />
+            {session ? "Accéder à mon espace" : "Me connecter à mon espace"}
+          </Link>
+          <p className="mt-4 max-w-sm font-body text-xs leading-relaxed text-primary-foreground/70">
+            Suivez vos précommandes, recevez en avant-première les nouvelles d'Hybris et retrouvez vos livres numériques, sans mot de passe.
+          </p>
+        </motion.div>
       </div>
     </section>
   );
