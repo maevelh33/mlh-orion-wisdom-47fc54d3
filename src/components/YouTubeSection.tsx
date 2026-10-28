@@ -7,7 +7,7 @@ const UPLOADS_PLAYLIST = "UUyWM4YRwHwAxld74qQ-6wMA";
 
 const YouTubeSection = () => {
   return (
-    <section id="youtube" className="py-24 md:py-32 bg-cream">
+    <section id="youtube" className="py-24 md:py-32 bg-background">
       <div className="max-w-3xl mx-auto px-6">
         <FadeIn>
           <p className="font-body text-xs tracking-[0.4em] uppercase text-muted-foreground mb-4">
@@ -49,7 +49,7 @@ const YouTubeSection = () => {
 
         {/* Value proposition */}
         <FadeIn delay={0.45}>
-          <div className="mt-12 p-8 bg-background rounded border border-border">
+          <div className="mt-12 p-8 bg-cream rounded border border-border">
             <h3 className="font-display text-2xl font-medium text-foreground mb-4">
               La valeur de ma chaîne
             </h3>
