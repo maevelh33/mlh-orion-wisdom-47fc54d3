@@ -8,9 +8,7 @@ import { shopConfigured } from "@/lib/supabase";
 // Les ancres passent par "/" pour fonctionner aussi depuis les pages Livres.
 const navLinks = [
   { label: "Accueil", to: "/#accueil" },
-  { label: "Présentation", to: "/#presentation" },
   { label: "Livres", to: "/livres" },
-  { label: "YouTube", to: "/#youtube" },
   { label: "Formation", to: "/#formation" },
   { label: "Services", to: "/#services" },
   { label: "Contact", to: "/#contact" },
