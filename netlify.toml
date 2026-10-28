@@ -6,7 +6,8 @@
   publish = "dist"
 
 [build.environment]
-  NODE_VERSION = "20"
+  # Node 22 minimum : la bibliothèque Supabase utilise le WebSocket natif de Node.
+  NODE_VERSION = "22"
 
 # Fonctions serveur de la boutique (paiement Stripe, webhook, administration),
 # servies sous /api/… (voir l'adresse « path » en bas de chaque fichier).

@@ -6,7 +6,7 @@ Fait avec Vite, React, TypeScript, Tailwind CSS et framer-motion.
 
 ## Travailler sur le site
 
-Il faut [Node.js](https://nodejs.org) (version 20 ou plus).
+Il faut [Node.js](https://nodejs.org) (version 22 ou plus).
 
 ```sh
 npm install      # une seule fois, installe les dépendances
