@@ -17,8 +17,16 @@ npm run preview  # affiche le site construit, comme en ligne
 
 ## Mise en ligne
 
-Chaque push sur la branche `main` publie automatiquement le site sur GitHub Pages
-(voir `.github/workflows/static.yml`). Le domaine est défini dans `CNAME`.
+Le site est hébergé sur [Netlify](https://app.netlify.com), relié à ce dépôt GitHub.
+Chaque push (ou pull request fusionnée) sur la branche `main` est construit et mis
+en ligne automatiquement en 1 à 2 minutes. Le suivi des mises en ligne se trouve dans
+l'onglet **Deploys** du site sur Netlify.
+
+- Les réglages de construction sont dans `netlify.toml` (commande `npm run build`,
+  dossier publié `dist`).
+- Le nom de domaine mlhorion.com se gère dans Netlify (**Domain management**).
+- Si une mise en ligne échoue, Netlify garde la version précédente en ligne : le site
+  ne tombe pas en panne. Le message d'erreur est dans le détail du déploiement.
 
 ## Où modifier quoi
 

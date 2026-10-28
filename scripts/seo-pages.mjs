@@ -1,6 +1,6 @@
 // Après `vite build` : crée une vraie page HTML par route (titre, description,
 // aperçu de partage et données structurées propres à chaque page) et le sitemap.
-// Sans ça, GitHub Pages renvoie une erreur 404 sur /livres et /livres/hybris,
+// Sans ça, l'hébergeur renvoie une erreur 404 sur /livres et /livres/hybris,
 // et les aperçus Instagram/WhatsApp affichent tous ceux de l'accueil.
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -14,7 +14,7 @@ const template = readFileSync(join(dist, "index.html"), "utf8");
 const esc = (s) =>
   s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-// GitHub Pages sert /livres/index.html à l'adresse /livres/ (avec la barre finale).
+// Netlify sert /livres/index.html à l'adresse /livres/ (avec la barre finale).
 const pageUrl = (path) => `${site.url}${path}${path.endsWith("/") ? "" : "/"}`;
 
 const person = {

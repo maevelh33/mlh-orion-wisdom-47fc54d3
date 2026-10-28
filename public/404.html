@@ -5,7 +5,7 @@
     <meta name="robots" content="noindex">
     <title>Page introuvable | MLH.ORION</title>
     <script>
-      // GitHub Pages : renvoie les adresses inconnues vers l'application,
+      // Netlify sert ce fichier pour les adresses inconnues : on renvoie vers l'application,
       // qui affiche sa propre page « introuvable ».
       var l = window.location;
       l.replace('/?redirect=' + encodeURIComponent(l.pathname + l.search + l.hash));
