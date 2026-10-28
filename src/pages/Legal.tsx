@@ -59,8 +59,9 @@ const Cgv = () => (
       sortie ; le livre papier est expédié à partir de sa sortie.
     </P>
     <P>
-      Si la sortie est repoussée de plus de <ToFill>durée, ex. 6 mois</ToFill> après la date annoncée, ou si le livre ne paraît pas, l'acheteur
-      peut demander l'annulation et le remboursement intégral de sa précommande en écrivant à {CONTACT}.
+      Si la sortie est repoussée de plus de 6 mois après la date annoncée lors de la commande, ou si le livre ne paraît pas, l'acheteur peut
+      demander l'annulation et le remboursement intégral de sa précommande en écrivant à {CONTACT}. Le remboursement intervient dans les 14
+      jours suivant la demande. Tout changement de date de sortie est indiqué sur la page du livre et dans l'espace client.
     </P>
     <H>2. Prix et paiement</H>
     <P>
@@ -71,8 +72,10 @@ const Cgv = () => (
     </P>
     <H>3. Livraison du livre papier</H>
     <P>
-      Le livre papier est expédié à l'adresse indiquée lors du paiement, en France ou dans l'Union européenne selon les zones ouvertes. Délai
-      indicatif après expédition : <ToFill>ex. 3 à 7 jours ouvrés en France</ToFill>. Le statut « Expédié » apparaît dans l'espace client.
+      Le livre papier est expédié à l'adresse indiquée lors du paiement, en France ou dans l'Union européenne selon les zones ouvertes, au plus
+      tard 30 jours après la sortie du livre (ou après la commande, si le livre est déjà paru). Délai indicatif d'acheminement après
+      expédition : 3 à 7 jours ouvrés en France métropolitaine, 5 à 12 jours ouvrés vers les autres pays de l'Union européenne. Le statut
+      « Expédié » apparaît alors dans l'espace client.
     </P>
     <H>4. Accès à l'ebook</H>
     <P>
