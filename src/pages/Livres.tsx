@@ -1,25 +1,7 @@
-import { Info } from "lucide-react";
-import { Link } from "react-router-dom";
-import chatonCover from "@/assets/chaton-cover.webp";
-import hybrisCoverAsset from "@/assets/hybris-cover.webp";
 import FadeIn from "@/components/FadeIn";
-import BookNotice from "@/components/BookNotice";
-import { booksData } from "@/data/books";
+import BookCards from "@/components/BookCards";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-
-const books = [
-  {
-    title: "Chaton",
-    slug: "chaton",
-    cover: chatonCover,
-  },
-  {
-    title: "Hybris",
-    slug: "hybris",
-    cover: hybrisCoverAsset,
-  },
-];
 
 const Livres = () => {
   return (
@@ -40,30 +22,8 @@ const Livres = () => {
         </FadeIn>
 
         {/* Books */}
-        <div className="grid gap-10 sm:grid-cols-2 mb-20">
-          {books.map((book, i) => (
-            <FadeIn key={book.title} delay={i * 0.1}>
-              <div className="p-6 bg-card border border-border rounded flex flex-col items-center text-center">
-                <Link to={`/livres/${book.slug}`} className="block w-full mb-6 overflow-hidden rounded">
-                  <img
-                    src={book.cover}
-                    alt={`Couverture de ${book.title}`}
-                    className="w-full h-auto object-cover transition-transform duration-500 hover:scale-105"
-                  />
-                </Link>
-                <h2 className="font-display text-2xl font-medium text-foreground mb-4">
-                  {book.title}
-                </h2>
-                {booksData[book.slug]?.notice && <BookNotice className="mb-4">{booksData[book.slug].notice}</BookNotice>}
-                <Link
-                  to={`/livres/${book.slug}`}
-                  className="inline-flex items-center gap-2 font-body text-sm tracking-[0.15em] uppercase px-6 py-2.5 border border-bordeaux text-bordeaux hover:bg-bordeaux hover:text-background transition-colors"
-                >
-                  Plus d'infos <Info className="w-3.5 h-3.5" />
-                </Link>
-              </div>
-            </FadeIn>
-          ))}
+        <div className="mb-20">
+          <BookCards />
         </div>
 
         {/* Substack */}

@@ -12,7 +12,7 @@ const externalLinks = [
 
 const ServicesSection = () => {
   return (
-    <section id="services" className="py-24 md:py-32 bg-cream">
+    <section id="services" className="py-24 md:py-32 bg-background">
       <div className="max-w-4xl mx-auto px-6">
         <FadeIn>
           <p className="font-body text-xs tracking-[0.4em] uppercase text-muted-foreground mb-4">
@@ -26,7 +26,7 @@ const ServicesSection = () => {
 
         {/* PRIMARY OFFER — Réserver un appel */}
         <FadeIn delay={0.1}>
-          <div className="relative p-8 md:p-14 bg-background rounded border-2 border-bordeaux/30 shadow-[0_20px_60px_-30px_hsl(var(--bordeaux)/0.4)] text-center mb-16 overflow-hidden">
+          <div className="relative p-8 md:p-14 bg-cream rounded border-2 border-bordeaux/30 shadow-[0_20px_60px_-30px_hsl(var(--bordeaux)/0.4)] text-center mb-16 overflow-hidden">
             <div className="absolute top-4 right-4 inline-flex items-center gap-1.5 font-body text-[10px] tracking-[0.25em] uppercase text-bordeaux">
               <Sparkles className="w-3 h-3" /> Recommandé
             </div>

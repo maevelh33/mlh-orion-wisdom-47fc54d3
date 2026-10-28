@@ -12,7 +12,7 @@ const Paragraph = ({ children }: { children: React.ReactNode }) => (
 
 const AboutSection = () => {
   return (
-    <section id="presentation" className="py-24 md:py-32 bg-background">
+    <section id="presentation" className="py-24 md:py-32 bg-cream">
       <div className="max-w-3xl mx-auto px-6">
         <FadeIn>
           <p className="font-body text-xs tracking-[0.4em] uppercase text-muted-foreground mb-4">

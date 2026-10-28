@@ -6,6 +6,7 @@ import FormationSection from "@/components/FormationSection";
 import ServicesSection from "@/components/ServicesSection";
 import ContactSection from "@/components/ContactSection";
 import HybrisBanner from "@/components/HybrisBanner";
+import BooksSection from "@/components/BooksSection";
 import MetisBanner from "@/components/MetisBanner";
 import Footer from "@/components/Footer";
 
@@ -15,11 +16,12 @@ const Index = () => {
       <Navbar />
       <HeroSection />
       <HybrisBanner />
+      <BooksSection />
       <MetisBanner />
+      <ServicesSection />
       <AboutSection />
       <YouTubeSection />
       <FormationSection />
-      <ServicesSection />
       <ContactSection />
       <Footer />
     </div>
