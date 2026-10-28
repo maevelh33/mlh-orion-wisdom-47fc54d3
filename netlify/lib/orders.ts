@@ -1,6 +1,6 @@
 import type Stripe from "stripe";
 import type { SupabaseClient } from "@supabase/supabase-js";
-import type { Format, Order, OrderStatus, Product, ShippingAddress } from "../../src/lib/shop";
+import { de, type Format, type Order, type OrderStatus, type Product, type ShippingAddress } from "../../src/lib/shop";
 
 /** Accès aux données dont le traitement des paiements a besoin (Supabase en vrai, mémoire en test). */
 export interface ShopRepo {
@@ -93,7 +93,7 @@ export const handleStripeEvent = async (event: Stripe.Event, deps: WebhookDeps):
         await deps.sendEmail("confirmation", order, product).catch((e) => log("e-mail de confirmation non envoyé", e));
         if (order.user_id) {
           await repo.notify(order.user_id, {
-            title: order.format === "ebook" && product.ebook_status === "available" ? `${product.title} est dans votre bibliothèque` : `Précommande de ${product.title} confirmée`,
+            title: order.format === "ebook" && product.ebook_status === "available" ? `${product.title} est dans votre bibliothèque` : `Précommande ${de(product.title)} confirmée`,
             body: "Merci pour votre confiance.",
             link: "/compte",
           });
@@ -125,7 +125,7 @@ export const handleStripeEvent = async (event: Stripe.Event, deps: WebhookDeps):
       await deps.sendEmail("refund", updated, product).catch((e) => log("e-mail de remboursement non envoyé", e));
       if (updated.user_id) {
         await repo.notify(updated.user_id, {
-          title: status === "refunded" ? `Commande ${product.title} remboursée` : `Remboursement partiel pour ${product.title}`,
+          title: status === "refunded" ? `Commande ${de(product.title)} remboursée` : `Remboursement partiel pour ${product.title}`,
           body: "Le montant apparaîtra sur votre compte sous quelques jours.",
           link: "/compte",
         });

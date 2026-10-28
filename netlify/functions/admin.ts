@@ -1,9 +1,10 @@
 // POST /api/admin { action, ... } : actions réservées à l'administratrice.
 //   notify-availability { productId }            → e-mail « disponible » aux acheteurs de l'ebook
 //   import-stripe { paymentLinkUrl, productId, format } → importe les anciennes précommandes
+//   welcome-list / welcome                        → invite les acheteurs importés à découvrir leur espace
 //   test-email                                    → s'envoie un e-mail d'essai (vérifie Brevo)
 import type { Config } from "@netlify/functions";
-import { importPaymentLink, notifyAvailability } from "../lib/admin";
+import { importPaymentLink, listWelcomePending, notifyAvailability, sendWelcome } from "../lib/admin";
 import { getStripe, getSupabaseAdmin } from "../lib/clients";
 import { brevoMailer, layout } from "../lib/email";
 import { siteUrl } from "../lib/env";
@@ -36,6 +37,10 @@ export default async (req: Request) => {
             format: body.format as "auto" | "ebook" | "paper",
           }),
         );
+      case "welcome-list":
+        return json({ people: await listWelcomePending(db) });
+      case "welcome":
+        return json(await sendWelcome(db, brevoMailer, siteUrl()));
       case "test-email":
         await brevoMailer({
           to: user.email!,

@@ -37,3 +37,10 @@ describe("grantsEbook", () => {
 it("formatPrice affiche les prix à la française", () => {
   expect(formatPrice(3399).replace(/\s/g, " ")).toBe("33,99 €");
 });
+
+it("élide « de » devant une voyelle ou un h muet", async () => {
+  const { de } = await import("./shop");
+  expect(de("Hybris")).toBe("d'Hybris");
+  expect(de("Chaton")).toBe("de Chaton");
+  expect(de("<strong>Hybris</strong>")).toBe("d'<strong>Hybris</strong>");
+});

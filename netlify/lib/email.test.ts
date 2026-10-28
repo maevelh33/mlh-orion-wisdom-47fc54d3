@@ -20,7 +20,7 @@ const site = "https://mlhorion.com";
 describe("e-mails", () => {
   it("confirmation de précommande papier : récapitulatif, sortie, dédicace échappée", () => {
     const mail = orderConfirmationEmail(order, product, site);
-    expect(mail.subject).toBe("Votre précommande de Hybris est confirmée");
+    expect(mail.subject).toBe("Votre précommande d'Hybris est confirmée");
     expect(mail.html).toContain("Bonjour Lou,");
     expect(mail.html).toContain("début 2027");
     expect(mail.html).toMatch(/39,99\s€/);
