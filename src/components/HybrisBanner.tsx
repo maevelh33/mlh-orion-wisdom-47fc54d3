@@ -57,15 +57,13 @@ const HybrisBanner = () => {
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </Link>
 
-                <a
-                  href="https://buy.stripe.com/3cIbJ2abCdVW7reb4Gfw402"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  to="/livres/hybris/precommander"
                   className="inline-flex items-center gap-3 font-body text-xs md:text-sm tracking-[0.25em] uppercase px-7 py-3.5 border border-[#c9a84c] text-[#f0d78c] hover:bg-[#c9a84c]/10 transition-colors w-fit"
                 >
                   Précommander
                   <ArrowRight className="w-4 h-4" />
-                </a>
+                </Link>
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#c9a84c]/15 border border-[#c9a84c]/30 rounded-sm">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#e8b84a] animate-pulse" />
                   <p className="font-body text-sm text-[#f0d78c] font-medium tracking-wide">

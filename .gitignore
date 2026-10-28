@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Clés locales (ne jamais les publier)
+.env
+.env.*

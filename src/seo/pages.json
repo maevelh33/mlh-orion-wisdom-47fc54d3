@@ -45,6 +45,30 @@
         "name": "Hybris",
         "url": "https://buy.stripe.com/3cIbJ2abCdVW7reb4Gfw402"
       }
+    },
+    "/livres/hybris/precommander": {
+      "title": "Précommander Hybris — livre papier ou ebook | MLH.ORION",
+      "description": "Précommandez Hybris, le nouveau roman de Maëve Orion : livre papier dédicacé (33,99 €) ou ebook (15 €). Sortie prévue début 2027. Résumé et extrait.",
+      "image": "/og/hybris.jpg",
+      "imageAlt": "Couverture du roman Hybris"
+    },
+    "/mentions-legales": {
+      "title": "Mentions légales | MLH.ORION",
+      "description": "Mentions légales du site mlhorion.com.",
+      "image": "/og/accueil.jpg",
+      "imageAlt": "Une bibliothèque baroque aux plafonds peints"
+    },
+    "/cgv": {
+      "title": "Conditions générales de vente | MLH.ORION",
+      "description": "Conditions générales de vente des livres papier et ebooks de Maëve Orion.",
+      "image": "/og/accueil.jpg",
+      "imageAlt": "Une bibliothèque baroque aux plafonds peints"
+    },
+    "/confidentialite": {
+      "title": "Politique de confidentialité | MLH.ORION",
+      "description": "Données collectées par la boutique mlhorion.com et vos droits.",
+      "image": "/og/accueil.jpg",
+      "imageAlt": "Une bibliothèque baroque aux plafonds peints"
     }
   }
 }

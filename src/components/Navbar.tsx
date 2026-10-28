@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, User, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "@/auth/AuthProvider";
+import { shopConfigured } from "@/lib/supabase";
 
 // Les ancres passent par "/" pour fonctionner aussi depuis les pages Livres.
 const navLinks = [
@@ -19,6 +21,8 @@ const Navbar = () => {
   const isHome = pathname === "/";
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const { session } = useAuth();
+  const accountActive = pathname.startsWith("/compte") || pathname === "/connexion" || pathname === "/admin";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -69,6 +73,19 @@ const Navbar = () => {
               {link.label}
             </Link>
           ))}
+          {shopConfigured && (
+            <Link
+              to="/compte"
+              aria-label={session ? "Mon espace" : "Se connecter à mon espace"}
+              aria-current={accountActive ? "page" : undefined}
+              className={`inline-flex items-center gap-2 font-body text-sm tracking-widest uppercase transition-colors ${
+                accountActive ? "text-bordeaux" : linkColor("/compte")
+              }`}
+            >
+              <User size={16} />
+              Espace
+            </Link>
+          )}
         </div>
 
         {/* Mobile toggle */}
@@ -104,6 +121,18 @@ const Navbar = () => {
               {link.label}
             </Link>
           ))}
+          {shopConfigured && (
+            <Link
+              to="/compte"
+              onClick={() => setOpen(false)}
+              className={`flex items-center gap-2 pt-4 border-t border-border font-body text-sm tracking-widest uppercase hover:text-foreground ${
+                accountActive ? "text-bordeaux" : "text-muted-foreground"
+              }`}
+            >
+              <User size={16} />
+              {session ? "Mon espace" : "Se connecter"}
+            </Link>
+          )}
         </motion.div>
       )}
     </nav>

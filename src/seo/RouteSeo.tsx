@@ -21,6 +21,17 @@ const RouteSeo = () => {
   useEffect(() => {
     const path = pathname.length > 1 ? pathname.replace(/\/+$/, "") : "/";
     const page = pages[path];
+    // Espace client et administration : jamais dans Google.
+    const isPrivate = /^\/(compte|connexion|admin)(\/|$)/.test(path);
+    let robots = document.head.querySelector('meta[name="robots"]');
+    if (isPrivate && !robots) {
+      robots = Object.assign(document.createElement("meta"), { name: "robots", content: "noindex" });
+      document.head.appendChild(robots);
+    } else if (!isPrivate) robots?.remove();
+    if (isPrivate) {
+      document.title = path.startsWith("/admin") ? `Administration | ${seo.site.name}` : `Mon espace | ${seo.site.name}`;
+      return;
+    }
     if (!page) {
       document.title = `Page introuvable | ${seo.site.name}`;
       return;

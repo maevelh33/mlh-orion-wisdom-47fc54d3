@@ -1,0 +1,28 @@
+<!-- Modèle de l'e-mail de connexion, à coller dans Supabase :
+     Authentication > Emails > Templates > « Magic Link » (sujet : « Votre lien de connexion »).
+     Coller aussi ce même modèle dans « Confirm signup » : c'est celui que reçoit un tout nouveau client. -->
+<html lang="fr">
+<body style="margin:0;background:#f6f1ea;padding:32px 16px">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#fbf8f4;border:1px solid #e6ddd2">
+      <tr><td style="padding:32px 40px 8px;text-align:center;font-family:Georgia,serif;font-size:22px;letter-spacing:2px;color:#2b2522">
+        MLH.<span style="color:#6f2934">ORION</span>
+      </td></tr>
+      <tr><td style="padding:0 40px"><div style="width:48px;height:1px;background:#6f2934;margin:16px auto 24px"></div></td></tr>
+      <tr><td style="padding:0 40px 32px;font-family:Arial,sans-serif;font-size:15px;line-height:1.7;color:#7a6f68">
+        <h1 style="font-family:Georgia,serif;font-weight:normal;font-size:26px;color:#2b2522;margin:0 0 16px">Votre lien de connexion</h1>
+        <p style="margin:0 0 24px">Cliquez sur le bouton ci-dessous pour accéder à votre espace : vos livres, vos commandes et leur statut.</p>
+        <p style="text-align:center;margin:0 0 28px">
+          <a href="{{ .ConfirmationURL }}" style="display:inline-block;background:#6f2934;color:#fbf8f4;text-decoration:none;font-family:Arial,sans-serif;font-size:13px;letter-spacing:3px;text-transform:uppercase;padding:14px 28px">Me connecter</a>
+        </p>
+        <p style="margin:0 0 8px">Ou saisissez ce code sur la page de connexion :</p>
+        <p style="margin:0 0 24px;text-align:center;font-family:Georgia,serif;font-size:32px;letter-spacing:8px;color:#2b2522">{{ .Token }}</p>
+        <p style="margin:0;font-size:13px">Ce lien et ce code expirent dans une heure. Si vous n'avez rien demandé, ignorez simplement cet e-mail.</p>
+      </td></tr>
+      <tr><td style="padding:20px 40px;border-top:1px solid #e6ddd2;font-family:Arial,sans-serif;font-size:12px;color:#7a6f68;text-align:center">
+        Maëve Orion — <a href="https://mlhorion.com" style="color:#7a6f68">mlhorion.com</a>
+      </td></tr>
+    </table>
+  </td></tr></table>
+</body>
+</html>
