@@ -3,7 +3,7 @@ import type { Config } from "@netlify/functions";
 import type { Format, Product, ShippingZone } from "../../src/lib/shop";
 import { buildCheckoutParams, CheckoutError } from "../lib/checkout";
 import { getStripe, getSupabaseAdmin } from "../lib/clients";
-import { ConfigError, describeConfigError, siteUrl } from "../lib/env";
+import { ConfigError, describeConfigError, requestSiteUrl } from "../lib/env";
 import { fail, getUser, json } from "../lib/http";
 
 export default async (req: Request) => {
@@ -30,7 +30,7 @@ export default async (req: Request) => {
       format: body.format,
       zone: body.zone,
       customer: user?.email ? { id: user.id, email: user.email } : null,
-      siteUrl: siteUrl(),
+      siteUrl: requestSiteUrl(req),
     });
     const session = await getStripe().checkout.sessions.create(params);
     return json({ url: session.url });

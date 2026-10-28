@@ -28,3 +28,28 @@ export const describeConfigError = (error: unknown): string | null => {
 };
 
 export const siteUrl = () => (process.env.SITE_URL || process.env.URL || "https://mlhorion.com").replace(/\/+$/, "");
+
+/**
+ * Adresse du site d'où vient la demande (aperçu Netlify pendant les tests, mlhorion.com
+ * ensuite), pour que Stripe y ramène le client. Seuls le site et ses aperçus sont acceptés.
+ */
+export const requestSiteUrl = (req: Request) => {
+  const fallback = siteUrl();
+  try {
+    const origin = new URL(req.url).origin;
+    const host = new URL(origin).hostname;
+    const official = new URL(fallback).hostname;
+    const netlifySite = process.env.SITE_NAME ? `${process.env.SITE_NAME}.netlify.app` : null;
+    const deployHosts = [process.env.DEPLOY_PRIME_URL, process.env.DEPLOY_URL]
+      .filter(Boolean)
+      .map((u) => new URL(u!).hostname);
+    const allowed =
+      host === official ||
+      host === `www.${official}` ||
+      deployHosts.includes(host) ||
+      (netlifySite && (host === netlifySite || host.endsWith(`--${netlifySite}`)));
+    return allowed ? origin : fallback;
+  } catch {
+    return fallback;
+  }
+};
