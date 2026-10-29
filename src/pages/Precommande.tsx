@@ -48,8 +48,12 @@ const Precommande = () => {
     );
   }
 
-  // Par défaut le livre papier s'il existe, sinon l'ebook (ex. Chaton, vendu seulement en ebook).
-  const format: Format = chosenFormat ?? (product.paper_price_cents ? "paper" : "ebook");
+  // Format demandé par le lien (?format=ebook depuis l'espace client), sinon le livre papier
+  // s'il existe, sinon l'ebook (ex. Chaton, vendu seulement en ebook).
+  const asked = params.get("format");
+  const askedFormat: Format | null = asked === "ebook" || asked === "paper" ? asked : null;
+  const format: Format =
+    chosenFormat ?? (askedFormat && priceFor(product, askedFormat) ? askedFormat : product.paper_price_cents ? "paper" : "ebook");
   const price = priceFor(product, format) ?? 0;
   const shipping = format === "paper" ? shippingFor(product, zone) : 0;
   const shippingOpen = format === "ebook" || shipping != null;

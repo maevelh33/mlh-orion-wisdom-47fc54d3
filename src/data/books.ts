@@ -131,3 +131,6 @@ export const booksData: Record<string, BookData> = {
     },
   },
 };
+
+/** Ordre d'affichage des livres (accueil, page Livres, espace client). */
+export const BOOK_ORDER = ["chaton", "hybris"];
