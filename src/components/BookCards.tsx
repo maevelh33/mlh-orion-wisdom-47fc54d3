@@ -2,15 +2,12 @@ import { Info } from "lucide-react";
 import { Link } from "react-router-dom";
 import FadeIn from "@/components/FadeIn";
 import BookNotice from "@/components/BookNotice";
-import { booksData } from "@/data/books";
-
-/** Livres présentés, dans l'ordre d'affichage. */
-const SLUGS = ["chaton", "hybris"];
+import { BOOK_ORDER, booksData } from "@/data/books";
 
 /** Cartes des livres (couverture, avancement, liens), sur la page Livres et sur l'accueil. */
 const BookCards = ({ titleAs: TitleTag = "h2" }: { titleAs?: "h2" | "h3" }) => (
   <div className="grid gap-10 sm:grid-cols-2">
-    {SLUGS.map((slug, i) => {
+    {BOOK_ORDER.map((slug, i) => {
       const book = booksData[slug];
       return (
         <FadeIn key={slug} delay={i * 0.1}>

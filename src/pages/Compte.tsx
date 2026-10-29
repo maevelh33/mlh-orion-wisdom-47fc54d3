@@ -4,59 +4,17 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Bell, BookOpen, ExternalLink, LogOut, Package } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
 import { useAuth } from "@/auth/AuthProvider";
-import { booksData } from "@/data/books";
 import { supabase } from "@/lib/supabase";
-import { displayStatus, formatLabel, formatPrice, grantsEbook, type Order, type Product } from "@/lib/shop";
+import { displayStatus, formatLabel, formatPrice } from "@/lib/shop";
 import { useMyOrders, useNotifications, useProducts } from "@/shop/useShop";
 import { Eyebrow, formatDate, Notice, SecondaryButton, StatusBadge, Title } from "@/shop/ui";
 import { PageShell } from "@/shop/ui";
 import PasswordForm from "@/shop/PasswordForm";
+import Library from "@/shop/Library";
 
 const SectionTitle = ({ children }: { children: React.ReactNode }) => (
   <h2 className="font-body text-xs tracking-[0.3em] uppercase text-bordeaux mb-6">{children}</h2>
 );
-
-/** Une entrée par livre numérique possédé (la meilleure commande si plusieurs). */
-const libraryOf = (orders: Order[]) => {
-  const rank = (o: Order) => (grantsEbook(o) ? 2 : o.status === "refunded" ? 1 : 0);
-  const byProduct = new Map<string, Order>();
-  for (const o of orders.filter((o) => o.format === "ebook" && o.status !== "failed" && o.status !== "pending")) {
-    const current = byProduct.get(o.product_id);
-    if (!current || rank(o) > rank(current)) byProduct.set(o.product_id, o);
-  }
-  return [...byProduct.values()];
-};
-
-const LibraryCard = ({ order, product }: { order: Order; product: Product | undefined }) => {
-  const book = booksData[order.product_id];
-  const status = displayStatus(order, product);
-  const readable = status.key === "available";
-  return (
-    <article className="flex gap-5 p-5 bg-card/60 border border-border rounded-sm">
-      {book?.cover && <img src={book.cover} alt="" className="w-20 md:w-24 aspect-[2/3] object-cover rounded-sm shadow-md shrink-0" />}
-      <div className="flex flex-col min-w-0">
-        <p className="font-display text-2xl text-foreground leading-tight mb-2">{product?.title ?? book?.title}</p>
-        <div className="mb-3">
-          <StatusBadge status={status} />
-        </div>
-        {readable ? (
-          <Link
-            to={`/compte/lire/${order.product_id}`}
-            className="mt-auto inline-flex w-fit items-center gap-2 font-body text-xs tracking-[0.2em] uppercase px-5 py-2.5 bg-bordeaux text-primary-foreground hover:bg-bordeaux/90 transition-colors"
-          >
-            <BookOpen className="w-4 h-4" /> Lire
-          </Link>
-        ) : status.key === "preordered" ? (
-          <p className="mt-auto font-body text-sm text-muted-foreground">
-            Disponible {product?.release_label ? product.release_label.toLowerCase() : "à la sortie"}. Un e-mail vous préviendra.
-          </p>
-        ) : (
-          <p className="mt-auto font-body text-sm text-muted-foreground">Cet achat a été remboursé.</p>
-        )}
-      </div>
-    </article>
-  );
-};
 
 const Compte = () => {
   const { session, profile, refreshProfile, signOut } = useAuth();
@@ -87,7 +45,6 @@ const Compte = () => {
   }, [justPaid, paidOrderArrived, queryClient, userId]);
 
   const productById = (id: string) => products.find((p) => p.id === id);
-  const library = libraryOf(orders.data ?? []);
   const unread = (notifications.data ?? []).filter((n) => !n.read_at);
 
   const markRead = async (id?: string) => {
@@ -163,26 +120,7 @@ const Compte = () => {
         </FadeIn>
       )}
 
-      <FadeIn className="mb-16">
-        <SectionTitle>Ma bibliothèque</SectionTitle>
-        {orders.isLoading ? (
-          <p className="font-body text-sm text-muted-foreground">Chargement…</p>
-        ) : library.length === 0 ? (
-          <div className="p-8 border border-dashed border-border rounded-sm text-center">
-            <BookOpen className="w-6 h-6 text-muted-foreground mx-auto mb-3" />
-            <p className="font-body text-sm text-muted-foreground mb-5">Vos ebooks apparaîtront ici.</p>
-            <Link to="/livres/hybris/precommander" className="font-body text-xs tracking-[0.2em] uppercase text-bordeaux hover:underline">
-              Découvrir Hybris
-            </Link>
-          </div>
-        ) : (
-          <div className="grid sm:grid-cols-2 gap-5">
-            {library.map((o) => (
-              <LibraryCard key={o.id} order={o} product={productById(o.product_id)} />
-            ))}
-          </div>
-        )}
-      </FadeIn>
+      <Library orders={orders.data ?? []} products={products} loading={orders.isLoading} />
 
       <FadeIn className="mb-16">
         <SectionTitle>Mes commandes</SectionTitle>
