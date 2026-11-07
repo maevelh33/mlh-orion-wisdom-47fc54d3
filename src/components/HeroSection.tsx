@@ -70,7 +70,7 @@ const HeroSection = () => {
             {session ? "Accéder à mon espace" : "Me connecter à mon espace"}
           </Link>
           <p className="mt-4 max-w-sm font-body text-xs leading-relaxed text-primary-foreground/70">
-            Suivez vos précommandes, recevez en avant-première les nouvelles d'Hybris et retrouvez vos livres numériques, sans mot de passe.
+            Suivez vos précommandes, recevez en avant-première les nouvelles d'Hybris et retrouvez vos livres numériques.
           </p>
         </motion.div>
       </div>
