@@ -21,6 +21,8 @@ const emailFromLink = () => {
 
 type Mode = "link" | "password";
 const MODE_KEY = "connexion-mode";
+// Longueur du code envoyé par e-mail : doit suivre le réglage Supabase (Authentication > Email OTP Length).
+const CODE_LENGTH = 8;
 
 /** Dernière méthode choisie, retenue sur cet appareil (simple confort : peut manquer). */
 const savedMode = (): Mode => {
@@ -214,24 +216,24 @@ const Connexion = () => {
               Un e-mail vient de partir vers <strong>{email}</strong>. Cliquez sur le lien qu'il contient pour vous connecter.
             </Notice>
             <p className="font-body text-sm leading-relaxed text-muted-foreground">
-              Vous lisez vos e-mails sur un autre appareil ? Saisissez ici le code à 6 chiffres indiqué dans l'e-mail.
+              Vous lisez vos e-mails sur un autre appareil ? Saisissez ici le code à {CODE_LENGTH} chiffres indiqué dans l'e-mail.
             </p>
             <label className="block">
               <span className="block font-body text-xs tracking-[0.2em] uppercase text-muted-foreground mb-2">Code</span>
               <input
                 inputMode="numeric"
                 autoComplete="one-time-code"
-                pattern="[0-9]{6}"
-                maxLength={6}
+                pattern={`[0-9]{${CODE_LENGTH}}`}
+                maxLength={CODE_LENGTH}
                 required
                 value={code}
                 onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))}
-                placeholder="123456"
+                placeholder="12345678"
                 className={`${inputClass} tracking-[0.5em] text-center font-display text-2xl`}
               />
             </label>
             {error && <Notice tone="danger">{error}</Notice>}
-            <PrimaryButton type="submit" disabled={busy || code.length !== 6} className="w-full">
+            <PrimaryButton type="submit" disabled={busy || code.length !== CODE_LENGTH} className="w-full">
               {busy ? "Vérification…" : "Me connecter"}
             </PrimaryButton>
             <button
