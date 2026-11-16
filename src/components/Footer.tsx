@@ -8,7 +8,7 @@ const Footer = () => {
           MLH.<span className="text-background/60">ORION</span>
         </p>
         <p className="font-body text-xs tracking-widest uppercase text-background/40 mb-6">
-          Philosophie · Psychologie · Littérature · Patrimoine
+          Philosophie · Psychologie · Littérature
         </p>
         <div className="w-8 h-px bg-background/20 mx-auto mb-6" />
         <nav aria-label="Informations légales" className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-6">
