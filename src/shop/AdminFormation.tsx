@@ -4,7 +4,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ArrowDown, ArrowUp, Eye, EyeOff, Mail, Plus, Trash2, Upload } from "lucide-react";
 import { callApi } from "@/lib/api";
 import { supabase } from "@/lib/supabase";
-import { COURSE_ID, formatDuration, grantsCourse, youtubeId, type Enrollment, type Lesson } from "@/lib/course";
+import { COURSE_ID, formatDuration, grantsCourse, parseDuration, youtubeId, type Enrollment, type Lesson } from "@/lib/course";
 import { displayStatus, formatPrice } from "@/lib/shop";
 import { useCourse } from "./useCourse";
 import { formatDate, Notice, PrimaryButton, SecondaryButton, StatusBadge } from "./ui";
@@ -94,12 +94,15 @@ const Settings = () => {
 const LessonEditor = ({ lesson, index, count, move }: { lesson: Lesson; index: number; count: number; move: (dir: -1 | 1) => void }) => {
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(!lesson.youtube_id);
-  const [form, setForm] = useState({
+  const saved = {
     title: lesson.title,
     video: lesson.youtube_id ? `https://youtu.be/${lesson.youtube_id}` : "",
     duration: lesson.duration_minutes ? String(lesson.duration_minutes) : "",
     summary: lesson.summary,
-  });
+  };
+  const [form, setForm] = useState(saved);
+  // Modifications saisies mais pas encore enregistrées : signalées pour ne pas les perdre.
+  const dirty = (Object.keys(saved) as (keyof typeof saved)[]).some((k) => form[k] !== saved[k]);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<Message>(null);
   const id = form.video.trim() ? youtubeId(form.video) : null;
@@ -116,8 +119,12 @@ const LessonEditor = ({ lesson, index, count, move }: { lesson: Lesson; index: n
     e.preventDefault();
     if (!form.title.trim()) return setMessage({ tone: "danger", text: "Le titre est obligatoire." });
     if (form.video.trim() && !id) return setMessage({ tone: "danger", text: "Lien YouTube non reconnu. Copiez le lien de partage de la vidéo." });
-    const minutes = form.duration.trim() ? Math.round(Number(form.duration.replace(",", "."))) : null;
-    update({ title: form.title.trim(), youtube_id: id, duration_minutes: minutes && minutes > 0 ? minutes : null, summary: form.summary.trim() });
+    const minutes = form.duration.trim() ? parseDuration(form.duration) : null;
+    if (form.duration.trim() && !minutes)
+      return setMessage({ tone: "danger", text: "Durée non reconnue. Écrivez par exemple « 12 », « 12:34 » ou « 1h05 »." });
+    update({ title: form.title.trim(), youtube_id: id, duration_minutes: minutes, summary: form.summary.trim() });
+    // Le formulaire reprend la forme enregistrée (« 12:34 » devient « 13 »).
+    setForm({ title: form.title.trim(), video: id ? `https://youtu.be/${id}` : "", duration: minutes ? String(minutes) : "", summary: form.summary.trim() });
   };
 
   const upload = async (file: File) => {
@@ -151,6 +158,7 @@ const LessonEditor = ({ lesson, index, count, move }: { lesson: Lesson; index: n
               lesson.duration_minutes ? formatDuration(lesson.duration_minutes) : null,
               lesson.attachment_path ? "PDF ✓" : null,
               lesson.published ? null : "Masquée",
+              dirty ? "Modifications non enregistrées" : null,
             ]
               .filter(Boolean)
               .join(" · ")}
@@ -177,8 +185,8 @@ const LessonEditor = ({ lesson, index, count, move }: { lesson: Lesson; index: n
           <Field label="Titre">
             <input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className={inputClass} />
           </Field>
-          <Field label="Durée (min)">
-            <input inputMode="numeric" value={form.duration} onChange={(e) => setForm({ ...form, duration: e.target.value })} className={inputClass} />
+          <Field label="Durée" hint="12, 12:34 ou 1h05">
+            <input value={form.duration} onChange={(e) => setForm({ ...form, duration: e.target.value })} className={inputClass} />
           </Field>
           <div className="md:col-span-2 grid gap-4 md:grid-cols-[1fr_10rem] md:items-start">
             <Field label="Lien de la vidéo YouTube" hint="Vidéo « non répertoriée » : seuls les inscrits verront le lecteur sur le site.">
@@ -200,6 +208,7 @@ const LessonEditor = ({ lesson, index, count, move }: { lesson: Lesson; index: n
             <PrimaryButton type="submit" disabled={busy}>
               Enregistrer
             </PrimaryButton>
+            {dirty && <span className="font-body text-xs text-bordeaux">Non enregistré</span>}
             <label className="inline-flex items-center gap-2 font-body text-xs tracking-[0.2em] uppercase px-5 py-2.5 border border-border hover:border-bordeaux hover:text-bordeaux cursor-pointer transition-colors">
               <Upload className="w-4 h-4" /> {lesson.attachment_path ? "Remplacer le PDF" : "Ajouter un PDF"}
               <input type="file" accept=".pdf" className="sr-only" disabled={busy} onChange={(e) => e.target.files?.[0] && upload(e.target.files[0])} />
