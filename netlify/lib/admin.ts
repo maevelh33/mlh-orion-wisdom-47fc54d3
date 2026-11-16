@@ -1,7 +1,9 @@
 import type Stripe from "stripe";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Format, Order, Product } from "../../src/lib/shop";
-import { bookAvailableEmail, welcomeEmail, type Mailer } from "./email";
+import type { Course, Enrollment } from "../../src/lib/course";
+import { bookAvailableEmail, courseInvitationEmail, welcomeEmail, type Mailer } from "./email";
+import { enrollmentFromSession } from "./enrollments";
 import { orderFromSession } from "./orders";
 
 /** Nombre d'e-mails envoyés par appel : la page d'administration rappelle tant qu'il en reste. */
@@ -51,6 +53,32 @@ export const notifyAvailability = async (db: SupabaseClient, mail: Mailer, produ
   return { sent, remaining, failures };
 };
 
+/** Sessions terminées d'un lien de paiement Stripe (buy.stripe.com/…), avec leur paiement. */
+async function* paymentLinkSessions(stripe: Stripe, paymentLinkUrl: string) {
+  const url = paymentLinkUrl.trim().replace(/\/+$/, "");
+  let link: Stripe.PaymentLink | undefined;
+  for await (const l of stripe.paymentLinks.list({ limit: 100 })) {
+    if (l.url.replace(/\/+$/, "") === url) {
+      link = l;
+      break;
+    }
+  }
+  if (!link) throw new Error("Lien de paiement introuvable dans ce compte Stripe.");
+  yield* stripe.checkout.sessions.list({
+    payment_link: link.id,
+    status: "complete",
+    limit: 100,
+    expand: ["data.payment_intent.latest_charge"],
+  });
+}
+
+/** Remboursement éventuel d'une session importée. */
+const refundOf = (session: Stripe.Checkout.Session) => {
+  const pi = typeof session.payment_intent === "object" ? session.payment_intent : null;
+  const charge = pi && typeof pi.latest_charge === "object" ? pi.latest_charge : null;
+  return { charge, refunded: charge?.amount_refunded ?? 0, full: Boolean(charge && charge.amount_refunded >= charge.amount) };
+};
+
 /**
  * Importe les paiements faits avant la boutique via un lien de paiement Stripe
  * (buy.stripe.com/…). Les clients retrouvent ces commandes en se connectant
@@ -61,25 +89,9 @@ export const importPaymentLink = async (
   stripe: Stripe,
   opts: { paymentLinkUrl: string; productId: string; format: Format | "auto" },
 ) => {
-  const url = opts.paymentLinkUrl.trim().replace(/\/+$/, "");
-  let link: Stripe.PaymentLink | undefined;
-  for await (const l of stripe.paymentLinks.list({ limit: 100 })) {
-    if (l.url.replace(/\/+$/, "") === url) {
-      link = l;
-      break;
-    }
-  }
-  if (!link) throw new Error("Lien de paiement introuvable dans ce compte Stripe.");
-
   let imported = 0;
   let skipped = 0;
-  const sessions = stripe.checkout.sessions.list({
-    payment_link: link.id,
-    status: "complete",
-    limit: 100,
-    expand: ["data.payment_intent.latest_charge"],
-  });
-  for await (const session of sessions) {
+  for await (const session of paymentLinkSessions(stripe, opts.paymentLinkUrl)) {
     if (session.payment_status === "unpaid") {
       skipped++;
       continue;
@@ -176,6 +188,95 @@ export const sendWelcome = async (db: SupabaseClient, mail: Mailer, site: string
         .update({ welcome_sent_at: new Date().toISOString() })
         .eq("source", "import")
         .eq("email", order.email); // les e-mails des commandes sont enregistrés en minuscules
+      sent++;
+    } catch (e) {
+      failures.push(`${email} : ${e instanceof Error ? e.message : e}`);
+    }
+  }
+  const remaining = Math.max(0, byEmail.size - sent - failures.length);
+  return { sent, remaining, failures };
+};
+
+// ---------------------------------------------------------------------------
+// Formation
+// ---------------------------------------------------------------------------
+
+/**
+ * Importe les achats de la formation faits avec l'ancien lien de paiement Stripe :
+ * l'accès s'ouvre dès que la personne se connecte avec le même e-mail. Aucun e-mail n'est envoyé.
+ */
+export const importCoursePaymentLink = async (db: SupabaseClient, stripe: Stripe, opts: { paymentLinkUrl: string; courseId: string }) => {
+  let imported = 0;
+  let skipped = 0;
+  for await (const session of paymentLinkSessions(stripe, opts.paymentLinkUrl)) {
+    if (session.payment_status === "unpaid") {
+      skipped++;
+      continue;
+    }
+    const row = enrollmentFromSession(session, opts.courseId);
+    row.course_id = opts.courseId;
+    const { charge, refunded, full } = refundOf(session);
+    row.receipt_url = charge?.receipt_url ?? null;
+    if (refunded) {
+      row.amount_refunded_cents = refunded;
+      row.status = full ? "refunded" : "partially_refunded";
+    }
+
+    const { data: existing } = await db.from("enrollments").select("id, user_id, source").eq("stripe_session_id", session.id).maybeSingle();
+    if (existing && existing.source !== "import") {
+      skipped++; // déjà enregistrée par le site lui-même
+      continue;
+    }
+    if (!existing?.user_id && row.email) {
+      const { data: profile } = await db.from("profiles").select("id").eq("email", row.email).maybeSingle();
+      row.user_id = profile?.id ?? null;
+    }
+    const { error } = await db.from("enrollments").upsert({ ...row, source: "import" }, { onConflict: "stripe_session_id" });
+    if (error) throw new Error(error.message);
+    imported++;
+  }
+  return { imported, skipped };
+};
+
+/** Inscriptions importées ou offertes, avec accès, dont la personne n'a pas encore été invitée. */
+const courseInvitesPending = (db: SupabaseClient) =>
+  db
+    .from("enrollments")
+    .select("*")
+    .in("source", ["import", "offert"])
+    .in("status", ["paid", "partially_refunded"])
+    .is("welcome_sent_at", null)
+    .order("created_at");
+
+/** Liste des personnes (une par adresse e-mail) qui recevront l'invitation, pour vérification. */
+export const listCourseInvites = async (db: SupabaseClient) => {
+  const { data, error } = await courseInvitesPending(db).returns<Enrollment[]>();
+  if (error) throw new Error(error.message);
+  const people = new Map<string, { email: string; name: string | null; source: string }>();
+  for (const e of data ?? []) if (!people.has(e.email)) people.set(e.email, { email: e.email, name: e.customer_name, source: e.source });
+  return [...people.values()];
+};
+
+/** Invite les élèves importés ou offerts à retrouver la formation dans leur espace, une seule fois chacun. */
+export const sendCourseInvites = async (db: SupabaseClient, mail: Mailer, site: string) => {
+  const { data, error } = await courseInvitesPending(db).returns<Enrollment[]>();
+  if (error) throw new Error(error.message);
+  const byEmail = new Map<string, Enrollment>();
+  for (const e of data ?? []) if (!byEmail.has(e.email)) byEmail.set(e.email, e);
+
+  const courses = new Map<string, Course>();
+  let sent = 0;
+  const failures: string[] = [];
+  for (const [email, enrollment] of [...byEmail].slice(0, AVAILABILITY_BATCH)) {
+    try {
+      let course = courses.get(enrollment.course_id);
+      if (!course) {
+        const { data: c } = await db.from("courses").select("*").eq("id", enrollment.course_id).maybeSingle<Course>();
+        if (!c) throw new Error("formation introuvable");
+        courses.set(enrollment.course_id, (course = c));
+      }
+      await mail(courseInvitationEmail(enrollment, course, site));
+      await db.from("enrollments").update({ welcome_sent_at: new Date().toISOString() }).in("source", ["import", "offert"]).eq("email", email);
       sent++;
     } catch (e) {
       failures.push(`${email} : ${e instanceof Error ? e.message : e}`);

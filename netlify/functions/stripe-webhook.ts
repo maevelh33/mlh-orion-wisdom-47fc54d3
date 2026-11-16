@@ -3,11 +3,21 @@
 import type { Config } from "@netlify/functions";
 import type Stripe from "stripe";
 import { getStripe, getSupabaseAdmin } from "../lib/clients";
-import { brevoMailer, orderConfirmationEmail, paymentFailedEmail, refundEmail } from "../lib/email";
+import {
+  brevoMailer,
+  coursePaymentFailedEmail,
+  courseRefundEmail,
+  courseWelcomeEmail,
+  orderConfirmationEmail,
+  paymentFailedEmail,
+  refundEmail,
+} from "../lib/email";
+import { supabaseCourseRepo } from "../lib/enrollments";
 import { requireEnv, siteUrl } from "../lib/env";
 import { handleStripeEvent, supabaseRepo } from "../lib/orders";
 
 const templates = { confirmation: orderConfirmationEmail, failed: paymentFailedEmail, refund: refundEmail };
+const courseTemplates = { confirmation: courseWelcomeEmail, failed: coursePaymentFailedEmail, refund: courseRefundEmail };
 
 export default async (req: Request) => {
   if (req.method !== "POST") return new Response("Méthode non autorisée", { status: 405 });
@@ -27,8 +37,13 @@ export default async (req: Request) => {
   }
 
   try {
+    const db = getSupabaseAdmin();
     const result = await handleStripeEvent(event, {
-      repo: supabaseRepo(getSupabaseAdmin()),
+      repo: supabaseRepo(db),
+      course: {
+        repo: supabaseCourseRepo(db),
+        sendEmail: (kind, enrollment, course) => brevoMailer(courseTemplates[kind](enrollment, course, siteUrl())),
+      },
       sendEmail: (kind, order, product) => brevoMailer(templates[kind](order, product, siteUrl())),
       getReceiptUrl: async (paymentIntentId) => {
         const pi = await stripe.paymentIntents.retrieve(paymentIntentId, { expand: ["latest_charge"] });

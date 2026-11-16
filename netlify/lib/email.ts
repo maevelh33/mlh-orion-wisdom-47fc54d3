@@ -1,3 +1,4 @@
+import type { Course, Enrollment } from "../../src/lib/course";
 import { de, formatLabel, formatPrice, type Order, type Product } from "../../src/lib/shop";
 import { requireEnv } from "./env";
 
@@ -69,7 +70,7 @@ const summary = (order: Order, product: Product) => {
     .join("")}</table>`;
 };
 
-const greeting = (order: Order) => p(order.customer_name ? `Bonjour ${esc(order.customer_name.split(" ")[0])},` : "Bonjour,");
+const greeting = (order: Pick<Order, "customer_name">) => p(order.customer_name ? `Bonjour ${esc(order.customer_name.split(" ")[0])},` : "Bonjour,");
 
 export const orderConfirmationEmail = (order: Order, product: Product, site: string): Email => {
   const ready = order.format === "ebook" && product.ebook_status === "available";
@@ -141,7 +142,8 @@ export const bookAvailableEmail = (order: Order, product: Product, site: string)
 });
 
 /** Lien de connexion avec l'adresse pré-remplie (dans le fragment #, qui n'est jamais envoyé au serveur). */
-export const loginLink = (site: string, email: string) => `${site}/connexion#email=${encodeURIComponent(email)}`;
+export const loginLink = (site: string, email: string, next?: string) =>
+  `${site}/connexion${next ? `?suite=${encodeURIComponent(next)}` : ""}#email=${encodeURIComponent(email)}`;
 
 /** Invitation des acheteurs des anciennes précommandes (importées) à découvrir leur espace. */
 export const welcomeEmail = (order: Order, product: Product, site: string): Email => {
@@ -169,6 +171,78 @@ export const welcomeEmail = (order: Order, product: Product, site: string): Emai
         `<p style="text-align:center;margin:28px 0 12px">${button(link, "Découvrir mon espace")}</p>` +
         `<p style="margin:0 0 24px;text-align:center;font-size:12px">Ou copiez ce lien : <a href="${esc(link)}" style="color:${C.bordeaux};word-break:break-all">${esc(link)}</a></p>` +
         p(`À très bientôt dans les pages ${de(esc(product.title))},`) +
+        `<p style="margin:0;font-family:Georgia,'Cormorant Garamond',serif;font-size:20px;color:${C.ink}">Maëve</p>`,
+      site,
+    ),
+  };
+};
+
+// ---------------------------------------------------------------------------
+// Formation
+// ---------------------------------------------------------------------------
+
+export const courseWelcomeEmail = (enrollment: Enrollment, course: Course, site: string): Email => ({
+  to: enrollment.email,
+  toName: enrollment.customer_name,
+  subject: `Bienvenue dans la formation « ${course.title} »`,
+  html: layout(
+    "Bienvenue dans la formation",
+    greeting(enrollment) +
+      p(`Votre paiement de <strong>${formatPrice(enrollment.amount_total_cents, enrollment.currency)}</strong> est confirmé : la formation <strong>${esc(course.title)}</strong> est à vous, à vie.`) +
+      p("Toutes les leçons vous attendent dans votre espace. Vous y suivez votre avancement, reprenez là où vous vous êtes arrêté et prenez vos notes, leçon après leçon.") +
+      p(`Connectez-vous avec cette adresse e-mail (<strong>${esc(enrollment.email)}</strong>) : un lien de connexion vous sera envoyé.`) +
+      `<p style="text-align:center;margin:28px 0 8px">${button(loginLink(site, enrollment.email, "/compte/formation"), "Commencer la formation")}</p>`,
+    site,
+  ),
+});
+
+export const coursePaymentFailedEmail = (enrollment: Enrollment, course: Course, site: string): Email => ({
+  to: enrollment.email,
+  toName: enrollment.customer_name,
+  subject: "Votre paiement pour la formation n'a pas abouti",
+  html: layout(
+    "Le paiement n'a pas abouti",
+    greeting(enrollment) +
+      p(`Votre banque a refusé le paiement de la formation <strong>${esc(course.title)}</strong>. Aucune somme n'a été prélevée.`) +
+      p("Vous pouvez recommencer quand vous le souhaitez :") +
+      `<p style="text-align:center;margin:28px 0 8px">${button(`${site}/formation`, "Réessayer")}</p>`,
+    site,
+  ),
+});
+
+export const courseRefundEmail = (enrollment: Enrollment, course: Course, site: string): Email => {
+  const full = enrollment.status === "refunded";
+  return {
+    to: enrollment.email,
+    toName: enrollment.customer_name,
+    subject: "Remboursement de votre formation",
+    html: layout(
+      full ? "Votre formation a été remboursée" : "Remboursement partiel effectué",
+      greeting(enrollment) +
+        p(`Un remboursement de <strong>${formatPrice(enrollment.amount_refunded_cents, enrollment.currency)}</strong> a été effectué pour la formation <strong>${esc(course.title)}</strong>.`) +
+        p("Il apparaîtra sur votre compte bancaire sous 5 à 10 jours ouvrés, selon votre banque.") +
+        (full ? p("L'accès à la formation a été retiré de votre espace.") : ""),
+      site,
+    ),
+  };
+};
+
+/** Invitation des personnes qui avaient acheté la formation avant le site (ancien lien Stripe, accès offert). */
+export const courseInvitationEmail = (enrollment: Pick<Enrollment, "email" | "customer_name">, course: Course, site: string): Email => {
+  const link = loginLink(site, enrollment.email, "/compte/formation");
+  return {
+    to: enrollment.email,
+    toName: enrollment.customer_name,
+    subject: "Votre formation a un nouveau chez-elle",
+    html: layout(
+      "Votre formation vous attend",
+      greeting(enrollment) +
+        p(`Merci encore d'avoir rejoint la formation <strong>${esc(course.title)}</strong>.`) +
+        p("Elle a désormais sa place sur mon site, dans un espace rien qu'à vous : toutes les leçons au même endroit, votre avancement, la reprise là où vous vous êtes arrêté, et vos notes personnelles pour chaque leçon.") +
+        p(`Connectez-vous simplement avec cette adresse e-mail (<strong>${esc(enrollment.email)}</strong>) : un lien de connexion vous sera envoyé, et votre accès est déjà ouvert.`) +
+        `<p style="text-align:center;margin:28px 0 12px">${button(link, "Accéder à ma formation")}</p>` +
+        `<p style="margin:0 0 24px;text-align:center;font-size:12px">Ou copiez ce lien : <a href="${esc(link)}" style="color:${C.bordeaux};word-break:break-all">${esc(link)}</a></p>` +
+        p("Belle écriture,") +
         `<p style="margin:0;font-family:Georgia,'Cormorant Garamond',serif;font-size:20px;color:${C.ink}">Maëve</p>`,
       site,
     ),

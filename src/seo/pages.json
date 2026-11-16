@@ -57,6 +57,12 @@
       "image": "/og/chaton.jpg",
       "imageAlt": "Couverture du roman Chaton"
     },
+    "/formation": {
+      "title": "Formation « Écrire un livre de A à Z » — Maëve Orion | MLH.ORION",
+      "description": "Écrire un livre de l'idée au manuscrit prêt à publier : 18 modules vidéo, résumés, conseils et PDF. Accès à vie, avec le suivi de votre avancement dans votre espace.",
+      "image": "/og/accueil.jpg",
+      "imageAlt": "Une bibliothèque baroque aux plafonds peints"
+    },
     "/mentions-legales": {
       "title": "Mentions légales | MLH.ORION",
       "description": "Mentions légales du site mlhorion.com.",
@@ -65,7 +71,7 @@
     },
     "/cgv": {
       "title": "Conditions générales de vente | MLH.ORION",
-      "description": "Conditions générales de vente des livres papier et ebooks de Maëve Orion.",
+      "description": "Conditions générales de vente des livres papier, ebooks et de la formation de Maëve Orion.",
       "image": "/og/accueil.jpg",
       "imageAlt": "Une bibliothèque baroque aux plafonds peints"
     },

@@ -1,56 +1,19 @@
 // @vitest-environment node
 // Vérifie la migration et les règles d'accès sur un PostgreSQL en mémoire (PGlite),
 // avec une imitation minimale des schémas « auth » et « storage » de Supabase.
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
-import { PGlite } from "@electric-sql/pglite";
+import type { PGlite } from "@electric-sql/pglite";
 import { beforeAll, describe, expect, it } from "vitest";
-
-const migration = ["20261028000000_boutique.sql", "20261028010000_bienvenue.sql", "20261028020000_chaton.sql"]
-  .map((f) => readFileSync(join(__dirname, "../migrations", f), "utf8"))
-  .join("\n");
-
-const SUPABASE_STUB = `
-  create schema auth;
-  create table auth.users (id uuid primary key, email text not null);
-  create function auth.uid() returns uuid language sql stable as $$
-    select nullif(current_setting('test.uid', true), '')::uuid
-  $$;
-  create schema storage;
-  create table storage.buckets (id text primary key, name text, public boolean);
-  create table storage.objects (id uuid primary key default gen_random_uuid(), bucket_id text, name text);
-  alter table storage.objects enable row level security;
-  create role authenticated;
-`;
-
-const GRANTS = `
-  grant usage on schema public, auth, storage to authenticated;
-  grant select, update on all tables in schema public to authenticated;
-  grant select, insert, update, delete on storage.objects to authenticated;
-  grant execute on all functions in schema public, auth to authenticated;
-`;
+import { startDatabase } from "./database";
 
 const ADMIN = "00000000-0000-0000-0000-00000000000a";
 const ALICE = "00000000-0000-0000-0000-0000000000a1";
 const BOB = "00000000-0000-0000-0000-0000000000b0";
 
 let db: PGlite;
-
-/** Exécute une requête comme le client connecté `uid`, soumise aux règles RLS. */
-const asUser = async <T>(uid: string | null, sql: string, params: unknown[] = []) => {
-  await db.exec(`set test.uid = '${uid ?? ""}'; set role authenticated;`);
-  try {
-    return (await db.query<T>(sql, params)).rows;
-  } finally {
-    await db.exec("reset role;");
-  }
-};
+let asUser: Awaited<ReturnType<typeof startDatabase>>["asUser"];
 
 beforeAll(async () => {
-  db = new PGlite();
-  await db.exec(SUPABASE_STUB);
-  await db.exec(migration);
-  await db.exec(GRANTS);
+  ({ db, asUser } = await startDatabase());
 
   // Une précommande importée avant qu'Alice n'ait de compte.
   await db.query(

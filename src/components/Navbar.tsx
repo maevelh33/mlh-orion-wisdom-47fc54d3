@@ -9,7 +9,7 @@ import { shopConfigured } from "@/lib/supabase";
 const navLinks = [
   { label: "Accueil", to: "/#accueil" },
   { label: "Livres", to: "/livres" },
-  { label: "Formation", to: "/#formation" },
+  { label: "Formation", to: "/formation" },
   { label: "Services", to: "/#services" },
   { label: "Contact", to: "/#contact" },
 ];
@@ -32,7 +32,7 @@ const Navbar = () => {
   // Hors de l'accueil, il n'y a pas d'image de fond : la barre reste opaque.
   const solid = scrolled || open || !isHome;
 
-  const isActive = (to: string) => to === "/livres" && pathname.startsWith("/livres");
+  const isActive = (to: string) => (to === "/livres" || to === "/formation") && pathname.startsWith(to);
 
   // Sur la photo sombre de l'accueil, le texte passe en clair pour rester lisible.
   const linkColor = (to: string) =>

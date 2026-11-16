@@ -49,8 +49,8 @@ const Mentions = () => (
 const Cgv = () => (
   <>
     <P>
-      Les présentes conditions s'appliquent aux ventes de livres (papier et numériques) réalisées sur mlhorion.com par Maëve Orion (voir les
-      mentions légales), à des acheteurs consommateurs.
+      Les présentes conditions s'appliquent aux ventes de livres (papier et numériques) et de la formation « Écrire un livre de A à Z »
+      réalisées sur mlhorion.com par Maëve Orion (voir les mentions légales), à des acheteurs consommateurs.
     </P>
     <H>1. Produits et précommandes</H>
     <P>
@@ -83,26 +83,33 @@ const Cgv = () => (
       L'ebook est accessible dans l'espace client, en se connectant avec l'adresse e-mail utilisée lors de l'achat : lecture en ligne et/ou
       téléchargement. Il est réservé à un usage strictement personnel.
     </P>
-    <H>5. Droit de rétractation</H>
+    <H>5. Accès à la formation</H>
+    <P>
+      La formation est accessible immédiatement après le paiement, et sans limite de durée, dans l'espace client, en se connectant avec
+      l'adresse e-mail utilisée lors de l'achat. Elle comprend des leçons vidéo, des résumés et des documents à télécharger. Elle est réservée à
+      un usage strictement personnel : les vidéos et documents ne peuvent être ni partagés, ni diffusés, ni revendus.
+    </P>
+    <H>6. Droit de rétractation</H>
     <Ul
       items={[
         "Livre papier : vous disposez de 14 jours à compter de la réception du livre pour vous rétracter, sans avoir à vous justifier. Le livre doit être retourné en bon état ; les frais de retour sont à votre charge. Le remboursement intervient dans les 14 jours suivant la réception du retour.",
         "Ebook (contenu numérique) : vous pouvez annuler votre précommande à tout moment avant la sortie. En commandant, vous demandez expressément à accéder à l'ebook dès sa sortie et reconnaissez perdre votre droit de rétractation à partir du moment où il est mis à votre disposition (article L221-28 du Code de la consommation).",
+        "Formation (contenu numérique) : en payant, vous demandez expressément l'accès immédiat à la formation et reconnaissez perdre votre droit de rétractation dès cet accès (article L221-28 du Code de la consommation).",
         `Pour exercer ce droit, écrivez à ${CONTACT} en indiquant votre commande.`,
       ]}
     />
-    <H>6. Remboursements</H>
+    <H>7. Remboursements</H>
     <P>
-      Les remboursements sont effectués sur le moyen de paiement utilisé, via Stripe. Un ebook remboursé n'est plus accessible dans l'espace
-      client.
+      Les remboursements sont effectués sur le moyen de paiement utilisé, via Stripe. Un ebook ou une formation remboursés ne sont plus
+      accessibles dans l'espace client.
     </P>
-    <H>7. Réclamations et médiation</H>
+    <H>8. Réclamations et médiation</H>
     <P>
       Pour toute question ou réclamation : {CONTACT}. En cas de litige non résolu, vous pouvez recourir gratuitement au médiateur de la
       consommation : <ToFill>nom et site du médiateur auquel vous adhérez (obligatoire pour vendre à des particuliers)</ToFill>. Vous pouvez
       aussi utiliser la plateforme européenne de règlement des litiges en ligne.
     </P>
-    <H>8. Droit applicable</H>
+    <H>9. Droit applicable</H>
     <P>Les présentes conditions sont soumises au droit français.</P>
   </>
 );
@@ -117,6 +124,7 @@ const Confidentialite = () => (
         "Nom et adresse postale (livre papier) : pour l'expédition et la facturation.",
         "Prénom pour la dédicace, si vous en indiquez un.",
         "Historique de commandes : pour afficher vos achats et leur statut.",
+        "Formation : les leçons terminées et vos notes personnelles, pour suivre votre avancement. Vos notes ne sont visibles que par vous.",
       ]}
     />
     <P>Vos données bancaires sont saisies directement chez Stripe et ne transitent jamais par ce site.</P>
