@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { courseProgress, formatDuration, youtubeId } from "./course";
+import { courseProgress, formatDuration, parseDuration, youtubeId } from "./course";
 
 describe("youtubeId", () => {
   it.each([
@@ -52,4 +52,27 @@ it("formatDuration", () => {
   expect(formatDuration(65)).toBe("1 h 05");
   expect(formatDuration(120)).toBe("2 h");
   expect(formatDuration(null)).toBe("");
+});
+
+describe("parseDuration", () => {
+  it.each([
+    ["12", 12],
+    ["12 min", 12],
+    ["12min", 12],
+    ["12 mn", 12],
+    ["12:00", 12],
+    ["12:34", 13],
+    ["0:45", 1],
+    ["1:02:30", 63],
+    ["1h05", 65],
+    ["1 h 5 min", 65],
+    ["1h", 60],
+    ["8 min 20 s", 9],
+    ["12,5", 13],
+    [" 7 ", 7],
+  ])("%s → %i min", (input, minutes) => expect(parseDuration(input)).toBe(minutes));
+
+  it("refuse ce qui n'est pas une durée", () => {
+    for (const bad of ["", "abc", "0", "12:99:99:1", "-5", "douze"]) expect(parseDuration(bad)).toBeNull();
+  });
 });

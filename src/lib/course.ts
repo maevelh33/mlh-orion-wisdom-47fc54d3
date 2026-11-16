@@ -100,6 +100,26 @@ export const courseProgress = (lessons: Pick<Lesson, "id">[], progress: Pick<Les
   };
 };
 
+/**
+ * Durée saisie dans l'administration, en minutes : « 12 », « 12 min », « 12:34 » (min:s),
+ * « 1:02:30 » (h:min:s), « 1h05 », « 1 h 5 min ». Les secondes arrondissent à la minute
+ * supérieure. Renvoie null si le texte n'est pas une durée.
+ */
+export const parseDuration = (input: string): number | null => {
+  const text = input.trim().toLowerCase().replace(",", ".");
+  let seconds: number | null = null;
+  const clock = text.match(/^(\d+):(\d{1,2})(?::(\d{1,2}))?$/);
+  if (clock) {
+    const [a, b, c] = clock.slice(1).map((v) => (v === undefined ? undefined : Number(v)));
+    seconds = c === undefined ? a! * 60 + b! : a! * 3600 + b! * 60 + c;
+  } else {
+    const parts = text.match(/^(?:(\d+(?:\.\d+)?)\s*h)?\s*(?:(\d+(?:\.\d+)?)\s*(?:min|mn|m)?)?\s*(?:(\d+)\s*s)?$/);
+    if (parts && (parts[1] || parts[2] || parts[3])) seconds = Number(parts[1] ?? 0) * 3600 + Number(parts[2] ?? 0) * 60 + Number(parts[3] ?? 0);
+  }
+  if (seconds === null || !Number.isFinite(seconds) || seconds <= 0) return null;
+  return Math.ceil(seconds / 60);
+};
+
 export const formatDuration = (minutes: number | null | undefined) => {
   if (!minutes) return "";
   const h = Math.floor(minutes / 60);
