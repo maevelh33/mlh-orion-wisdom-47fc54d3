@@ -11,6 +11,7 @@ import { Eyebrow, formatDate, Notice, SecondaryButton, StatusBadge, Title } from
 import { PageShell } from "@/shop/ui";
 import PasswordForm from "@/shop/PasswordForm";
 import Library from "@/shop/Library";
+import CourseCard from "@/shop/CourseCard";
 
 const SectionTitle = ({ children }: { children: React.ReactNode }) => (
   <h2 className="font-body text-xs tracking-[0.3em] uppercase text-bordeaux mb-6">{children}</h2>
@@ -122,11 +123,13 @@ const Compte = () => {
 
       <Library orders={orders.data ?? []} products={products} loading={orders.isLoading} />
 
+      <CourseCard userId={userId} />
+
       <FadeIn className="mb-16">
         <SectionTitle>Mes commandes</SectionTitle>
         {orders.data && orders.data.length === 0 && (
           <p className="font-body text-sm text-muted-foreground">
-            Aucune commande pour le moment. Vous avez commandé avec une autre adresse e-mail ? Connectez-vous avec celle-ci pour la retrouver.
+            Aucune commande de livre pour le moment. Vous avez commandé avec une autre adresse e-mail ? Connectez-vous avec celle-ci pour la retrouver.
           </p>
         )}
         <ul className="divide-y divide-border border-y border-border">

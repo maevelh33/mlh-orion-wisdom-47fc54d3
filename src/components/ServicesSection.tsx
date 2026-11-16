@@ -71,14 +71,14 @@ const ServicesSection = () => {
             </Link>
           </FadeIn>
           <FadeIn delay={0.2}>
-            <a
-              href="#formation"
+            <Link
+              to="/formation"
               className="block h-full p-7 bg-card border border-border rounded hover:border-bordeaux/40 transition-colors group"
             >
               <Sparkles className="w-5 h-5 text-muted-foreground group-hover:text-bordeaux transition-colors mb-4" />
               <h3 className="font-display text-xl font-medium text-foreground mb-1">Formation</h3>
               <p className="font-body text-sm text-muted-foreground">Écrire un livre de A à Z</p>
-            </a>
+            </Link>
           </FadeIn>
         </div>
 

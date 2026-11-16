@@ -1,5 +1,6 @@
 import type Stripe from "stripe";
 import type { SupabaseClient } from "@supabase/supabase-js";
+import { handleCourseRefund, handleCourseSession, isCourseSession, type CourseDeps } from "./enrollments";
 import { de, type Format, type Order, type OrderStatus, type Product, type ShippingAddress } from "../../src/lib/shop";
 
 /** Accès aux données dont le traitement des paiements a besoin (Supabase en vrai, mémoire en test). */
@@ -50,6 +51,8 @@ export interface WebhookDeps {
   sendEmail: (kind: "confirmation" | "failed" | "refund", order: Order, product: Product) => Promise<void>;
   getReceiptUrl?: (paymentIntentId: string) => Promise<string | null>;
   log?: (message: string, extra?: unknown) => void;
+  /** Formation : sans elle, ses paiements sont ignorés. */
+  course?: CourseDeps;
 }
 
 const SESSION_EVENTS = new Set([
@@ -64,9 +67,11 @@ const SESSION_EVENTS = new Set([
  */
 export const handleStripeEvent = async (event: Stripe.Event, deps: WebhookDeps): Promise<string> => {
   const { repo, log = () => {} } = deps;
+  const shared = { findUserIdByEmail: repo.findUserIdByEmail, notify: repo.notify, getReceiptUrl: deps.getReceiptUrl, log };
 
   if (SESSION_EVENTS.has(event.type)) {
     const session = event.data.object as Stripe.Checkout.Session;
+    if (isCourseSession(session)) return deps.course ? handleCourseSession(event, deps.course, shared) : "ignoré : formation non configurée";
     if (!session.metadata?.product_id) return "ignoré : session sans produit (ancien lien de paiement ?)";
 
     const previous = await repo.findOrderBySession(session.id);
@@ -110,7 +115,7 @@ export const handleStripeEvent = async (event: Stripe.Event, deps: WebhookDeps):
     const paymentIntentId = idOf(charge.payment_intent);
     if (!paymentIntentId) return "ignoré : remboursement sans paiement associé";
     const order = await repo.findOrderByPaymentIntent(paymentIntentId);
-    if (!order) return "ignoré : remboursement d'un paiement hors boutique";
+    if (!order) return deps.course ? handleCourseRefund(charge, deps.course, shared) : "ignoré : remboursement d'un paiement hors boutique";
 
     const status: OrderStatus = charge.amount_refunded >= charge.amount ? "refunded" : "partially_refunded";
     if (order.status === status && order.amount_refunded_cents === charge.amount_refunded) return "déjà enregistré";

@@ -1,4 +1,5 @@
 import type Stripe from "stripe";
+import type { Course } from "../../src/lib/course";
 import { EU_COUNTRIES, priceFor, shippingFor, type Format, type Product, type ShippingZone } from "../../src/lib/shop";
 
 export class CheckoutError extends Error {}
@@ -80,4 +81,46 @@ export const buildCheckoutParams = ({ product, format, zone, customer, siteUrl }
   }
 
   return params;
+};
+
+export interface CourseCheckoutRequest {
+  course: Course;
+  customer?: { id: string; email: string } | null;
+  siteUrl: string;
+}
+
+/**
+ * Paramètres de la session Stripe Checkout pour la formation. Le client a coché, sur le site,
+ * la demande d'accès immédiat et la renonciation au droit de rétractation (contenu numérique) :
+ * c'est noté dans les métadonnées du paiement, comme preuve.
+ */
+export const buildCourseCheckoutParams = ({ course, customer, siteUrl }: CourseCheckoutRequest): Stripe.Checkout.SessionCreateParams => {
+  if (!course.on_sale) throw new CheckoutError("Les inscriptions à cette formation sont fermées pour le moment.");
+  const metadata: Record<string, string> = { kind: "course", course_id: course.id, acces_immediat_renonciation_retractation: "oui" };
+  if (customer) metadata.user_id = customer.id;
+  return {
+    mode: "payment",
+    locale: "fr",
+    line_items: [
+      {
+        quantity: 1,
+        price_data: {
+          currency: "eur",
+          unit_amount: course.price_cents,
+          product_data: { name: `Formation — ${course.title}`, description: "Accès à vie, dans votre espace sur mlhorion.com" },
+        },
+      },
+    ],
+    metadata,
+    payment_intent_data: { metadata },
+    client_reference_id: customer?.id,
+    customer_email: customer?.email,
+    success_url: `${siteUrl}/compte/formation?inscription={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${siteUrl}/formation?annule=1`,
+    custom_text: {
+      submit: {
+        message: `En validant, vous acceptez les conditions générales de vente (${siteUrl}/cgv) et demandez l'accès immédiat à la formation, ce qui met fin à votre droit de rétractation.`,
+      },
+    },
+  };
 };

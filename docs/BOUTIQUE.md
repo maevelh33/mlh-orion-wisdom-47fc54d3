@@ -129,6 +129,22 @@ Après avoir ajouté les variables : **Deploys** → **Trigger deploy** → **Cl
 
 ---
 
+## 9. Formation « Écrire un livre de A à Z »
+
+1. Supabase → **SQL Editor** → **New query** (onglet vide) → collez `supabase/migrations/20261116000000_formation.sql` → **Run**.
+2. Sur YouTube, chaque vidéo de la formation doit être **non répertoriée** (pas privée : une vidéo privée ne se lit pas sur le site).
+3. Administration → **Formation** → **Leçons** : ajoutez les leçons dans l'ordre, avec pour chacune le lien de partage
+   de la vidéo, la durée, le résumé et, si besoin, un PDF. Le programme (titres et durées) s'affiche sur la page `/formation` ;
+   les vidéos, résumés et PDF ne sont visibles que par les inscrits.
+4. **Anciens élèves** : collez l'ancien lien de paiement de la formation → **Importer**, vérifiez la liste,
+   **M'envoyer un aperçu**, puis **Envoyer l'invitation** (une seule fois par personne).
+5. Désactivez l'ancien lien de paiement de la formation dans Stripe, pour que tout passe par le site.
+
+Le webhook Stripe existant suffit : les paiements de la formation arrivent sur la même adresse.
+Une personne qui a payé autrement : Administration → **Formation** → **Élèves** → **Offrir l'accès**.
+
+---
+
 ## Au quotidien
 
 - **Expédier un livre papier** : Administration → **Commandes** → filtre « À expédier » → bouton **CSV** pour les étiquettes →
@@ -142,9 +158,11 @@ Après avoir ajouté les variables : **Deploys** → **Trigger deploy** → **Cl
 ## Comment ça marche (pour une personne qui reprendrait le code)
 
 - `src/lib/shop.ts` : types et règles partagés (statuts affichés, prix, zones de livraison).
+- `src/lib/course.ts` : formation (accès, avancement, liens YouTube) ; `netlify/lib/enrollments.ts` : ses paiements et remboursements.
 - `netlify/functions/checkout.ts` : crée la session Stripe Checkout (prix lus en base, jamais envoyés par le navigateur).
 - `netlify/functions/stripe-webhook.ts` + `netlify/lib/orders.ts` : enregistre paiements, échecs et remboursements ; idempotent.
 - `netlify/functions/admin.ts` + `netlify/lib/admin.ts` : e-mail de disponibilité par lots, import Stripe, e-mail d'essai.
 - `supabase/migrations/` : tables et règles d'accès (RLS) ; un client ne voit que ses commandes et ne peut ouvrir
-  le fichier d'un ebook que s'il l'a payé et qu'il est disponible.
+  le fichier d'un ebook que s'il l'a payé et qu'il est disponible. Les vidéos et PDF de la formation ne sont lisibles que par
+  les inscrits ; les notes des élèves ne sont lisibles que par eux.
 - Tests : `npm test` (base de données simulée avec PGlite, webhooks Stripe signés, e-mails).

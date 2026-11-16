@@ -54,5 +54,19 @@ export const Notice = ({ tone = "neutral", children }: { tone?: DisplayStatus["t
   <div className={`border px-5 py-4 rounded-sm font-body text-sm leading-relaxed ${toneClass[tone]}`}>{children}</div>
 );
 
+/** Barre d'avancement (formation). */
+export const ProgressBar = ({ percent, className = "" }: { percent: number; className?: string }) => (
+  <div
+    role="progressbar"
+    aria-valuenow={percent}
+    aria-valuemin={0}
+    aria-valuemax={100}
+    aria-label="Avancement"
+    className={`h-1.5 bg-border rounded-full overflow-hidden ${className}`}
+  >
+    <div className="h-full bg-bordeaux transition-[width] duration-500" style={{ width: `${percent}%` }} />
+  </div>
+);
+
 export const formatDate = (iso: string | null | undefined) =>
   iso ? new Date(iso).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" }) : "—";

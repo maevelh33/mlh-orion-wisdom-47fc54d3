@@ -19,6 +19,8 @@ const Precommande = lazy(() => import("./pages/Precommande"));
 const Connexion = lazy(() => import("./pages/Connexion"));
 const Compte = lazy(() => import("./pages/Compte"));
 const Lecture = lazy(() => import("./pages/Lecture"));
+const Formation = lazy(() => import("./pages/Formation"));
+const FormationEspace = lazy(() => import("./pages/FormationEspace"));
 const Admin = lazy(() => import("./pages/Admin"));
 const Legal = lazy(() => import("./pages/Legal"));
 
@@ -41,6 +43,7 @@ const App = () => (
                 <Route path="/livres" element={<Livres />} />
                 <Route path="/livres/:slug" element={<BookDetail />} />
                 <Route path="/livres/:slug/precommander" element={<Precommande />} />
+                <Route path="/formation" element={<Formation />} />
                 <Route path="/connexion" element={<Connexion />} />
                 <Route
                   path="/compte"
@@ -55,6 +58,14 @@ const App = () => (
                   element={
                     <RequireAuth>
                       <Lecture />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/compte/formation"
+                  element={
+                    <RequireAuth>
+                      <FormationEspace />
                     </RequireAuth>
                   }
                 />

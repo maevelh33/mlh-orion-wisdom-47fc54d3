@@ -5,6 +5,7 @@ import { callApi } from "@/lib/api";
 import { supabase } from "@/lib/supabase";
 import { displayStatus, formatLabel, formatPrice, type Format, type Order, type Product } from "@/lib/shop";
 import { useProducts } from "@/shop/useShop";
+import AdminFormation from "@/shop/AdminFormation";
 import { Eyebrow, formatDate, Notice, PageShell, PrimaryButton, SecondaryButton, StatusBadge, Title } from "@/shop/ui";
 
 interface ProfileRow {
@@ -651,6 +652,7 @@ const tabs = [
   { id: "orders", label: "Commandes", Component: OrdersTab },
   { id: "customers", label: "Clients", Component: CustomersTab },
   { id: "books", label: "Livres", Component: BooksTab },
+  { id: "formation", label: "Formation", Component: AdminFormation },
   { id: "tools", label: "Outils", Component: ToolsTab },
 ] as const;
 
