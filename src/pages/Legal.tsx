@@ -135,6 +135,7 @@ const Confidentialite = () => (
         "Supabase (comptes clients et commandes, serveurs dans l'Union européenne)",
         "Brevo (envoi des e-mails, France)",
         "Netlify (hébergement du site)",
+        "YouTube (vidéos de la formation et bande-annonce, en mode « confidentialité renforcée » : chargées seulement quand vous les lancez ou ouvrez une leçon)",
       ]}
     />
     <H>Durée de conservation</H>
