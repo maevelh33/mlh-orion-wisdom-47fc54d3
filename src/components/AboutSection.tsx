@@ -1,6 +1,6 @@
 import FadeIn from "@/components/FadeIn";
 
-const pillars = ["Philosophie", "Psychologie", "Littérature", "Science"];
+const pillars = ["Philosophie", "Psychologie", "Littérature"];
 
 const Subheading = ({ children }: { children: React.ReactNode }) => (
   <h3 className="font-body text-xs tracking-[0.3em] uppercase text-bordeaux mt-16 mb-6">{children}</h3>
@@ -31,16 +31,11 @@ const AboutSection = () => {
         </FadeIn>
 
         <FadeIn delay={0.15}>
-          <ul className="grid grid-cols-2 sm:grid-cols-4 border-y border-border mb-10" aria-label="Mes quatre piliers">
+          <ul className="grid grid-cols-3 border-y border-border mb-10" aria-label="Mes trois piliers">
             {pillars.map((pillar, i) => (
-              <li
-                key={pillar}
-                className={`py-5 text-center ${i > 0 ? "sm:border-l" : ""} ${i % 2 === 1 ? "border-l" : ""} ${
-                  i > 1 ? "border-t sm:border-t-0" : ""
-                } border-border`}
-              >
+              <li key={pillar} className={`py-5 text-center ${i > 0 ? "border-l" : ""} border-border`}>
                 <span className="block font-display text-sm text-bordeaux/60 mb-1">0{i + 1}</span>
-                <span className="font-body text-xs tracking-[0.2em] uppercase text-foreground">{pillar}</span>
+                <span className="font-body text-[11px] sm:text-xs tracking-[0.12em] sm:tracking-[0.2em] uppercase text-foreground">{pillar}</span>
               </li>
             ))}
           </ul>
@@ -49,10 +44,10 @@ const AboutSection = () => {
         <FadeIn>
           <Subheading>L'esprit</Subheading>
           <Paragraph>
-            Mon univers repose sur quatre piliers&nbsp;: philosophie, psychologie, littérature et science.
+            Mon univers repose sur trois piliers&nbsp;: philosophie, psychologie et littérature.
             J'explore les mécanismes humains, leurs contradictions et leurs conflits intérieurs,
             pour écrire avec profondeur et agir avec lucidité. La philosophie me guide vers le sens,
-            la science m'impose la rigueur, et la lecture nourrit mon vocabulaire et encourage une pensée structurée.
+            et la lecture nourrit mon vocabulaire et encourage une pensée structurée.
           </Paragraph>
           <Paragraph>
             Mon cœur se nourrit d'idéaux&nbsp;: persévérance, courage, loyauté, dépassement de soi.

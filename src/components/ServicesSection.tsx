@@ -4,7 +4,7 @@ import FadeIn from "@/components/FadeIn";
 import TikTok from "@/components/icons/TikTok";
 
 const externalLinks = [
-  { icon: Youtube, label: "YouTube", desc: "Philosophie, psychologie, patrimoine", href: "https://www.youtube.com/@mlhorion", external: true },
+  { icon: Youtube, label: "YouTube", desc: "Philosophie, psychologie, littérature", href: "https://www.youtube.com/@mlhorion", external: true },
   { icon: Instagram, label: "Instagram", desc: "Réflexions & coulisses", href: "https://www.instagram.com/mlh.orion", external: true },
   { icon: TikTok, label: "TikTok", desc: "Vidéos courtes", href: "https://www.tiktok.com/@mlhorion", external: true },
   { icon: Heart, label: "Ko-fi", desc: "Me soutenir par un don", href: "https://ko-fi.com/mlhorion", external: true },
