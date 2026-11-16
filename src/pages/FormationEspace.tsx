@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
-import { ArrowLeft, ArrowRight, Check, CheckCircle2, Circle, Download, PartyPopper, PlayCircle } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, CheckCircle2, Circle, Download, FileText, PartyPopper, PlayCircle } from "lucide-react";
 import { useAuth } from "@/auth/AuthProvider";
 import { supabase } from "@/lib/supabase";
 import { COURSE_ID, courseProgress, formatDuration, youtubeEmbedUrl, type Lesson, type LessonProgress } from "@/lib/course";
@@ -216,6 +216,22 @@ const FormationEspace = () => {
                     className="absolute inset-0 w-full h-full"
                   />
                 </div>
+              ) : current.attachment_path ? (
+                // Leçon sans vidéo : le document en est le contenu principal.
+                <div className="flex flex-col items-center justify-center gap-5 px-6 py-14 text-center bg-cream border border-bordeaux/20 rounded-sm">
+                  <FileText className="w-10 h-10 text-bordeaux" />
+                  <p className="font-body text-sm text-muted-foreground max-w-sm">Cette leçon est un guide à télécharger et à garder sous la main.</p>
+                  {pdfUrl ? (
+                    <a
+                      href={pdfUrl}
+                      className="inline-flex items-center gap-2 font-body text-sm tracking-[0.2em] uppercase px-8 py-3.5 bg-bordeaux text-primary-foreground hover:bg-bordeaux/90 transition-colors"
+                    >
+                      <Download className="w-4 h-4" /> Télécharger le guide (PDF)
+                    </a>
+                  ) : (
+                    <p className="font-body text-xs text-muted-foreground">Préparation du lien…</p>
+                  )}
+                </div>
               ) : (
                 <Notice>La vidéo de cette leçon arrive bientôt.</Notice>
               )}
@@ -236,7 +252,7 @@ const FormationEspace = () => {
                     "Marquer comme terminée"
                   )}
                 </PrimaryButton>
-                {pdfUrl && (
+                {pdfUrl && current.youtube_id && (
                   <a
                     href={pdfUrl}
                     className="inline-flex items-center gap-2 font-body text-xs tracking-[0.2em] uppercase px-5 py-2.5 border border-bordeaux text-bordeaux hover:bg-bordeaux hover:text-primary-foreground transition-colors"
