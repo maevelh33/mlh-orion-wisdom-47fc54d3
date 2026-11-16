@@ -76,7 +76,8 @@ export const youtubeId = (input: string): string | null => {
 };
 
 /** Lecteur YouTube sans cookies publicitaires ni suggestions d'autres chaînes. */
-export const youtubeEmbedUrl = (id: string) => `https://www.youtube-nocookie.com/embed/${id}?rel=0&modestbranding=1&playsinline=1`;
+export const youtubeEmbedUrl = (id: string, autoplay = false) =>
+  `https://www.youtube-nocookie.com/embed/${id}?rel=0&modestbranding=1&playsinline=1${autoplay ? "&autoplay=1" : ""}`;
 
 /** Avancement d'un élève : leçons terminées, pourcentage, leçon où reprendre. */
 export const courseProgress = (lessons: Pick<Lesson, "id">[], progress: Pick<LessonProgress, "lesson_id" | "completed_at" | "last_seen_at">[]) => {

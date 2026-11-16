@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { CheckCircle2, FileText, GraduationCap, Lock, PlayCircle } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
+import Trailer from "@/components/Trailer";
 import { useAuth } from "@/auth/AuthProvider";
 import { callApi } from "@/lib/api";
 import { formatDuration } from "@/lib/course";
@@ -49,6 +50,10 @@ const Formation = () => {
           <Eyebrow>Formation</Eyebrow>
           <Title>{formation.title}</Title>
           <p className="font-body text-lg leading-relaxed text-muted-foreground mb-10 max-w-2xl">{formation.tagline}</p>
+
+          <div className="max-w-2xl mb-12">
+            <Trailer youtubeId={formation.trailerYoutubeId} title={`Bande-annonce — ${formation.title}`} />
+          </div>
 
           <div className="grid sm:grid-cols-2 gap-3 mb-14 max-w-2xl">
             {formation.benefits.map((b) => (

@@ -4,6 +4,8 @@ import { BookText, FileText, GraduationCap, LineChart, Video } from "lucide-reac
 export const formation = {
   title: "Écrire un livre de A à Z",
   tagline: "De l'idée initiale au manuscrit prêt à être publié.",
+  /** Bande-annonce sur YouTube (https://youtu.be/erdaMI8-zkg). */
+  trailerYoutubeId: "erdaMI8-zkg",
   benefits: [
     { icon: Video, text: "18 modules vidéo pour maîtriser chaque étape" },
     { icon: BookText, text: "Résumés & conseils pratiques à chaque chapitre" },
